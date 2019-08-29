@@ -4,9 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>EcoBici</title>
+    <title>EcoBici - Bicicletas bloquedas en tiempo real.</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="response"></div>
+    <div class="disclaimer">
+      <p>Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte">API Transporte</a> del GCBA.</p>
+    </div>
+    <button value="Actualizar" onClick="window.location.reload();">Actualizar</button>
+
+    <!-- Scripts -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>
