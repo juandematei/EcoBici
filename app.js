@@ -4,6 +4,8 @@
   const client_secret = "d16cdAd7C5a44875825649808f94ca6B";
 
   $(document).ready(function() {
+    $(".updating").show();
+
     $.ajax({
       type: "GET",
       dataType: "json",
@@ -31,8 +33,10 @@
         console.log("Hay " + totalDisabled + " bicis bloquedas en la red.");
 
         $(".response").append("Hay " + totalDisabled + " bicis bloquedas en la red.");
+        $(".updating").hide();
       },
       error: function(data) {
+        $(".updating").hide();
         $(".response").append("ERROR");
         console.log("Error");
       }

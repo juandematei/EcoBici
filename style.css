@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
@@ -13,10 +23,16 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding: 2rem;
+}
+
+a {
+  color: inherit;
 }
 
 .response {
-  font-size: 3rem;
+  font-size: 2rem;
+  min-height: 25vh;
 }
 
 button {
@@ -27,5 +43,41 @@ button {
   height: 40px;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 2rem;
+  margin: 2rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+footer .author {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  line-height: 30px;
+}
+
+footer .author .author-logo {
+  background-image: url(https://www.juandematei.com/img/logo-white.png);
+  background-size: 30px;
+  background-position: 0px;
+  background-repeat: no-repeat;
+  height: 30px;
+  display: inline-block;
+  padding-left: 40px;
+  margin-left: 10px;
 }

@@ -6,13 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>EcoBici - Bicicletas bloquedas en tiempo real.</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
   </head>
   <body>
-    <div class="response"></div>
+    <header>
+      <div class="logo">
+        <img src="logo.svg" alt="BA EcoBici logo" />
+      </div>
+    </header>
+    <div class="response">
+      <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+    </div>
+    <button value="Actualizar" onClick="window.location.reload();">Actualizar</button>
     <div class="disclaimer">
       <p>Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte">API Transporte</a> del GCBA.</p>
     </div>
-    <button value="Actualizar" onClick="window.location.reload();">Actualizar</button>
+    <footer>
+      <div class="author">
+        <p>Desarrollo web</p>
+        <a class="author-logo" href="https://www.juandematei.com"></a>
+      </div>
+    </footer>
 
     <!-- Scripts -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
