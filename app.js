@@ -1,14 +1,14 @@
 (function() {
-  //const url = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus?";
-  //const client_id = "c9f17951eca1433a8744072cd6ed90c9";
-  //const client_secret = "d16cdAd7C5a44875825649808f94ca6B";
+  const url = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus?";
+  const client_id = "c9f17951eca1433a8744072cd6ed90c9";
+  const client_secret = "d16cdAd7C5a44875825649808f94ca6B";
 
   $(document).ready(function() {
     $.ajax({
       type: "GET",
       dataType: "json",
       url: "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus?client_id=c9f17951eca1433a8744072cd6ed90c9&client_secret=d16cdAd7C5a44875825649808f94ca6B",
-      headers: { "Access-Control-Allow-Origin": "https://juandematei.github.io" },
+      //headers: { "Access-Control-Allow-Origin": "https://juandematei.github.io" },
 
       success: function(data) {
         var response = data.data.stations;
