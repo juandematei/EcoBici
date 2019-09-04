@@ -1,75 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10440680-22"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
 
-      gtag("config", "UA-10440680-22");
-    </script>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10440680-22"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-1906096598396311",
-        enable_page_level_ads: true
-      });
-    </script>
+    gtag("config", "UA-10440680-22");
+  </script>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1906096598396311",
+      enable_page_level_ads: true
+    });
+  </script>
 
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="https://www.juandematei.com/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="https://www.juandematei.com/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="https://www.juandematei.com/favicon-16x16.png" />
-    <link rel="manifest" href="https://www.juandematei.com/site.webmanifest" />
-    <link rel="mask-icon" href="https://www.juandematei.com/safari-pinned-tab.svg" color="#5bbad5" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <meta property="og:title" content="EcoBici" />
-    <meta property="og:description" content="Bicicletas bloqueadas en tiempo real." />
-    <meta property="og:image" content="https://repository-images.githubusercontent.com/205054907/951a7700-cf00-11e9-8fdf-32d4d819cc2e" />
-    <meta property="og:url" content="https://juandematei.github.io/EcoBici/" />
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://www.juandematei.com/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://www.juandematei.com/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://www.juandematei.com/favicon-16x16.png" />
+  <link rel="manifest" href="https://www.juandematei.com/site.webmanifest" />
+  <link rel="mask-icon" href="https://www.juandematei.com/safari-pinned-tab.svg" color="#5bbad5" />
 
-    <meta name="theme-color" content="#e66300" />
+  <meta property="og:title" content="EcoBici" />
+  <meta property="og:description" content="Bicicletas bloqueadas en tiempo real." />
+  <meta property="og:image"
+    content="https://repository-images.githubusercontent.com/205054907/951a7700-cf00-11e9-8fdf-32d4d819cc2e" />
+  <meta property="og:url" content="https://juandematei.github.io/EcoBici/" />
 
-    <title>EcoBici - Bicicletas bloqueadas en tiempo real.</title>
+  <meta name="theme-color" content="#e66300" />
 
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-  </head>
+  <title>EcoBici - Bicicletas bloqueadas en tiempo real.</title>
 
-  <body>
-    <header>
-      <div class="logo">
-        <img src="logo.svg" alt="BA EcoBici logo" />
-      </div>
-    </header>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+</head>
 
-    <div class="response">
-      <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.svg" alt="BA EcoBici logo" />
     </div>
-    <button value="Actualizar" onClick="window.location.reload();">Actualizar</button>
-    <div class="disclaimer">
-      <p>Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API Transporte</a> del GCBA.</p>
+  </header>
+
+  <div class="response">
+    <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+  </div>
+  <button value="Actualizar" onClick="window.location.reload();">Actualizar</button>
+  <div class="disclaimer">
+    <p>Los datos son obtenidos en tiempo real con la <a
+        href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API
+        Transporte</a> del GCBA.</p>
+  </div>
+
+  <footer>
+    <div class="author">
+      <p>Desarrollo web</p>
+      <a class="author-logo" href="https://www.juandematei.com" target="_blank"></a>
     </div>
+  </footer>
 
-    <footer>
-      <div class="author">
-        <p>Desarrollo web</p>
-        <a class="author-logo" href="https://www.juandematei.com" target="_blank"></a>
-      </div>
-    </footer>
+  <!-- Scripts -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+</body>
 
-    <!-- Scripts -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="config.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-  </body>
 </html>
