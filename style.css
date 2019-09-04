@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
@@ -13,9 +12,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  padding: 2rem;
+  min-height: 100vh;
+  padding: 0 2rem;
   text-align: center;
+  position: relative;
 }
 
 a {
@@ -23,16 +23,49 @@ a {
 }
 
 header {
-  padding: 1rem;
+  padding: 2rem 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .response {
   font-size: 2rem;
-  min-height: 25vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.card {
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+  min-height: 100px;
+  margin: 1rem;
+  border-radius: 6px;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card strong {
+  font-size: 1.6rem;
+}
+
+.card.available {
+  color: #4caf50;
+}
+
+.card.disabled {
+  color: #f44336;
 }
 
 button {
@@ -43,13 +76,27 @@ button {
   height: 40px;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.refresh {
+  position: relative;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.updating {
+  position: absolute;
+  background-color: #0a4990;
+  padding: 7px 18px;
+  height: 40px;
+  border-radius: 6px;
+  width: 100%;
 }
 
 footer {
   padding: 1rem;
-  margin-top: 3rem;
+  margin: 2rem 0;
 }
 
 footer .author {
@@ -76,4 +123,44 @@ footer .author .author-logo {
   display: inline-block;
   padding-left: 40px;
   margin-left: 10px;
+}
+
+.disclaimer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #0a4990;
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 1rem 2rem;
+  text-align: left;
+}
+
+@media all and (min-width: 768px) {
+  .response {
+    font-size: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    min-height: 200px;
+    font-size: 1.6rem;
+  }
+
+  .card strong {
+    font-size: 2rem;
+  }
+
+  .refresh {
+    width: 25%;
+  }
+
+  .disclaimer {
+    text-align: center;
+  }
 }

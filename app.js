@@ -20,30 +20,34 @@
         var response = data.data.stations;
         //console.log(response);
 
+        var totalAvailable = 0;
         var totalDisabled = 0;
-        //var totalAvailable = 0;
+        var totalInUse = 0;
 
         for (var i = 0; i < response.length; i++) {
           var stationID = response[i].station_id;
           var stationNumBikesDisabled = response[i].num_bikes_disabled;
           var stationNumBikesAvailable = response[i].num_bikes_available;
 
-          console.log("Estación " + stationID + ": " + stationNumBikesDisabled + " bicis bloqueadas.");
+          //console.log("Estación " + stationID + ": " + stationNumBikesDisabled + " bicis bloqueadas.");
 
-          totalDisabled = totalDisabled + response[i].num_bikes_disabled;
           totalAvailable = totalAvailable + response[i].num_bikes_available;
+          totalDisabled = totalDisabled + response[i].num_bikes_disabled;
         }
 
-        console.log("Hay " + totalDisabled + " EcoBici bloqueadas");
-        console.log("Hay " + totalAvailable + " EcoBici disponibles");
+        console.log("Hay " + totalAvailable + " disponibles");
+        console.log("Hay " + totalDisabled + " bloqueadas");
 
-        $(".response").append("Hay " + totalDisabled + " EcoBici bloqueadas");
+        totalInUse = 4000 - totalAvailable - totalDisabled;
+
+        $(".available > p").append("<strong>" + totalAvailable + "</strong><br>disponibles");
+        $(".disabled > p").append("<strong>" + totalDisabled + "</strong><br>bloqueadas");
+        $(".in-use > p").append("<strong>" + totalInUse + "</strong><br>en uso*");
         $(".updating").hide();
       },
       error: function(data) {
-        $(".updating").hide();
-        $(".response").append("ERROR");
-        //console.log("Error");
+        $(".updating").append("ERROR");
+        console.log("ERROR");
       }
     });
   });
