@@ -1,0 +1,24 @@
+{
+  "name": "EcoBici",
+  "version": "1.0.0",
+  "description": "Los datos son obtenidos en tiempo real con la [API Transporte](https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte) del GCBA.",
+  "main": "app.js",
+  "dependencies": {
+    "cors-anywhere": "^0.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juandematei/EcoBici.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juandematei/EcoBici/issues"
+  },
+  "homepage": "https://github.com/juandematei/EcoBici#readme"
+}
