@@ -1,7 +1,8 @@
 (function() {
   const url = "https://cors-anywhere.herokuapp.com/https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus";
-  const client_id = "c9f17951eca1433a8744072cd6ed90c9";
-  const client_secret = "d16cdAd7C5a44875825649808f94ca6B";
+
+  var client_id = config.ID;
+  var client_secret = config.SECRET;
 
   $(document).ready(function() {
     $(".updating").show();
