@@ -4,15 +4,6 @@
   box-sizing: border-box;
 }
 
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -24,15 +15,24 @@ body {
   align-items: center;
   height: 100vh;
   padding: 2rem;
+  text-align: center;
 }
 
 a {
   color: inherit;
 }
 
+header {
+  padding: 1rem;
+}
+
 .response {
   font-size: 2rem;
   min-height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 button {
@@ -43,20 +43,16 @@ button {
   height: 40px;
   border-radius: 6px;
   cursor: pointer;
-  margin: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
 }
 
 footer .author {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

@@ -17,7 +17,7 @@
 
       success: function (data) {
         var response = data.data.stations;
-        console.log(response);
+        //console.log(response);
 
         var totalDisabled = 0;
 
@@ -25,20 +25,20 @@
           var stationID = response[i].station_id;
           var stationNumBikesDisabled = response[i].num_bikes_disabled;
 
-          console.log("Estación " + stationID + ": " + stationNumBikesDisabled + " bicis bloqueadas.");
+          //console.log("Estación " + stationID + ": " + stationNumBikesDisabled + " bicis bloqueadas.");
 
           totalDisabled = totalDisabled + response[i].num_bikes_disabled;
         }
 
-        console.log("Hay " + totalDisabled + " bicis bloquedas en la red.");
+        //console.log("Hay " + totalDisabled + " bicis bloquedas en la red.");
 
-        $(".response").append("Hay " + totalDisabled + " bicis bloquedas en la red.");
+        $(".response").append("Hay " + totalDisabled + " bicis bloquedas");
         $(".updating").hide();
       },
       error: function (data) {
         $(".updating").hide();
         $(".response").append("ERROR");
-        console.log("Error");
+        //console.log("Error");
       }
     });
   });
