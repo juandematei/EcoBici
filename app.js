@@ -42,11 +42,12 @@
 
         $(".available > p").append("<strong>" + totalAvailable + "</strong><br>disponibles");
         $(".disabled > p").append("<strong>" + totalDisabled + "</strong><br>bloqueadas");
-        $(".in-use > p").append("<strong>" + totalInUse + "</strong><br>en uso*");
+        $(".in-use > p").append("<strong>" + totalInUse + "</strong><br>en uso<sup>*</sup>");
         $(".updating").hide();
       },
       error: function(data) {
-        $(".updating").append("ERROR");
+        $(".updating").hide();
+        $(".disabled").append("ERROR");
         console.log("ERROR");
       }
     });
