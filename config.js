@@ -1,0 +1,4 @@
+var config = {
+  ID: "c9f17951eca1433a8744072cd6ed90c9",
+  SECRET: "d16cdAd7C5a44875825649808f94ca6B"
+};
