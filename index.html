@@ -13,14 +13,6 @@
       gtag("config", "UA-10440680-22");
     </script>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-1906096598396311",
-        enable_page_level_ads: true
-      });
-    </script>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -54,29 +46,33 @@
 
     <div class="response">
       <div class="card available"><p></p></div>
-      <div class="card disabled"><p></p></div>
+      <div class="card disabled">
+        <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+        <p></p>
+      </div>
       <div class="card in-use"><p></p></div>
     </div>
 
-    <div class="disclaimer">
-      <p><sup>*</sup>Cantidad estimada tomando un total de 4.000 bicicletas en el sistema.</p>
+    <div class="refresh">
+      <button class="refresh-btn" value="Actualizar" onClick="window.location.reload();"><i class="fas fa-sync"></i> Actualizar</button>
     </div>
 
-    <div class="refresh">
-      <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
-      <button value="Actualizar" onClick="window.location.reload();">Actualizar</button>
-    </div>
+    <!-- <div class="search">
+      <input class="search-input" type="text" placeholder="Ingresá el número de estación" />
+      <button class="search-btn" value="Buscar" type="submit"><i class="fas fa-search"></i></button>
+    </div> -->
 
     <footer>
       <div class="author">
-        <p>Desarrollo web</p>
-        <a class="author-logo" href="https://www.juandematei.com" target="_blank"></a>
+        <p>Hecho con <i class="fas fa-heart"></i> por <a href="https://www.juandematei.com" target="_blank">Juan Dematei</a></p>
+      </div>
+      <div class="social">
+        <a href="https://github.com/juandematei/EcoBici" target="_blank"><i class="fab fa-github"></i> Ver en GitHub</a>
+      </div>
+      <div class="disclaimer">
+        <p><sup>*</sup>Cantidad estimada tomando un total de 4.000 bicicletas en el sistema. Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API Transporte</a> del GCBA. Los datos proporcionados por la API se actualizan regularmente desde los sistemas de origen para ofrecer la información más precisa disponible en ese momento.</p>
       </div>
     </footer>
-
-    <div class="disclaimer">
-      <p>Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API Transporte</a> del GCBA.</p>
-    </div>
 
     <!-- Scripts -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
