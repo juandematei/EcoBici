@@ -8,6 +8,7 @@
   var client_secret = config.SECRET;
 
   $(document).ready(function() {
+    $(".search").hide();
     $(".updating").show();
 
     // Initial counters for total system.
