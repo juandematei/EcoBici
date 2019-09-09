@@ -45,23 +45,23 @@
       </div>
     </header>
 
+    <div class="search">
+      <input class="search-input" type="number" placeholder="Ingresá el número de estación" />
+      <button class="search-btn" value="Buscar" type="submit"><i class="fas fa-search"></i></button>
+    </div>
+
     <h2>Total</h2>
+    <h3></h3>
+
     <div class="response">
       <div class="card available"><p></p></div>
-      <div class="card disabled">
-        <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
-        <p></p>
-      </div>
-      <div class="card in-use"><p></p></div>
+      <div class="card disabled"><p></p></div>
+      <!-- <div class="card in-use"><p></p></div> -->
     </div>
 
     <div class="refresh">
       <button class="refresh-btn" value="Actualizar" onClick="window.location.reload();"><i class="fas fa-sync"></i> Actualizar</button>
-    </div>
-
-    <div class="search">
-      <input class="search-input" type="number" placeholder="Ingresá el número de estación" />
-      <button class="search-btn" value="Buscar" type="submit"><i class="fas fa-search"></i></button>
+      <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
     </div>
 
     <footer>
@@ -72,13 +72,13 @@
         <a href="https://github.com/juandematei/EcoBici" target="_blank"><i class="fab fa-github"></i> Ver en GitHub</a>
       </div>
       <div class="disclaimer">
-        <p><sup>*</sup>Cantidad estimada tomando un total de 4.000 bicicletas en el sistema. Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API Transporte</a> del GCBA. Los datos proporcionados por la API se actualizan regularmente desde los sistemas de origen para ofrecer la información más precisa disponible en ese momento.</p>
+        <p>Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API Transporte</a> del GCBA. Los datos proporcionados por la API se actualizan regularmente desde los sistemas de origen para ofrecer la información más precisa disponible en ese momento.</p>
       </div>
     </footer>
 
     <!-- Scripts -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
-    <script type="text/javascript" src="app_V2.js"></script>
+    <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+input:active,
+input:focus,
+button:active,
+button:focus {
+  border: none;
+  outline: none;
+}
+
 a {
   color: inherit;
   font-weight: 600;
@@ -49,6 +57,8 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 @media all and (min-width: 768px) {
   .response {
@@ -61,14 +71,15 @@ h1 {
   }
 }
 
-.updating {
-  color: #333;
-}
-
 h2 {
   font-size: 1.6rem;
-  margin-bottom: 1rem;
   width: 100%;
+}
+
+h3 {
+  font-size: 1.2rem;
+  width: 100%;
+  text-transform: uppercase;
 }
 
 .card {
@@ -86,6 +97,7 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 25px 15px -25px rgba(0, 0, 0, 0.5);
 }
 
 .card strong {
@@ -165,6 +177,17 @@ h2 {
   height: 40px;
   border-radius: 6px;
   cursor: pointer;
+  width: 100%;
+}
+
+.updating {
+  color: #fff;
+  position: absolute;
+  background-color: #0a4990;
+  top: 0;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 6px;
   width: 100%;
 }
 
