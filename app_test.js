@@ -1,5 +1,6 @@
 // Use 'urlPrefix' as first part of any API request url to avoid CORS blocking.
 const urlPrefix = "https://cors-anywhere.herokuapp.com/";
+
 // Use 'urlStatus' for stations dynamic data and 'urlInformation' for stations static data.
 const urlStatus = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus";
 const urlInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationInformation";
@@ -8,63 +9,14 @@ const urlInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/st
 var client_id = config.ID;
 var client_secret = config.SECRET;
 
-(function() {
-  // Initial data when pages loads (total)
-  $(document).ready(function() {
-    $(".updating").show();
+// Initial counters for total system.
+var totalBikes = 4000;
+var totalAvailable = 0;
+var totalDisabled = 0;
+var totalInUse = totalBikes - totalAvailable - totalDisabled;
 
-    // Initial counters for total system.
-    var totalBikes = 4000;
-    var totalAvailable = 0;
-    var totalDisabled = 0;
-    var totalInUse = totalBikes - totalAvailable - totalDisabled;
-
-    // Request for 'available' and 'disabled' bikes total.
-    $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: urlPrefix + urlStatus,
-      data: {
-        client_id: client_id,
-        client_secret: client_secret
-      },
-
-      success: function(data) {
-        var response = data.data.stations;
-
-        for (var i = 0; i < response.length; i++) {
-          totalAvailable = totalAvailable + response[i].num_bikes_available;
-          totalDisabled = totalDisabled + response[i].num_bikes_disabled;
-        }
-
-        //console.log("Hay " + totalAvailable + " disponibles");
-        //console.log("Hay " + totalDisabled + " bloqueadas");
-
-        totalInUse = totalBikes - totalAvailable - totalDisabled;
-
-        $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
-        $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
-        //$(".in-use > p").html("<strong>" + totalInUse + "</strong><br>en uso<sup>*</sup>");
-        $(".updating").hide();
-      },
-      error: function(data) {
-        $(".updating").hide();
-        $(".disabled").html("ERROR");
-        console.log("ERROR");
-      }
-    });
-    stationStatic();
-  });
-
-  // Search for specific station.
-  $(".search-btn").click(function(event) {
-    stationStatus();
-  });
-})();
-
-// Request for 'available' and 'disabled' bikes at specific station.
-function stationStatus() {
-  var stationStatusSearch = $(".search-input").val();
+$(document).ready(function() {
+  // Request for 'available' and 'disabled' bikes when page loads.
   $(".updating").show();
   $.ajax({
     type: "GET",
@@ -75,30 +27,68 @@ function stationStatus() {
       client_secret: client_secret
     },
     success: function(data) {
-      var responseStatus = data.data.stations;
-      //console.log(responseStatus);
+      var response = data.data.stations;
 
-      for (var i = 0; i < responseStatus.length; i++) {
-        if (responseStatus[i].station_id == stationStatusSearch) {
-          stationStaticSearch = responseStatus[i].station_id;
-          stationTotalAvailable = responseStatus[i].num_bikes_available;
-          stationTotalDisabled = responseStatus[i].num_bikes_disabled;
-          //stationTotalDocks = responseStatus[i].num_docks_available;
-        }
+      for (var i = 0; i < response.length; i++) {
+        totalAvailable = totalAvailable + response[i].num_bikes_available;
+        totalDisabled = totalDisabled + response[i].num_bikes_disabled;
       }
 
-      $("h2").html("Estación");
-      $("h3").html("NOMBRE ESTACION");
-      $(".available > p").html("<strong>" + stationTotalAvailable + "</strong><br>disponibles");
-      $(".disabled > p").html("<strong>" + stationTotalDisabled + "</strong><br>bloqueadas");
-      //$(".in-use > p").html("<strong>" + stationTotalDocks + "</strong><br>posiciones libres");
+      $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
+      $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
+      $(".updating").hide();
     },
-    error: function(data) {
-      console.log("ERROR STATION");
+    error: function() {
+      $(".updating").hide();
+      $("h3").html("ERROR");
     }
   });
-  $(".updating").hide();
-}
+});
+
+// Search
+$(".search-btn").click(function() {
+  var stationStatusSearch = $(".search-input").val();
+
+  if (stationStatusSearch == 0) {
+    alert("Ingrese una estación");
+  } else {
+    $(".updating").show();
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: urlPrefix + urlStatus,
+      data: {
+        client_id: client_id,
+        client_secret: client_secret
+      },
+      success: function(data) {
+        var response = data.data.stations;
+
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].station_id == stationStatusSearch) {
+            stationStaticSearch = response[i].station_id;
+            stationTotalAvailable = response[i].num_bikes_available;
+            stationTotalDisabled = response[i].num_bikes_disabled;
+          }
+        }
+
+        $("h2").html("Estación");
+        $(".available > p").html("<strong>" + stationTotalAvailable + "</strong><br>disponibles");
+        $(".disabled > p").html("<strong>" + stationTotalDisabled + "</strong><br>bloqueadas");
+        stationStatic();
+      },
+      error: function() {
+        $(".updating").hide();
+        $("h3").html("ERROR");
+      }
+    });
+  }
+});
+
+// Refresh
+$(".refresh-btn").click(function() {
+  location.reload();
+});
 
 // Request for stations static data.
 function stationStatic() {
@@ -110,18 +100,21 @@ function stationStatic() {
       client_id: client_id,
       client_secret: client_secret
     },
-    async: true,
 
     success: function(data) {
-      var responseStatic = data.data.stations;
-      console.log(responseStatic);
+      const stationsStatic = data.data.stations;
 
-      for (var i = 0; i < responseStatic.length; i++) {
-        stationsID = responseStatic[i].station_id;
-        stationsNames = responseStatic[i].name;
-      }
+      const findStation = function(stations, id) {
+        const index = stations.findIndex(function(station, index) {
+          return station.station_id === id;
+        });
+        return stations[index];
+      };
+      let stationSearch = findStation(stationsStatic, stationStaticSearch);
+      $("h3").html(stationSearch.name);
+      $(".updating").hide();
     },
-    error: function(data) {
+    error: function() {
       console.log("ERROR STATIC");
     }
   });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10440680-22"></script>
@@ -33,42 +33,42 @@
 
     <title>EcoBici - Bicicletas bloqueadas en tiempo real.</title>
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <header>
+    <header class="container">
       <h1>EcoBici - Bicicletas bloqueadas en tiempo real.</h1>
       <div class="logo">
         <img src="logo.svg" alt="BA EcoBici logo" />
       </div>
     </header>
 
-    <div class="search">
+    <div class="search container">
       <input class="search-input" type="number" placeholder="Ingresá el número de estación" />
       <button class="search-btn" value="Buscar" type="submit"><i class="fas fa-search"></i></button>
     </div>
 
-    <h2>Total</h2>
-    <h3></h3>
-
-    <div class="response">
+    <div class="response container">
+      <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+      <h2>Total</h2>
+      <h3>Todas las estaciones</h3>
       <div class="card available"><p></p></div>
       <div class="card disabled"><p></p></div>
       <!-- <div class="card in-use"><p></p></div> -->
     </div>
 
-    <div class="refresh">
-      <button class="refresh-btn" value="Actualizar" onClick="window.location.reload();"><i class="fas fa-sync"></i> Actualizar</button>
-      <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+    <div class="refresh container">
+      <button class="refresh-btn" value="Actualizar"><i class="fas fa-sync"></i> Actualizar</button>
     </div>
 
     <footer>
-      <div class="author">
+      <div class="author container">
         <p>Hecho con <i class="fas fa-heart"></i> por <a href="https://www.juandematei.com" target="_blank">Juan Dematei</a></p>
       </div>
-      <div class="social">
+      <div class="social container">
         <a href="https://github.com/juandematei/EcoBici" target="_blank"><i class="fab fa-github"></i> Ver en GitHub</a>
       </div>
       <div class="disclaimer">

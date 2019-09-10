@@ -14,24 +14,27 @@ button:focus {
 
 a {
   color: inherit;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #fff;
   background-color: #e66300;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
   min-height: 100vh;
+}
+
+.container {
   padding: 0 2rem;
+  margin: 0 auto;
   text-align: center;
-  position: relative;
 }
 
 /* HEADER */
+header {
+  width: 100%;
+}
+
 h1 {
   font-size: 0;
   width: 1px;
@@ -49,6 +52,40 @@ h1 {
   padding: 1.5rem 0;
 }
 
+/* SEARCH */
+.search {
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+@media all and (min-width: 768px) {
+  .search {
+    width: 50%;
+  }
+}
+
+.search-input {
+  color: #333;
+  border: none;
+  padding: 7px 18px;
+  height: 40px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  width: 80%;
+}
+
+.search-btn {
+  color: #fff;
+  border: none;
+  background-color: #0a4990;
+  padding: 7px 18px;
+  height: 40px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  cursor: pointer;
+  width: 20%;
+}
+
 /* RESPONSE */
 .response {
   font-size: 2rem;
@@ -57,8 +94,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  position: relative;
 }
 @media all and (min-width: 768px) {
   .response {
@@ -70,15 +106,27 @@ h1 {
     align-items: center;
   }
 }
+.updating {
+  color: #fff;
+  background-color: #e66300;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 h2 {
   font-size: 1.6rem;
   width: 100%;
+  margin-top: 1rem;
 }
 
 h3 {
   font-size: 1.2rem;
   width: 100%;
+  margin-bottom: 1rem;
   text-transform: uppercase;
 }
 
@@ -92,7 +140,7 @@ h3 {
   padding: 1rem;
   text-transform: uppercase;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -122,45 +170,9 @@ h3 {
   color: #f44336;
 }
 
-/* SEARCH */
-.search {
-  position: relative;
-  margin-bottom: 1rem;
-  width: 100%;
-  display: flex;
-}
-@media all and (min-width: 768px) {
-  .search {
-    width: 25%;
-  }
-}
-
-.search-input {
-  color: #333;
-  border: none;
-  padding: 7px 18px;
-  height: 40px;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  width: 80%;
-}
-
-.search-btn {
-  color: #fff;
-  border: none;
-  background-color: #0a4990;
-  padding: 7px 18px;
-  height: 40px;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  cursor: pointer;
-  width: 20%;
-}
-
 /* REFRESH */
 .refresh {
   position: relative;
-  margin-bottom: 1rem;
   width: 100%;
 }
 @media all and (min-width: 768px) {
@@ -178,27 +190,13 @@ h3 {
   border-radius: 6px;
   cursor: pointer;
   width: 100%;
-}
-
-.updating {
-  color: #fff;
-  position: absolute;
-  background-color: #0a4990;
-  top: 0;
-  height: 40px;
-  line-height: 40px;
-  border-radius: 6px;
-  width: 100%;
+  margin-top: 1rem;
 }
 
 /* FOOTER */
-footer {
-  padding: 1rem 0;
-}
-
 footer .author {
-  margin-bottom: 3rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  margin-top: 2rem;
 }
 @media all and (min-width: 768px) {
   footer .author {
@@ -212,14 +210,15 @@ footer .author i {
 
 .social a {
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   padding: 7px 18px;
   border-radius: 6px;
   cursor: pointer;
   background-color: #fff;
-  color: #0a4990;
+  color: #333;
   display: block;
   margin: 0 auto;
+  margin-top: 2rem;
 }
 @media all and (min-width: 768px) {
   .social a {
@@ -229,8 +228,9 @@ footer .author i {
 
 .disclaimer {
   width: 100%;
-  color: #fff;
-  font-size: 0.8rem;
-  margin-top: 3rem;
+  background-color: #0a4990;
+  font-size: 0.6rem;
   text-align: justify;
+  padding: 2rem;
+  margin-top: 2rem;
 }
