@@ -1,22 +1,44 @@
-// Use 'urlPrefix' as first part of any API request url to avoid CORS blocking.
+//! Use 'urlPrefix' as first part of any API request url to avoid CORS blocking.
 const urlPrefix = "https://cors-anywhere.herokuapp.com/";
 
-// Use 'urlStatus' for stations dynamic data and 'urlInformation' for stations static data.
+//! Use 'urlStatus' for stations dynamic data and 'urlInformation' for stations static data.
 const urlStatus = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus";
 const urlInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationInformation";
 
-// 'client_id' and 'client_secret' MUST be requested at https://www.buenosaires.gob.ar/form/formulario-de-registro-api-transporte.
-var client_id = config.ID;
-var client_secret = config.SECRET;
+//! 'client_id' and 'client_secret' MUST be requested at https://www.buenosaires.gob.ar/form/formulario-de-registro-api-transporte.
+const client_id = config.ID;
+const client_secret = config.SECRET;
 
-// Initial counters for total system.
-var totalBikes = 4000;
+//* Initial counters for total bikes.
 var totalAvailable = 0;
 var totalDisabled = 0;
-var totalInUse = totalBikes - totalAvailable - totalDisabled;
 
+//* Request for total bikes when page loads.
 $(document).ready(function() {
-  // Request for 'available' and 'disabled' bikes when page loads.
+  totalBikes();
+});
+
+//* Search for station bikes.
+$(".search-btn").click(function() {
+  stationBikes();
+});
+
+//* Refresh.
+$(".refresh-btn").click(function() {
+  var stationStatusSearch = $(".search-input").val();
+  if (stationStatusSearch == 0) {
+    totalBikes();
+  } else {
+    stationBikes();
+  }
+});
+
+//* Reload page (logo).
+$(".logo").click(function() {
+  location.reload();
+});
+
+function totalBikes() {
   $(".updating").show();
   $.ajax({
     type: "GET",
@@ -44,12 +66,10 @@ $(document).ready(function() {
       $("h3").html("ERROR");
     }
   });
-});
+}
 
-// Search
-$(".search-btn").click(function() {
+function stationBikes() {
   var stationStatusSearch = $(".search-input").val();
-
   if (stationStatusSearch == 0) {
     alert("Ingrese una estación");
   } else {
@@ -84,14 +104,8 @@ $(".search-btn").click(function() {
       }
     });
   }
-});
+}
 
-// Refresh
-$(".refresh-btn").click(function() {
-  location.reload();
-});
-
-// Request for stations static data.
 function stationStatic() {
   $.ajax({
     type: "GET",

@@ -31,6 +31,16 @@ a {
   color: #333;
   display: block;
   margin: 0 auto;
+  background-position: center;
+  transition: background 0.8s;
+}
+.btn:hover {
+  background: #20599a radial-gradient(circle, transparent 1%, #20599a 1%) center/15000%;
+}
+.btn:active {
+  background-color: #366aa4;
+  background-size: 100%;
+  transition: background 0s;
 }
 
 @media all and (min-width: 768px) {
@@ -88,6 +98,7 @@ h1 {
 @media all and (min-width: 768px) {
   .search {
     width: 75%;
+    padding: 0 3rem;
   }
 }
 
@@ -228,6 +239,13 @@ footer .author i {
 .social a {
   text-decoration: none;
   margin-top: 2rem;
+}
+
+.social a:hover,
+.social a:active {
+  background-color: #fff;
+  background: #fff;
+  transition: none;
 }
 
 .disclaimer {
