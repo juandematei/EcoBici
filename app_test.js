@@ -28,6 +28,7 @@ $(document).ready(function() {
     },
     success: function(data) {
       var response = data.data.stations;
+      console.log(response);
 
       for (var i = 0; i < response.length; i++) {
         totalAvailable = totalAvailable + response[i].num_bikes_available;
@@ -103,6 +104,7 @@ function stationStatic() {
 
     success: function(data) {
       const stationsStatic = data.data.stations;
+      console.log(stationsStatic);
 
       const findStation = function(stations, id) {
         const index = stations.findIndex(function(station, index) {

@@ -29,6 +29,11 @@ body {
   margin: 0 auto;
   text-align: center;
 }
+@media all and (min-width: 1024px) {
+  .container {
+    width: 75%;
+  }
+}
 
 /* HEADER */
 header {
@@ -60,7 +65,7 @@ h1 {
 }
 @media all and (min-width: 768px) {
   .search {
-    width: 50%;
+    width: 75%;
   }
 }
 
@@ -89,7 +94,6 @@ h1 {
 /* RESPONSE */
 .response {
   font-size: 2rem;
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,12 +102,8 @@ h1 {
 }
 @media all and (min-width: 768px) {
   .response {
-    font-size: 2rem;
-    width: 100%;
-    display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
   }
 }
 .updating {
@@ -119,15 +119,23 @@ h1 {
 
 h2 {
   font-size: 1.6rem;
-  width: 100%;
   margin-top: 1rem;
+}
+@media all and (min-width: 768px) {
+  h2 {
+    width: 100%;
+  }
 }
 
 h3 {
-  font-size: 1.2rem;
-  width: 100%;
-  margin-bottom: 1rem;
   text-transform: uppercase;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+@media all and (min-width: 768px) {
+  h3 {
+    width: 100%;
+  }
 }
 
 .card {
@@ -146,6 +154,7 @@ h3 {
   justify-content: center;
   align-items: center;
   box-shadow: 0px 25px 15px -25px rgba(0, 0, 0, 0.5);
+  flex: 1;
 }
 
 .card strong {
@@ -229,7 +238,7 @@ footer .author i {
 .disclaimer {
   width: 100%;
   background-color: #0a4990;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   text-align: justify;
   padding: 2rem;
   margin-top: 2rem;
