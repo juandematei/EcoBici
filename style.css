@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
 input:active,
@@ -17,14 +18,35 @@ a {
   font-weight: 700;
 }
 
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  height: 40px;
+  line-height: 28px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+  display: block;
+  margin: 0 auto;
+}
+
+@media all and (min-width: 768px) {
+  .btn {
+    width: 30%;
+  }
+}
+
 body {
-  font-family: "Roboto", sans-serif;
   color: #fff;
   background-color: #e66300;
   min-height: 100vh;
 }
 
 .container {
+  /* background-color: aqua; */
   padding: 0 2rem;
   margin: 0 auto;
   text-align: center;
@@ -72,7 +94,7 @@ h1 {
 .search-input {
   color: #333;
   border: none;
-  padding: 7px 18px;
+  padding: 6px 18px;
   height: 40px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
@@ -81,13 +103,11 @@ h1 {
 
 .search-btn {
   color: #fff;
-  border: none;
   background-color: #0a4990;
-  padding: 7px 18px;
-  height: 40px;
+  border-top-left-radius: 0;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  cursor: pointer;
+  border-bottom-left-radius: 0;
   width: 20%;
 }
 
@@ -182,23 +202,11 @@ h3 {
 /* REFRESH */
 .refresh {
   position: relative;
-  width: 100%;
-}
-@media all and (min-width: 768px) {
-  .refresh {
-    width: 25%;
-  }
 }
 
 .refresh-btn {
   color: #fff;
-  border: none;
   background-color: #0a4990;
-  padding: 7px 18px;
-  height: 40px;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 100%;
   margin-top: 1rem;
 }
 
@@ -219,27 +227,23 @@ footer .author i {
 
 .social a {
   text-decoration: none;
-  font-weight: 700;
-  padding: 7px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #fff;
-  color: #333;
-  display: block;
-  margin: 0 auto;
   margin-top: 2rem;
-}
-@media all and (min-width: 768px) {
-  .social a {
-    width: 25%;
-  }
 }
 
 .disclaimer {
   width: 100%;
   background-color: #0a4990;
+  margin-top: 2rem;
+}
+
+.disclaimer p {
   font-size: 0.8rem;
   text-align: justify;
   padding: 2rem;
-  margin-top: 2rem;
+}
+
+@media all and (min-width: 768px) {
+  .disclaimer p {
+    padding: 2rem 0;
+  }
 }
