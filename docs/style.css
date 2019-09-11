@@ -1,0 +1,267 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+input:active,
+input:focus,
+button:active,
+button:focus {
+  border: none;
+  outline: none;
+}
+
+a {
+  color: inherit;
+  font-weight: 700;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  height: 40px;
+  line-height: 28px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+  display: block;
+  margin: 0 auto;
+  background-position: center;
+  transition: background 0.8s;
+}
+.btn:hover {
+  background: #20599a radial-gradient(circle, transparent 1%, #20599a 1%) center/15000%;
+}
+.btn:active {
+  background-color: #366aa4;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+@media all and (min-width: 768px) {
+  .btn {
+    width: 30%;
+  }
+}
+
+body {
+  color: #fff;
+  background-color: #e66300;
+  min-height: 100vh;
+}
+
+.container {
+  /* background-color: aqua; */
+  padding: 0 2rem;
+  margin: 0 auto;
+  text-align: center;
+}
+@media all and (min-width: 1024px) {
+  .container {
+    width: 75%;
+  }
+}
+
+/* HEADER */
+header {
+  width: 100%;
+}
+
+h1 {
+  font-size: 0;
+  width: 1px;
+  height: 1px;
+  display: inline-block;
+  overflow: hidden;
+  position: absolute !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.logo {
+  padding: 1.5rem 0;
+}
+
+/* SEARCH */
+.search {
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+@media all and (min-width: 768px) {
+  .search {
+    width: 75%;
+    padding: 0 3rem;
+  }
+}
+
+.search-input {
+  color: #333;
+  border: none;
+  padding: 6px 18px;
+  height: 40px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  width: 80%;
+}
+
+.search-btn {
+  color: #fff;
+  background-color: #0a4990;
+  border-top-left-radius: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 0;
+  width: 20%;
+}
+
+/* RESPONSE */
+.response {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+@media all and (min-width: 768px) {
+  .response {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+.updating {
+  color: #fff;
+  background-color: #e66300;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+}
+@media all and (min-width: 768px) {
+  h2 {
+    width: 100%;
+  }
+}
+
+h3 {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+@media all and (min-width: 768px) {
+  h3 {
+    width: 100%;
+  }
+}
+
+.card {
+  background-color: #fff;
+  color: #333;
+  width: 100%;
+  min-height: 100px;
+  margin: 0 1rem 1rem 1rem;
+  border-radius: 6px;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 25px 15px -25px rgba(0, 0, 0, 0.5);
+  flex: 1;
+}
+
+.card strong {
+  font-size: 1.6rem;
+}
+@media all and (min-width: 768px) {
+  .card {
+    min-height: 200px;
+    font-size: 1.6rem;
+  }
+
+  .card strong {
+    font-size: 2rem;
+  }
+}
+
+.card.available {
+  color: #4caf50;
+}
+
+.card.disabled {
+  color: #f44336;
+}
+
+/* REFRESH */
+.refresh {
+  position: relative;
+}
+
+.refresh-btn {
+  color: #fff;
+  background-color: #0a4990;
+  margin-top: 1rem;
+}
+
+/* FOOTER */
+footer .author {
+  font-size: 1rem;
+  margin-top: 2rem;
+}
+@media all and (min-width: 768px) {
+  footer .author {
+    font-size: 1.2rem;
+  }
+}
+
+footer .author i {
+  color: #b71c1c;
+}
+
+.social a {
+  text-decoration: none;
+  margin-top: 2rem;
+}
+
+.social a:hover,
+.social a:active {
+  background-color: #fff;
+  background: #fff;
+  transition: none;
+}
+
+.disclaimer {
+  width: 100%;
+  background-color: #0a4990;
+  margin-top: 2rem;
+}
+
+.disclaimer p {
+  font-size: 0.8rem;
+  text-align: justify;
+  padding: 2rem;
+}
+
+@media all and (min-width: 768px) {
+  .disclaimer p {
+    padding: 2rem 0;
+  }
+}

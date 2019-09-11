@@ -1,15 +1,11 @@
 {
   "name": "ecobici",
   "version": "1.0.0",
-  "description": "Los datos son obtenidos en tiempo real con la [API Transporte](https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte) del GCBA.",
+  "description": "Bicicletas disponibles y bloqueadas en tiempo real.",
   "main": "app.js",
-  "dependencies": {
-    "cors-anywhere": "^0.4.1"
-  },
+  "dependencies": {},
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juandematei/EcoBici.git"
