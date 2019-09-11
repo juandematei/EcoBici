@@ -191,6 +191,7 @@ h3 {
 .card strong {
   font-size: 1.6rem;
 }
+
 @media all and (min-width: 768px) {
   .card {
     min-height: 200px;
@@ -208,6 +209,10 @@ h3 {
 
 .card.disabled {
   color: #f44336;
+}
+
+.last-update {
+  font-size: 0.8rem;
 }
 
 /* REFRESH */

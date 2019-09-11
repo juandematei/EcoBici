@@ -50,7 +50,8 @@ function totalBikes() {
     },
     success: function(data) {
       var response = data.data.stations;
-      console.log(response);
+      var lastUpdated = new Date(data.last_updated * 1000);
+      var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
 
       for (var i = 0; i < response.length; i++) {
         totalAvailable = totalAvailable + response[i].num_bikes_available;
@@ -59,6 +60,7 @@ function totalBikes() {
 
       $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
       $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
+      $(".last-update > p").html("Última actualización " + lastDateTime);
       $(".updating").hide();
     },
     error: function() {
