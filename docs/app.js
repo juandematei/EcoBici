@@ -26,6 +26,7 @@ $(".search-btn").click(function() {
 //* Refresh.
 $(".refresh-btn").click(function() {
   var stationStatusSearch = $(".search-input").val();
+
   if (stationStatusSearch == 0) {
     totalBikes();
   } else {
@@ -40,6 +41,9 @@ $(".logo").click(function() {
 
 function totalBikes() {
   $(".updating").show();
+  totalAvailable = 0;
+  totalDisabled = 0;
+
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -50,7 +54,6 @@ function totalBikes() {
     },
     success: function(data) {
       var response = data.data.stations;
-      console.log(response);
 
       for (var i = 0; i < response.length; i++) {
         totalAvailable = totalAvailable + response[i].num_bikes_available;
@@ -118,7 +121,6 @@ function stationStatic() {
 
     success: function(data) {
       const stationsStatic = data.data.stations;
-      console.log(stationsStatic);
 
       const findStation = function(stations, id) {
         const index = stations.findIndex(function(station, index) {
