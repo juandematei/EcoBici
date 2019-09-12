@@ -24,29 +24,13 @@ a {
   padding: 6px 18px;
   height: 40px;
   line-height: 28px;
+  text-align: center;
   cursor: pointer;
-  width: 100%;
   font-size: 1rem;
   background-color: #fff;
   color: #333;
   display: block;
   margin: 0 auto;
-  background-position: center;
-  transition: background 0.8s;
-}
-.btn:hover {
-  background: #20599a radial-gradient(circle, transparent 1%, #20599a 1%) center/15000%;
-}
-.btn:active {
-  background-color: #366aa4;
-  background-size: 100%;
-  transition: background 0s;
-}
-
-@media all and (min-width: 768px) {
-  .btn {
-    width: 30%;
-  }
 }
 
 body {
@@ -105,21 +89,20 @@ h1 {
 .search-input {
   color: #333;
   border: none;
-  padding: 6px 18px;
+  padding: 6px 0 6px 20px;
   height: 40px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
-  width: 80%;
+  width: 100%;
+  text-align: center;
 }
 
 .search-btn {
-  color: #fff;
-  background-color: #0a4990;
   border-top-left-radius: 0;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 0;
-  width: 20%;
+  padding: 6px 10px 6px 0;
 }
 
 /* RESPONSE */
@@ -213,6 +196,7 @@ h3 {
 
 .last-update {
   font-size: 0.8rem;
+  width: 100%;
 }
 
 /* REFRESH */
@@ -223,13 +207,30 @@ h3 {
 .refresh-btn {
   color: #fff;
   background-color: #0a4990;
+  background-position: center;
+  transition: background 0.8s;
   margin-top: 1rem;
+  width: 100%;
+}
+
+.refresh-btn:hover {
+  background: #20599a radial-gradient(circle, transparent 1%, #20599a 1%) center/15000%;
+}
+.refresh-btn:active {
+  background-color: #366aa4;
+  background-size: 100%;
+  transition: background 0s;
 }
 
 /* FOOTER */
-footer .author {
-  font-size: 1rem;
+footer {
+  background-color: #333;
+  padding: 3rem 0;
   margin-top: 2rem;
+}
+
+.author {
+  font-size: 1rem;
 }
 @media all and (min-width: 768px) {
   footer .author {
@@ -237,13 +238,16 @@ footer .author {
   }
 }
 
-footer .author i {
+.author i {
   color: #b71c1c;
+}
+
+.social {
+  margin-top: 3rem;
 }
 
 .social a {
   text-decoration: none;
-  margin-top: 2rem;
 }
 
 .social a:hover,
@@ -255,18 +259,10 @@ footer .author i {
 
 .disclaimer {
   width: 100%;
-  background-color: #0a4990;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .disclaimer p {
   font-size: 0.8rem;
   text-align: justify;
-  padding: 2rem;
-}
-
-@media all and (min-width: 768px) {
-  .disclaimer p {
-    padding: 2rem 0;
-  }
 }

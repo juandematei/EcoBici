@@ -9,36 +9,71 @@ const urlInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/st
 const client_id = config.ID;
 const client_secret = config.SECRET;
 
-//* Initial counters for total bikes.
+//* Global variables
+//  Initial counters
 var totalAvailable = 0;
 var totalDisabled = 0;
+//  Search elements
+var searchInput = document.getElementById("search-input");
+var searchButton = document.getElementById("search-button");
+var searchValue = "";
 
-//* Request for total bikes when page loads.
 $(document).ready(function() {
-  totalBikes();
+  //* Show bikes totals when page loads.
+  bikesTotal();
 });
 
-//* Search for station bikes.
-$(".search-btn").click(function() {
-  stationBikes();
+//* Search by station.
+searchButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  searchValue = $("#search-input").val();
+  bikesStation();
+  stationInfo();
 });
 
-//* Refresh.
-$(".refresh-btn").click(function() {
-  var stationStatusSearch = $(".search-input").val();
-  if (stationStatusSearch == 0) {
-    totalBikes();
-  } else {
-    stationBikes();
+//* Start search by pressing enter on search box.
+searchInput.addEventListener("keyup", function(event) {
+  event.preventDefault();
+  if (event.keyCode === 13) {
+    searchButton.click();
   }
 });
 
-//* Reload page (logo).
-$(".logo").click(function() {
-  location.reload();
-});
+//! Request station static data (stationInformation)
+function stationInfo() {
+  if (searchValue !== "") {
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: urlPrefix + urlInformation,
+      data: {
+        client_id: client_id,
+        client_secret: client_secret
+      },
 
-function totalBikes() {
+      success: function(data) {
+        var responseStationInfo = data.data.stations;
+
+        const findStationInfo = function(stations, id) {
+          const index = stations.findIndex(function(station, index) {
+            return station.station_id === id;
+          });
+          return stations[index];
+        };
+        let searchValue = findStationInfo(responseStationInfo, stationStaticId);
+        $("h3").html(searchValue.name);
+        $(".updating").hide();
+      },
+      error: function() {
+        $(".updating").hide();
+        $("h3").html("ERROR");
+      }
+    });
+  }
+}
+
+//! Request bikes total (stationStatus)
+function bikesTotal() {
   $(".updating").show();
   $.ajax({
     type: "GET",
@@ -49,18 +84,20 @@ function totalBikes() {
       client_secret: client_secret
     },
     success: function(data) {
-      var response = data.data.stations;
+      var responseBikesTotal = data.data.stations;
+
       var lastUpdated = new Date(data.last_updated * 1000);
       var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
 
-      for (var i = 0; i < response.length; i++) {
-        totalAvailable = totalAvailable + response[i].num_bikes_available;
-        totalDisabled = totalDisabled + response[i].num_bikes_disabled;
+      $(".last-update > p").html("Última actualización de datos " + lastDateTime);
+
+      for (var i = 0; i < responseBikesTotal.length; i++) {
+        totalAvailable = totalAvailable + responseBikesTotal[i].num_bikes_available;
+        totalDisabled = totalDisabled + responseBikesTotal[i].num_bikes_disabled;
       }
 
       $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
       $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
-      $(".last-update > p").html("Última actualización " + lastDateTime);
       $(".updating").hide();
     },
     error: function() {
@@ -70,11 +107,9 @@ function totalBikes() {
   });
 }
 
-function stationBikes() {
-  var stationStatusSearch = $(".search-input").val();
-  if (stationStatusSearch == 0) {
-    alert("Ingrese una estación");
-  } else {
+//! Request bikes per station (stationStatus)
+function bikesStation() {
+  if (searchValue !== "") {
     $(".updating").show();
     $.ajax({
       type: "GET",
@@ -85,55 +120,25 @@ function stationBikes() {
         client_secret: client_secret
       },
       success: function(data) {
-        var response = data.data.stations;
-
-        for (var i = 0; i < response.length; i++) {
-          if (response[i].station_id == stationStatusSearch) {
-            stationStaticSearch = response[i].station_id;
-            stationTotalAvailable = response[i].num_bikes_available;
-            stationTotalDisabled = response[i].num_bikes_disabled;
+        var responseBikesStation = data.data.stations;
+        for (var i = 0; i < responseBikesStation.length; i++) {
+          if (responseBikesStation[i].station_id === searchValue) {
+            stationStaticId = responseBikesStation[i].station_id;
+            stationTotalAvailable = responseBikesStation[i].num_bikes_available;
+            stationTotalDisabled = responseBikesStation[i].num_bikes_disabled;
           }
         }
 
         $("h2").html("Estación");
         $(".available > p").html("<strong>" + stationTotalAvailable + "</strong><br>disponibles");
         $(".disabled > p").html("<strong>" + stationTotalDisabled + "</strong><br>bloqueadas");
-        stationStatic();
       },
       error: function() {
         $(".updating").hide();
         $("h3").html("ERROR");
       }
     });
+  } else {
+    alert("Ingrese una estacion");
   }
-}
-
-function stationStatic() {
-  $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: urlPrefix + urlInformation,
-    data: {
-      client_id: client_id,
-      client_secret: client_secret
-    },
-
-    success: function(data) {
-      const stationsStatic = data.data.stations;
-      console.log(stationsStatic);
-
-      const findStation = function(stations, id) {
-        const index = stations.findIndex(function(station, index) {
-          return station.station_id === id;
-        });
-        return stations[index];
-      };
-      let stationSearch = findStation(stationsStatic, stationStaticSearch);
-      $("h3").html(stationSearch.name);
-      $(".updating").hide();
-    },
-    error: function() {
-      console.log("ERROR STATIC");
-    }
-  });
 }

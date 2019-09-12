@@ -50,13 +50,13 @@
     <header class="container">
       <h1>EcoBici - Bicicletas bloqueadas en tiempo real.</h1>
       <div class="logo">
-        <img src="logo.svg" alt="BA EcoBici logo" />
+        <a href="/"><img src="logo.svg" alt="BA EcoBici logo"/></a>
       </div>
     </header>
 
     <div class="search container">
-      <input class="search-input" type="number" placeholder="Ingresá el número de estación" />
-      <button class="search-btn btn" value="Buscar" type="submit"><i class="fas fa-search"></i></button>
+      <input id="search-input" class="search-input" type="number" placeholder="Buscar por número de estación" />
+      <button id="search-button" class="search-btn btn" value="Buscar" type="submit"><i class="fas fa-search"></i></button>
     </div>
 
     <div class="response container">
@@ -79,8 +79,8 @@
       <div class="social container">
         <a class="btn" href="https://github.com/juandematei/EcoBici" target="_blank"><i class="fab fa-github"></i> Ver en GitHub</a>
       </div>
-      <div class="disclaimer">
-        <p class="container">Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API Transporte</a> del GCBA. Los datos proporcionados por la API se actualizan regularmente desde los sistemas de origen para ofrecer la información más precisa disponible en ese momento.</p>
+      <div class="disclaimer container">
+        <p>Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank">API Transporte</a> del GCBA. Los datos proporcionados por la API se actualizan regularmente desde los sistemas de origen para ofrecer la información más precisa disponible en ese momento.</p>
       </div>
     </footer>
 
