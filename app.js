@@ -28,9 +28,9 @@ $(document).ready(function() {
 //* Search by station.
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
-  searchValue = $("#search-input").val();
-  bikesStation();
+  searchValue = searchInput.value;
   stationInfo();
+  bikesStation();
 });
 
 //* Start search by pressing enter on search box.
@@ -72,16 +72,18 @@ function stationInfo() {
           });
           return stations[index];
         };
-        let searchValue = findStationInfo(responseStationInfo, stationStaticId);
+        let result = findStationInfo(responseStationInfo, stationStaticId);
 
-        if (typeof searchValue == "undefined") {
+        if (typeof result !== "undefined") {
+          $("h3").html("");
+          $("h3").html(result.name);
+          $(".updating").hide();
+        } else {
           $(".updating").hide();
           $("h2").html("ERROR");
           $("h3").html("No se cargaron los datos");
-        } else {
-          $("h3").html("");
-          $("h3").html(searchValue.name);
-          $(".updating").hide();
+          searchInput.value = "";
+          searchValue = "";
         }
       },
       error: function() {
