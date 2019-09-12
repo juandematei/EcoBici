@@ -17,6 +17,8 @@ var totalDisabled = 0;
 var searchInput = document.getElementById("search-input");
 var searchButton = document.getElementById("search-button");
 var searchValue = "";
+//  Refresh
+var refreshButton = document.getElementById("refresh-button");
 
 $(document).ready(function() {
   //* Show bikes totals when page loads.
@@ -36,6 +38,16 @@ searchInput.addEventListener("keyup", function(event) {
   event.preventDefault();
   if (event.keyCode === 13) {
     searchButton.click();
+  }
+});
+
+//* Refresh
+refreshButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  if (searchValue !== "") {
+    searchButton.click();
+  } else {
+    location.reload();
   }
 });
 
@@ -61,12 +73,21 @@ function stationInfo() {
           return stations[index];
         };
         let searchValue = findStationInfo(responseStationInfo, stationStaticId);
-        $("h3").html(searchValue.name);
-        $(".updating").hide();
+
+        if (typeof searchValue == "undefined") {
+          $(".updating").hide();
+          $("h2").html("ERROR");
+          $("h3").html("No se cargaron los datos");
+        } else {
+          $("h3").html("");
+          $("h3").html(searchValue.name);
+          $(".updating").hide();
+        }
       },
       error: function() {
         $(".updating").hide();
-        $("h3").html("ERROR");
+        $("h2").html("ERROR");
+        $("h3").html("No se cargaron los datos");
       }
     });
   }
@@ -102,7 +123,8 @@ function bikesTotal() {
     },
     error: function() {
       $(".updating").hide();
-      $("h3").html("ERROR");
+      $("h2").html("ERROR");
+      $("h3").html("No se cargaron los datos");
     }
   });
 }
@@ -135,10 +157,14 @@ function bikesStation() {
       },
       error: function() {
         $(".updating").hide();
-        $("h3").html("ERROR");
+        $("h2").html("ERROR");
+        $("h3").html("No se cargaron los datos");
       }
     });
   } else {
-    alert("Ingrese una estacion");
+    //alert("Ingrese una estacion");
+    $(".updating").hide();
+    $("h2").html("ERROR");
+    $("h3").html("Ingrese una estación");
   }
 }
