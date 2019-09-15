@@ -16,6 +16,7 @@ var totalDisabled = 0;
 //  Search elements
 var searchInput = document.getElementById("search-input");
 var searchButton = document.getElementById("search-button");
+var searchFixed = document.getElementById("search-fixed");
 var searchValue = "";
 //  Refresh
 var refreshButton = document.getElementById("refresh-button");
@@ -45,7 +46,7 @@ searchInput.addEventListener("keyup", function(event) {
 //* Refresh
 refreshButton.addEventListener("click", function(event) {
   event.preventDefault();
-  if (searchValue !== "") {
+  if (searchFixed.checked == true) {
     searchButton.click();
   } else {
     location.reload();

@@ -50,9 +50,16 @@
       </div>
     </header>
 
-    <div class="search container">
-      <input id="search-input" class="search-input" type="number" aria-label="Ingresá una estación para buscar" placeholder="Ingresá una estación" />
-      <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
+    <div class="container">
+      <div class="search">
+        <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
+        <input id="search-input" class="search-input" type="number" aria-label="Buscar una estación" placeholder="Buscar una estación" />
+        <div class="search-fixed">
+          <input id="search-fixed" type="checkbox" aria-label="Fijar estación" />
+          <label for="search-fixed">Fijar</label>
+        </div>
+        <button id="search-location" class="location-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-location-arrow"></i></button>
+      </div>
     </div>
 
     <div class="response container">
@@ -65,7 +72,7 @@
     </div>
 
     <div class="refresh container">
-      <button id="refresh-button" class="refresh-btn btn" value="Actualizar"><i class="fas fa-sync"></i> Actualizar</button>
+      <button id="refresh-button" class="refresh-btn btn" value=""><i class="fas fa-sync"></i> Actualizar</button>
     </div>
 
     <footer>
