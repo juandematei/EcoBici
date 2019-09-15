@@ -29,8 +29,8 @@ $(document).ready(function() {
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
-  stationInfo();
   bikesStation();
+  stationInfo();
 });
 
 //* Start search by pressing enter on search box.
@@ -65,6 +65,7 @@ function stationInfo() {
 
       success: function(data) {
         var responseStationInfo = data.data.stations;
+        console.log(responseStationInfo);
 
         const findStationInfo = function(stations, id) {
           const index = stations.findIndex(function(station, index) {
@@ -75,13 +76,12 @@ function stationInfo() {
         let result = findStationInfo(responseStationInfo, stationStaticId);
 
         if (typeof result !== "undefined") {
-          $("h3").html("");
-          $("h3").html(result.name);
+          $("h2").html("");
+          $("h2").html("Estación " + result.station_id);
           $(".updating").hide();
         } else {
           $(".updating").hide();
           $("h2").html("ERROR");
-          $("h3").html("No se cargaron los datos");
           searchInput.value = "";
           searchValue = "";
         }
@@ -89,7 +89,6 @@ function stationInfo() {
       error: function() {
         $(".updating").hide();
         $("h2").html("ERROR");
-        $("h3").html("No se cargaron los datos");
       }
     });
   }
@@ -108,6 +107,7 @@ function bikesTotal() {
     },
     success: function(data) {
       var responseBikesTotal = data.data.stations;
+      console.log(responseBikesTotal);
 
       var lastUpdated = new Date(data.last_updated * 1000);
       var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
@@ -119,6 +119,9 @@ function bikesTotal() {
         totalDisabled = totalDisabled + responseBikesTotal[i].num_bikes_disabled;
       }
 
+      //TODO Correct totals
+      totalAvailable = totalAvailable - 396;
+
       $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
       $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
       $(".updating").hide();
@@ -126,7 +129,6 @@ function bikesTotal() {
     error: function() {
       $(".updating").hide();
       $("h2").html("ERROR");
-      $("h3").html("No se cargaron los datos");
     }
   });
 }
@@ -153,20 +155,60 @@ function bikesStation() {
           }
         }
 
-        $("h2").html("Estación");
         $(".available > p").html("<strong>" + stationTotalAvailable + "</strong><br>disponibles");
         $(".disabled > p").html("<strong>" + stationTotalDisabled + "</strong><br>bloqueadas");
       },
       error: function() {
         $(".updating").hide();
         $("h2").html("ERROR");
-        $("h3").html("No se cargaron los datos");
       }
     });
   } else {
-    //alert("Ingrese una estacion");
     $(".updating").hide();
     $("h2").html("ERROR");
-    $("h3").html("Ingrese una estación");
   }
+}
+
+//! Request stations by status.
+function stationStatus() {
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: urlPrefix + urlStatus,
+    data: {
+      client_id: client_id,
+      client_secret: client_secret
+    },
+
+    success: function(data) {
+      var responseStationPlanned = data.data.stations;
+      var totalPlanned = 0;
+      var totalInService = 0;
+      var totalEndOfLife = 0;
+      var totalMaintenance = 0;
+
+      for (var i = 0; i < responseStationPlanned.length; i++) {
+        if (responseStationPlanned[i].status === "PLANNED") {
+          totalPlanned = totalPlanned + 1;
+        }
+        if (responseStationPlanned[i].status === "IN_SERVICE") {
+          totalInService = totalInService + 1;
+        }
+        if (responseStationPlanned[i].status === "END_OF_LIFE") {
+          totalEndOfLife = totalEndOfLife + 1;
+        }
+        if (responseStationPlanned[i].status === "MAINTENANCE") {
+          totalMaintenance = totalMaintenance + 1;
+        }
+      }
+      console.log(totalPlanned);
+      console.log(totalInService);
+      console.log(totalMaintenance);
+      console.log(totalEndOfLife);
+      console.log(totalPlanned + totalInService + totalMaintenance + totalEndOfLife);
+    },
+    error: function() {
+      $(".updating").hide();
+    }
+  });
 }
