@@ -214,8 +214,8 @@ h3 {
 }
 
 .last-update {
-  color: var(--color-black);
   font-size: 0.8rem;
+  font-weight: 700;
   width: 100%;
 }
 
