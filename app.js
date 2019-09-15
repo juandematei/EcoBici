@@ -38,6 +38,7 @@ searchInput.addEventListener("keyup", function(event) {
   event.preventDefault();
   if (event.keyCode === 13) {
     searchButton.click();
+    searchInput.blur();
   }
 });
 
@@ -112,7 +113,7 @@ function bikesTotal() {
       var lastUpdated = new Date(data.last_updated * 1000);
       var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
 
-      $(".last-update > p").html("Última actualización de datos " + lastDateTime);
+      $(".last-update > p").html("Última actualización total " + lastDateTime);
 
       for (var i = 0; i < responseBikesTotal.length; i++) {
         totalAvailable = totalAvailable + responseBikesTotal[i].num_bikes_available;
@@ -150,10 +151,14 @@ function bikesStation() {
         for (var i = 0; i < responseBikesStation.length; i++) {
           if (responseBikesStation[i].station_id === searchValue) {
             stationStaticId = responseBikesStation[i].station_id;
+            stationLastReported = responseBikesStation[i].last_reported;
             stationTotalAvailable = responseBikesStation[i].num_bikes_available;
             stationTotalDisabled = responseBikesStation[i].num_bikes_disabled;
           }
         }
+        var stationLastReported = new Date(stationLastReported * 1000);
+        var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
+        $(".last-update > p").html("Última actualización estación " + lastDateTime);
 
         $(".available > p").html("<strong>" + stationTotalAvailable + "</strong><br>disponibles");
         $(".disabled > p").html("<strong>" + stationTotalDisabled + "</strong><br>bloqueadas");
