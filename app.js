@@ -9,32 +9,33 @@ const urlInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/st
 const client_id = config.ID;
 const client_secret = config.SECRET;
 
-//* Global variables
+//! Global variables ---------------------------------------------------------->
 //  Initial counters
 var totalAvailable = 0;
 var totalDisabled = 0;
 //  Search elements
-var searchInput = document.getElementById("search-input");
 var searchButton = document.getElementById("search-button");
-var searchFixed = document.getElementById("search-fixed");
+var searchInput = document.getElementById("search-input");
 var searchValue = "";
+var searchFixed = document.getElementById("search-fixed");
+var searchLocation = document.getElementById("search-location");
 //  Refresh
 var refreshButton = document.getElementById("refresh-button");
 
+//* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function() {
-  //* Show bikes totals when page loads.
   bikesTotal();
 });
 
-//* Search by station.
+//* Search by station --------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
-  bikesStation();
   stationInfo();
+  bikesStation();
 });
 
-//* Start search by pressing enter on search box.
+//* Start search by pressing enter on search box ------------------------------>
 searchInput.addEventListener("keyup", function(event) {
   event.preventDefault();
   if (event.keyCode === 13) {
@@ -43,7 +44,7 @@ searchInput.addEventListener("keyup", function(event) {
   }
 });
 
-//* Refresh
+//* Refresh results ----------------------------------------------------------->
 refreshButton.addEventListener("click", function(event) {
   event.preventDefault();
   if (searchFixed.checked == true) {
@@ -53,7 +54,7 @@ refreshButton.addEventListener("click", function(event) {
   }
 });
 
-//! Request station static data (stationInformation)
+//! Request station static data (stationInformation) -------------------------->
 function stationInfo() {
   if (searchValue !== "") {
     $.ajax({
@@ -67,7 +68,7 @@ function stationInfo() {
 
       success: function(data) {
         var responseStationInfo = data.data.stations;
-        console.log(responseStationInfo);
+        //console.log(responseStationInfo);
 
         const findStationInfo = function(stations, id) {
           const index = stations.findIndex(function(station, index) {
@@ -81,6 +82,7 @@ function stationInfo() {
           $("h2").html("");
           $("h2").html("Estación " + result.station_id);
           $(".updating").hide();
+          console.log(result.name);
         } else {
           $(".updating").hide();
           $("h2").html("ERROR");
@@ -96,7 +98,7 @@ function stationInfo() {
   }
 }
 
-//! Request bikes total (stationStatus)
+//! Request bikes total (stationStatus) --------------------------------------->
 function bikesTotal() {
   $(".updating").show();
   $.ajax({
@@ -109,7 +111,7 @@ function bikesTotal() {
     },
     success: function(data) {
       var responseBikesTotal = data.data.stations;
-      console.log(responseBikesTotal);
+      //console.log(responseBikesTotal);
 
       var lastUpdated = new Date(data.last_updated * 1000);
       var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
@@ -127,6 +129,7 @@ function bikesTotal() {
       $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
       $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
       $(".updating").hide();
+      console.log("OK bikesTotal");
     },
     error: function() {
       $(".updating").hide();
@@ -135,7 +138,7 @@ function bikesTotal() {
   });
 }
 
-//! Request bikes per station (stationStatus)
+//! Request bikes per station (stationStatus) --------------------------------->
 function bikesStation() {
   if (searchValue !== "") {
     $(".updating").show();
@@ -149,6 +152,8 @@ function bikesStation() {
       },
       success: function(data) {
         var responseBikesStation = data.data.stations;
+        //console.log(responseBikesStation);
+
         for (var i = 0; i < responseBikesStation.length; i++) {
           if (responseBikesStation[i].station_id === searchValue) {
             stationStaticId = responseBikesStation[i].station_id;
@@ -157,12 +162,13 @@ function bikesStation() {
             stationTotalDisabled = responseBikesStation[i].num_bikes_disabled;
           }
         }
+
         var stationLastReported = new Date(stationLastReported * 1000);
         var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
-        $(".last-update > p").html("Última actualización estación " + lastDateTime);
 
         $(".available > p").html("<strong>" + stationTotalAvailable + "</strong><br>disponibles");
         $(".disabled > p").html("<strong>" + stationTotalDisabled + "</strong><br>bloqueadas");
+        $(".last-update > p").html("Última actualización estación " + lastDateTime);
       },
       error: function() {
         $(".updating").hide();
@@ -175,7 +181,7 @@ function bikesStation() {
   }
 }
 
-//! Request stations by status.
+//! Request stations by status ------------------------------------------------>
 function stationStatus() {
   $.ajax({
     type: "GET",
@@ -207,11 +213,11 @@ function stationStatus() {
           totalMaintenance = totalMaintenance + 1;
         }
       }
-      console.log(totalPlanned);
-      console.log(totalInService);
-      console.log(totalMaintenance);
-      console.log(totalEndOfLife);
-      console.log(totalPlanned + totalInService + totalMaintenance + totalEndOfLife);
+      console.log("Total PLANNED: " + totalPlanned);
+      console.log("Total IN_SERVICE: " + totalInService);
+      console.log("Total MAINTENANCE: " + totalMaintenance);
+      console.log("Total END_OF_LIFE: " + totalEndOfLife);
+      console.log("Total ESTACIONES: " + totalPlanned + totalInService + totalMaintenance + totalEndOfLife);
     },
     error: function() {
       $(".updating").hide();
