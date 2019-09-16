@@ -25,14 +25,15 @@ var refreshButton = document.getElementById("refresh-button");
 //* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function() {
   bikesTotal();
+  getLocation();
 });
 
 //* Search by station --------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
-  stationInfo();
   bikesStation();
+  stationInfo();
 });
 
 //* Start search by pressing enter on search box ------------------------------>
@@ -42,6 +43,12 @@ searchInput.addEventListener("keyup", function(event) {
     searchButton.click();
     searchInput.blur();
   }
+});
+
+//* Search by geolocation ----------------------------------------------------->
+searchLocation.addEventListener("click", function(event) {
+  event.preventDefault();
+  showPosition();
 });
 
 //* Refresh results ----------------------------------------------------------->
@@ -76,13 +83,27 @@ function stationInfo() {
           });
           return stations[index];
         };
+
         let result = findStationInfo(responseStationInfo, stationStaticId);
 
         if (typeof result !== "undefined") {
+          number = pad(result.station_id);
+          numberH2 = number.toString();
+
+          name = result.name;
+          nameNum = name.slice(0, 3);
+
           $("h2").html("");
-          $("h2").html("Estación " + result.station_id);
+
+          if (numberH2 === nameNum) {
+            $("h2").html("Estación " + name);
+          } else {
+            $("h2").html("Estación " + numberH2);
+          }
           $(".updating").hide();
-          console.log(result.name);
+
+          console.log("station.name ------> " + name);
+          console.log("station.nameNum ---> " + nameNum);
         } else {
           $(".updating").hide();
           $("h2").html("ERROR");
@@ -129,11 +150,12 @@ function bikesTotal() {
       $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
       $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
       $(".updating").hide();
-      console.log("OK bikesTotal");
+      console.log("bikesTotal ---> OK");
     },
     error: function() {
       $(".updating").hide();
       $("h2").html("ERROR");
+      console.log("bikesTotal ---> ERROR");
     }
   });
 }
@@ -223,4 +245,26 @@ function stationStatus() {
       $(".updating").hide();
     }
   });
+}
+
+//* Add leading zeros to station_id number ------------------------------------>
+function pad(number) {
+  if (number <= 999) {
+    number = ("00" + number).slice(-3);
+  }
+  return number;
+}
+
+//* Geolocation --------------------------------------------------------------->
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    searchLocation = "Geolocation is not supported by this browser.";
+    console.log(searchLocation.innerHTML);
+  }
+}
+function showPosition(position) {
+  searchLocation = "Lat: " + position.coords.latitude + " / Lon: " + position.coords.longitude;
+  console.log(searchLocation);
 }

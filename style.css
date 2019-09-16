@@ -157,6 +157,10 @@ h1 {
   margin-left: 6px;
 }
 
+.location-btn:disabled {
+  color: #777;
+}
+
 /** RESPONSE -----------------------------------------------------------------*/
 .response {
   font-size: 2rem;
@@ -184,23 +188,13 @@ h1 {
 }
 
 h2 {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
+  text-transform: uppercase;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 @media all and (min-width: 768px) {
   h2 {
-    width: 100%;
-  }
-}
-
-h3 {
-  text-transform: uppercase;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-@media all and (min-width: 768px) {
-  h3 {
     width: 100%;
   }
 }
