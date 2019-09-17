@@ -13,29 +13,27 @@ const client_secret = config.SECRET;
 //  Initial counters
 var totalAvailable = 0;
 var totalDisabled = 0;
-//  Search elements
-var searchButton = document.getElementById("search-button");
-var searchInput = document.getElementById("search-input");
-var searchValue = "";
-var searchFixed = document.getElementById("search-fixed");
-var searchLocation = document.getElementById("search-location");
-//  Refresh
-var refreshButton = document.getElementById("refresh-button");
 
 //* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function() {
   bikesTotal();
-  getLocation();
 });
 
-const findStationInfo = function(stations, id) {
+//* Search -------------------------------------------------------------------->
+//  Search elements
+var searchValue = "";
+var searchButton = document.getElementById("search-button");
+var searchInput = document.getElementById("search-input");
+var searchFixed = document.getElementById("search-fixed");
+var searchLocation = document.getElementById("search-location");
+const search = function(stations, id) {
   const index = stations.findIndex(function(station, index) {
     return station.station_id === id;
   });
   return stations[index];
 };
 
-//* Search by station --------------------------------------------------------->
+//* Search button click ------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
@@ -58,6 +56,7 @@ searchLocation.addEventListener("click", function(event) {
 });
 
 //* Refresh results ----------------------------------------------------------->
+var refreshButton = document.getElementById("refresh-button");
 refreshButton.addEventListener("click", function(event) {
   event.preventDefault();
   if (searchFixed.checked == true) {
@@ -70,6 +69,7 @@ refreshButton.addEventListener("click", function(event) {
 //! STATION ------------------------------------------------------------------->
 function bikesStation() {
   if (searchValue !== "") {
+    $(".updating").show();
     $.ajax({
       type: "GET",
       dataType: "json",
@@ -82,7 +82,7 @@ function bikesStation() {
         var responseInfo = data.data.stations;
         console.log(responseInfo);
 
-        let result = findStationInfo(responseInfo, searchValue);
+        let result = search(responseInfo, searchValue);
 
         if (typeof result !== "undefined") {
           number = pad(result.station_id);
@@ -98,10 +98,9 @@ function bikesStation() {
           } else {
             $("h2").html("Estación " + numberH2);
           }
-          $(".updating").hide();
-
           console.log("station.name ------> " + name);
           console.log("station.nameNum ---> " + nameNum);
+          $(".updating").hide();
         } else {
           $(".updating").hide();
           $("h2").html("ERROR");
@@ -126,14 +125,14 @@ function bikesStation() {
         var responseStatus = data.data.stations;
         console.log(responseStatus);
 
-        const findStationInfo = function(stations, id) {
+        const search = function(stations, id) {
           const index = stations.findIndex(function(station, index) {
             return station.station_id === id;
           });
           return stations[index];
         };
 
-        let result = findStationInfo(responseStatus, searchValue);
+        let result = search(responseStatus, searchValue);
 
         console.log(result.num_bikes_available);
         console.log(result.num_bikes_disabled);
@@ -145,9 +144,15 @@ function bikesStation() {
         var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
 
         $(".last-update > p").html("Última actualización estación " + lastDateTime);
+        document.getElementById("search").classList.remove("error");
       },
-      error: function() {}
+      error: function() {
+        $(".updating").hide();
+        $("h2").html("ERROR");
+      }
     });
+  } else {
+    document.getElementById("search").classList.add("error");
   }
 }
 
