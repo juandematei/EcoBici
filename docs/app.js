@@ -9,31 +9,38 @@ const urlInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/st
 const client_id = config.ID;
 const client_secret = config.SECRET;
 
-//* Global variables
+//! Global variables ---------------------------------------------------------->
 //  Initial counters
 var totalAvailable = 0;
 var totalDisabled = 0;
-//  Search elements
-var searchInput = document.getElementById("search-input");
-var searchButton = document.getElementById("search-button");
-var searchValue = "";
-//  Refresh
-var refreshButton = document.getElementById("refresh-button");
 
+//* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function() {
-  //* Show bikes totals when page loads.
   bikesTotal();
 });
 
-//* Search by station.
+//* Search -------------------------------------------------------------------->
+//  Search elements
+var searchValue = "";
+var searchButton = document.getElementById("search-button");
+var searchInput = document.getElementById("search-input");
+var searchFixed = document.getElementById("search-fixed");
+var searchLocation = document.getElementById("search-location");
+const search = function(stations, id) {
+  const index = stations.findIndex(function(station, index) {
+    return station.station_id === id;
+  });
+  return stations[index];
+};
+
+//* Search button click ------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
   bikesStation();
-  stationInfo();
 });
 
-//* Start search by pressing enter on search box.
+//* Start search by pressing enter on search box ------------------------------>
 searchInput.addEventListener("keyup", function(event) {
   event.preventDefault();
   if (event.keyCode === 13) {
@@ -42,19 +49,27 @@ searchInput.addEventListener("keyup", function(event) {
   }
 });
 
-//* Refresh
+//* Search by geolocation ----------------------------------------------------->
+searchLocation.addEventListener("click", function(event) {
+  event.preventDefault();
+  showPosition();
+});
+
+//* Refresh results ----------------------------------------------------------->
+var refreshButton = document.getElementById("refresh-button");
 refreshButton.addEventListener("click", function(event) {
   event.preventDefault();
-  if (searchValue !== "") {
+  if (searchFixed.checked == true) {
     searchButton.click();
   } else {
     location.reload();
   }
 });
 
-//! Request station static data (stationInformation)
-function stationInfo() {
+//! STATION ------------------------------------------------------------------->
+function bikesStation() {
   if (searchValue !== "") {
+    $(".updating").show();
     $.ajax({
       type: "GET",
       dataType: "json",
@@ -63,22 +78,28 @@ function stationInfo() {
         client_id: client_id,
         client_secret: client_secret
       },
-
       success: function(data) {
-        var responseStationInfo = data.data.stations;
-        //console.log(responseStationInfo);
+        var responseInfo = data.data.stations;
+        //console.log(responseInfo);
 
-        const findStationInfo = function(stations, id) {
-          const index = stations.findIndex(function(station, index) {
-            return station.station_id === id;
-          });
-          return stations[index];
-        };
-        let result = findStationInfo(responseStationInfo, stationStaticId);
+        let result = search(responseInfo, searchValue);
 
         if (typeof result !== "undefined") {
+          number = pad(result.station_id);
+          numberH2 = number.toString();
+
+          name = result.name;
+          nameNum = name.slice(0, 3);
+
           $("h2").html("");
-          $("h2").html("Estación " + result.station_id);
+
+          if (numberH2 === nameNum) {
+            $("h2").html("Estación " + name);
+          } else {
+            $("h2").html("Estación " + numberH2);
+          }
+          //console.log("station.name ------> " + name);
+          //console.log("station.nameNum ---> " + nameNum);
           $(".updating").hide();
         } else {
           $(".updating").hide();
@@ -92,10 +113,50 @@ function stationInfo() {
         $("h2").html("ERROR");
       }
     });
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: urlPrefix + urlStatus,
+      data: {
+        client_id: client_id,
+        client_secret: client_secret
+      },
+      success: function(data) {
+        var responseStatus = data.data.stations;
+        //console.log(responseStatus);
+
+        const search = function(stations, id) {
+          const index = stations.findIndex(function(station, index) {
+            return station.station_id === id;
+          });
+          return stations[index];
+        };
+
+        let result = search(responseStatus, searchValue);
+
+        //console.log(result.num_bikes_available);
+        //console.log(result.num_bikes_disabled);
+
+        $(".available > p").html("<strong>" + result.num_bikes_available + "</strong><br>disponibles");
+        $(".disabled > p").html("<strong>" + result.num_bikes_disabled + "</strong><br>bloqueadas");
+
+        var stationLastReported = new Date(result.last_reported * 1000);
+        var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
+
+        $(".last-update > p").html("Última actualización estación " + lastDateTime);
+        document.getElementById("search").classList.remove("error");
+      },
+      error: function() {
+        $(".updating").hide();
+        $("h2").html("ERROR");
+      }
+    });
+  } else {
+    document.getElementById("search").classList.add("error");
   }
 }
 
-//! Request bikes total (stationStatus)
+//! TOTAL --------------------------------------------------------------------->
 function bikesTotal() {
   $(".updating").show();
   $.ajax({
@@ -126,55 +187,17 @@ function bikesTotal() {
       $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
       $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
       $(".updating").hide();
+      //console.log("bikesTotal ---> OK");
     },
     error: function() {
       $(".updating").hide();
       $("h2").html("ERROR");
+      //console.log("bikesTotal ---> ERROR");
     }
   });
 }
 
-//! Request bikes per station (stationStatus)
-function bikesStation() {
-  if (searchValue !== "") {
-    $(".updating").show();
-    $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: urlPrefix + urlStatus,
-      data: {
-        client_id: client_id,
-        client_secret: client_secret
-      },
-      success: function(data) {
-        var responseBikesStation = data.data.stations;
-        for (var i = 0; i < responseBikesStation.length; i++) {
-          if (responseBikesStation[i].station_id === searchValue) {
-            stationStaticId = responseBikesStation[i].station_id;
-            stationLastReported = responseBikesStation[i].last_reported;
-            stationTotalAvailable = responseBikesStation[i].num_bikes_available;
-            stationTotalDisabled = responseBikesStation[i].num_bikes_disabled;
-          }
-        }
-        var stationLastReported = new Date(stationLastReported * 1000);
-        var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
-        $(".last-update > p").html("Última actualización estación " + lastDateTime);
-
-        $(".available > p").html("<strong>" + stationTotalAvailable + "</strong><br>disponibles");
-        $(".disabled > p").html("<strong>" + stationTotalDisabled + "</strong><br>bloqueadas");
-      },
-      error: function() {
-        $(".updating").hide();
-        $("h2").html("ERROR");
-      }
-    });
-  } else {
-    $(".updating").hide();
-    $("h2").html("ERROR");
-  }
-}
-
-//! Request stations by status.
+//! Request stations by status ------------------------------------------------>
 function stationStatus() {
   $.ajax({
     type: "GET",
@@ -206,14 +229,36 @@ function stationStatus() {
           totalMaintenance = totalMaintenance + 1;
         }
       }
-      console.log(totalPlanned);
-      console.log(totalInService);
-      console.log(totalMaintenance);
-      console.log(totalEndOfLife);
-      console.log(totalPlanned + totalInService + totalMaintenance + totalEndOfLife);
+      //console.log("Total PLANNED: " + totalPlanned);
+      //console.log("Total IN_SERVICE: " + totalInService);
+      //console.log("Total MAINTENANCE: " + totalMaintenance);
+      //console.log("Total END_OF_LIFE: " + totalEndOfLife);
+      //console.log("Total ESTACIONES: " + totalPlanned + totalInService + totalMaintenance + totalEndOfLife);
     },
     error: function() {
       $(".updating").hide();
     }
   });
+}
+
+//* Add leading zeros to station_id number ------------------------------------>
+function pad(number) {
+  if (number <= 999) {
+    number = ("00" + number).slice(-3);
+  }
+  return number;
+}
+
+//* Geolocation --------------------------------------------------------------->
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    searchLocation = "Geolocation is not supported by this browser.";
+    //console.log(searchLocation.innerHTML);
+  }
+}
+function showPosition(position) {
+  searchLocation = "Lat: " + position.coords.latitude + " / Lon: " + position.coords.longitude;
+  //console.log(searchLocation);
 }

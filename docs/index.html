@@ -50,22 +50,28 @@
       </div>
     </header>
 
-    <div class="search container">
-      <input id="search-input" class="search-input" type="number" aria-label="Ingresá una estación para buscar" placeholder="Ingresá una estación" />
-      <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
+    <div class="container">
+      <div id="search" class="search">
+        <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
+        <input id="search-input" class="search-input" type="number" aria-label="Buscar por estación" placeholder="Ingresa una estación" />
+        <div class="search-fixed">
+          <input id="search-fixed" type="checkbox" aria-label="Fijar estación" />
+          <label for="search-fixed">Fijar</label>
+        </div>
+        <button disabled id="search-location" class="location-btn btn" type="submit" aria-label="Buscar por ubicación" value="Buscar por ubicación"><i class="fas fa-location-arrow"></i></button>
+      </div>
     </div>
 
     <div class="response container">
       <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
-      <h2>Total estaciones</h2>
-      <!-- <h3>Todas las estaciones</h3> -->
+      <h2>Total</h2>
       <div class="card available"><p></p></div>
       <div class="card disabled"><p></p></div>
       <div class="last-update"><p>Última actualización</p></div>
     </div>
 
     <div class="refresh container">
-      <button id="refresh-button" class="refresh-btn btn" value="Actualizar"><i class="fas fa-sync"></i> Actualizar</button>
+      <button id="refresh-button" class="refresh-btn btn" value=""><i class="fas fa-sync"></i> Actualizar</button>
     </div>
 
     <footer>
@@ -77,7 +83,7 @@
           <a class="btn" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><i class="fab fa-github"></i> Ver en GitHub</a>
         </div>
         <div class="disclaimer">
-          <p>Los datos son obtenidos en tiempo real con la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA. Los datos proporcionados por la API se actualizan regularmente desde los sistemas de origen para ofrecer la información más precisa disponible en ese momento.</p>
+          <p>Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA.</p>
         </div>
       </div>
     </footer>
