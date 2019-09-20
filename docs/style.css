@@ -279,7 +279,6 @@ h3 {
   #response-cards {
     flex-direction: row;
   }
-
   .card {
     min-height: 200px;
     font-size: 1.4rem;
@@ -287,16 +286,20 @@ h3 {
   .card strong {
     font-size: 2rem;
   }
+  .card.available {
+    margin-right: 1rem;
+  }
+  .card.disabled {
+    margin-right: 1rem;
+  }
 }
 
 .card.available {
   color: var(--color-green);
-  margin-right: 1rem;
 }
 
 .card.disabled {
   color: var(--color-red);
-  margin-right: 1rem;
 }
 
 /** REFRESH ------------------------------------------------------------------*/
