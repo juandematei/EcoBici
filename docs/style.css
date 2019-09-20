@@ -276,9 +276,13 @@ h3 {
 }
 
 @media all and (min-width: 768px) {
+  #response-cards {
+    flex-direction: row;
+  }
+
   .card {
     min-height: 200px;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   .card strong {
     font-size: 2rem;
@@ -287,10 +291,12 @@ h3 {
 
 .card.available {
   color: var(--color-green);
+  margin-right: 1rem;
 }
 
 .card.disabled {
   color: var(--color-red);
+  margin-right: 1rem;
 }
 
 /** REFRESH ------------------------------------------------------------------*/
