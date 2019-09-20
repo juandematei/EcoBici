@@ -207,6 +207,11 @@ function bikesTotal() {
 
 //! Request stations by status ------------------------------------------------>
 function stationStatus() {
+  var totalPlanned = 0;
+  var totalInService = 0;
+  var totalEndOfLife = 0;
+  var totalMaintenance = 0;
+
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -218,10 +223,6 @@ function stationStatus() {
 
     success: function(data) {
       var responseStationPlanned = data.data.stations;
-      var totalPlanned = 0;
-      var totalInService = 0;
-      var totalEndOfLife = 0;
-      var totalMaintenance = 0;
 
       for (var i = 0; i < responseStationPlanned.length; i++) {
         if (responseStationPlanned[i].status === "PLANNED") {
@@ -237,11 +238,37 @@ function stationStatus() {
           totalMaintenance = totalMaintenance + 1;
         }
       }
-      console.log("Total PLANNED: " + totalPlanned);
-      console.log("Total IN_SERVICE: " + totalInService);
-      console.log("Total MAINTENANCE: " + totalMaintenance);
-      console.log("Total END_OF_LIFE: " + totalEndOfLife);
-      console.log("Total ESTACIONES: " + totalPlanned + totalInService + totalMaintenance + totalEndOfLife);
+      //console.log("Total PLANNED: " + totalPlanned);
+      //console.log("Total IN_SERVICE: " + totalInService);
+      //console.log("Total MAINTENANCE: " + totalMaintenance);
+      //console.log("Total END_OF_LIFE: " + totalEndOfLife);
+
+      var responseCards;
+      responseCards = document.getElementById("response-cards");
+
+      var cardInService;
+      cardInService = document.createElement("div");
+      cardInService.classList.add("card");
+      cardInService.innerHTML = "<p><strong>" + totalInService + "</strong><br>En servicio</p>";
+      responseCards.appendChild(cardInService);
+
+      var cardMaintenance;
+      cardMaintenance = document.createElement("div");
+      cardMaintenance.classList.add("card");
+      cardMaintenance.innerHTML = "<p><strong>" + totalMaintenance + "</strong><br>En mantenimiento</p>";
+      responseCards.appendChild(cardMaintenance);
+
+      var cardPlanned;
+      cardPlanned = document.createElement("div");
+      cardPlanned.classList.add("card");
+      cardPlanned.innerHTML = "<p><strong>" + totalPlanned + "</strong><br>Planeadas</p>";
+      responseCards.appendChild(cardPlanned);
+
+      var cardEndOfLife;
+      cardEndOfLife = document.createElement("div");
+      cardEndOfLife.classList.add("card");
+      cardEndOfLife.innerHTML = "<p><strong>" + totalEndOfLife + "</strong><br>Fin ciclo</p>";
+      responseCards.appendChild(cardEndOfLife);
     },
     error: function() {
       $(".updating").hide();
