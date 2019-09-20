@@ -9,9 +9,11 @@
   --color-green:     #2e7d32;
   --color-red:       #c62828;
   /* BORDERS -----------------------------------------------------------------*/
-  --border-radius:   8px;
+  --border-radius:   6px;
+  --box-shadow:      0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20);
 }
 
+/** RESET & DEFAULT STYLES ---------------------------------------------------*/
 * {
   margin: 0;
   padding: 0;
@@ -39,6 +41,25 @@ a {
   font-weight: 700;
 }
 
+.viewport-wrapper {
+  min-height: 100vh;
+}
+
+body {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+
+.container {
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+@media all and (min-width: 1024px) {
+  .container {
+    width: 768px;
+  }
+}
+
 .btn {
   border-radius: var(--border-radius);
   padding: 6px 18px;
@@ -58,25 +79,6 @@ a {
 @media all and (min-width: 768px) {
   .btn {
     width: 30%;
-  }
-}
-
-.wrapper {
-  min-height: 100vh;
-}
-
-body {
-  color: var(--color-white);
-  background-color: var(--color-primary);
-}
-
-.container {
-  padding: 0 2rem;
-  margin: 0 auto;
-}
-@media all and (min-width: 1024px) {
-  .container {
-    width: 768px;
   }
 }
 
@@ -109,7 +111,9 @@ h1 {
   flex-direction: row;
   color: var(--color-black);
   background-color: var(--color-white);
-  box-shadow: 0px 25px 15px -25px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--box-shadow);
+  -webkit-box-shadow: var(--box-shadow);
+  -moz-box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   padding: 6px;
 }
@@ -205,7 +209,7 @@ h1 {
   position: relative;
 }
 @media all and (min-width: 768px) {
-  .response {
+  #response {
     flex-direction: row;
     flex-wrap: wrap;
   }
@@ -227,16 +231,16 @@ h2 {
   margin-top: 1rem;
 }
 
-@media all and (min-width: 768px) {
-  h2 {
-    width: 100%;
-  }
-}
-
 h3 {
   font-size: 1rem;
   text-transform: uppercase;
   margin-bottom: 1rem;
+}
+
+@media all and (min-width: 768px) {
+  h2 {
+    width: 100%;
+  }
 }
 
 #response-cards {
@@ -257,7 +261,9 @@ h3 {
   padding: 1rem;
   text-transform: uppercase;
   font-size: 1.2rem;
-  box-shadow: 0px 25px 15px -25px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--box-shadow);
+  -webkit-box-shadow: var(--box-shadow);
+  -moz-box-shadow: var(--box-shadow);
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
@@ -274,7 +280,6 @@ h3 {
     min-height: 200px;
     font-size: 1.6rem;
   }
-
   .card strong {
     font-size: 2rem;
   }
@@ -301,6 +306,7 @@ h3 {
 .refresh-btn:hover {
   background: #20599a radial-gradient(circle, transparent 1%, #20599a 1%) center/15000%;
 }
+
 .refresh-btn:active {
   background-color: #366aa4;
   background-size: 100%;
