@@ -13,6 +13,7 @@ const client_secret = config.SECRET;
 //  Initial counters
 var totalAvailable = 0;
 var totalDisabled = 0;
+var totalDocks = 0;
 
 //* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function() {
@@ -80,7 +81,7 @@ function bikesStation() {
       },
       success: function(data) {
         var responseInfo = data.data.stations;
-        //console.log(responseInfo);
+        console.log(responseInfo);
 
         let result = search(responseInfo, searchValue);
 
@@ -94,12 +95,14 @@ function bikesStation() {
           $("h2").html("");
 
           if (numberH2 === nameNum) {
-            $("h2").html("Estación " + name);
+            $("h2").html("Estación");
+            $("h3").html(name);
           } else {
-            $("h2").html("Estación " + numberH2);
+            $("h2").html("Estación");
+            $("h3").html(numberH2);
           }
-          //console.log("station.name ------> " + name);
-          //console.log("station.nameNum ---> " + nameNum);
+          console.log("station.name ------> " + name);
+          console.log("station.nameNum ---> " + nameNum);
           $(".updating").hide();
         } else {
           $(".updating").hide();
@@ -123,7 +126,7 @@ function bikesStation() {
       },
       success: function(data) {
         var responseStatus = data.data.stations;
-        //console.log(responseStatus);
+        console.log(responseStatus);
 
         const search = function(stations, id) {
           const index = stations.findIndex(function(station, index) {
@@ -134,11 +137,12 @@ function bikesStation() {
 
         let result = search(responseStatus, searchValue);
 
-        //console.log(result.num_bikes_available);
-        //console.log(result.num_bikes_disabled);
+        console.log(result.num_bikes_available);
+        console.log(result.num_bikes_disabled);
 
-        $(".available > p").html("<strong>" + result.num_bikes_available + "</strong><br>disponibles");
-        $(".disabled > p").html("<strong>" + result.num_bikes_disabled + "</strong><br>bloqueadas");
+        $("#available > p").html("<strong>" + result.num_bikes_available + "</strong><br>disponibles");
+        $("#disabled > p").html("<strong>" + result.num_bikes_disabled + "</strong><br>bloqueadas");
+        $("#docks > p").html("<strong>" + result.num_docks_available + "</strong><br>espacios libres");
 
         var stationLastReported = new Date(result.last_reported * 1000);
         var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
@@ -169,7 +173,7 @@ function bikesTotal() {
     },
     success: function(data) {
       var responseBikesTotal = data.data.stations;
-      //console.log(responseBikesTotal);
+      console.log(responseBikesTotal);
 
       var lastUpdated = new Date(data.last_updated * 1000);
       var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
@@ -179,26 +183,35 @@ function bikesTotal() {
       for (var i = 0; i < responseBikesTotal.length; i++) {
         totalAvailable = totalAvailable + responseBikesTotal[i].num_bikes_available;
         totalDisabled = totalDisabled + responseBikesTotal[i].num_bikes_disabled;
+        totalDocks = totalDocks + responseBikesTotal[i].num_docks_available;
       }
 
       //TODO Correct totals
       totalAvailable = totalAvailable - 396;
+      totalDocks = totalDocks - 198;
 
-      $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
-      $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
+      $("#available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
+      $("#disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
+      $("#docks > p").html("<strong>" + totalDocks + "</strong><br>espacios libres");
+
       $(".updating").hide();
-      //console.log("bikesTotal ---> OK");
+      console.log("bikesTotal ---> OK");
     },
     error: function() {
       $(".updating").hide();
       $("h2").html("ERROR");
-      //console.log("bikesTotal ---> ERROR");
+      console.log("bikesTotal ---> ERROR");
     }
   });
 }
 
 //! Request stations by status ------------------------------------------------>
 function stationStatus() {
+  var totalPlanned = 0;
+  var totalInService = 0;
+  var totalEndOfLife = 0;
+  var totalMaintenance = 0;
+
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -210,10 +223,6 @@ function stationStatus() {
 
     success: function(data) {
       var responseStationPlanned = data.data.stations;
-      var totalPlanned = 0;
-      var totalInService = 0;
-      var totalEndOfLife = 0;
-      var totalMaintenance = 0;
 
       for (var i = 0; i < responseStationPlanned.length; i++) {
         if (responseStationPlanned[i].status === "PLANNED") {
@@ -233,7 +242,33 @@ function stationStatus() {
       //console.log("Total IN_SERVICE: " + totalInService);
       //console.log("Total MAINTENANCE: " + totalMaintenance);
       //console.log("Total END_OF_LIFE: " + totalEndOfLife);
-      //console.log("Total ESTACIONES: " + totalPlanned + totalInService + totalMaintenance + totalEndOfLife);
+
+      var responseCards;
+      responseCards = document.getElementById("response-cards");
+
+      var cardInService;
+      cardInService = document.createElement("div");
+      cardInService.classList.add("card");
+      cardInService.innerHTML = "<p><strong>" + totalInService + "</strong><br>En servicio</p>";
+      responseCards.appendChild(cardInService);
+
+      var cardMaintenance;
+      cardMaintenance = document.createElement("div");
+      cardMaintenance.classList.add("card");
+      cardMaintenance.innerHTML = "<p><strong>" + totalMaintenance + "</strong><br>En mantenimiento</p>";
+      responseCards.appendChild(cardMaintenance);
+
+      var cardPlanned;
+      cardPlanned = document.createElement("div");
+      cardPlanned.classList.add("card");
+      cardPlanned.innerHTML = "<p><strong>" + totalPlanned + "</strong><br>Planeadas</p>";
+      responseCards.appendChild(cardPlanned);
+
+      var cardEndOfLife;
+      cardEndOfLife = document.createElement("div");
+      cardEndOfLife.classList.add("card");
+      cardEndOfLife.innerHTML = "<p><strong>" + totalEndOfLife + "</strong><br>Fin ciclo</p>";
+      responseCards.appendChild(cardEndOfLife);
     },
     error: function() {
       $(".updating").hide();
@@ -255,10 +290,10 @@ function getLocation() {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
     searchLocation = "Geolocation is not supported by this browser.";
-    //console.log(searchLocation.innerHTML);
+    console.log(searchLocation.innerHTML);
   }
 }
 function showPosition(position) {
   searchLocation = "Lat: " + position.coords.latitude + " / Lon: " + position.coords.longitude;
-  //console.log(searchLocation);
+  console.log(searchLocation);
 }
