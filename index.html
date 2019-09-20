@@ -60,37 +60,43 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LZZDPZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <header>
-      <div class="container">
-        <h1>EcoBici - Bicicletas bloqueadas en tiempo real.</h1>
-        <div class="logo">
-          <a href="/"><img src="logo.svg" alt="BA EcoBici logo"/></a>
+    <div class="wrapper">
+      <header>
+        <div class="container">
+          <h1>EcoBici - Bicicletas bloqueadas en tiempo real.</h1>
+          <div class="logo">
+            <a href="/"><img src="logo.svg" alt="BA EcoBici logo"/></a>
+          </div>
+        </div>
+      </header>
+
+      <div id="search" class="container">
+        <div class="search-box">
+          <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
+          <input id="search-input" class="search-input" type="number" aria-label="Buscar por estación" placeholder="Ingresa una estación" />
+          <div class="search-fixed">
+            <input id="search-fixed" type="checkbox" aria-label="Fijar estación" />
+            <label for="search-fixed">Fijar</label>
+          </div>
+          <button disabled id="search-location" class="location-btn btn" type="submit" aria-label="Buscar por ubicación" value="Buscar por ubicación"><i class="fas fa-location-arrow"></i></button>
         </div>
       </div>
-    </header>
 
-    <div class="container">
-      <div id="search" class="search">
-        <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
-        <input id="search-input" class="search-input" type="number" aria-label="Buscar por estación" placeholder="Ingresa una estación" />
-        <div class="search-fixed">
-          <input id="search-fixed" type="checkbox" aria-label="Fijar estación" />
-          <label for="search-fixed">Fijar</label>
+      <div id="response" class="container">
+        <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+        <h2>Total</h2>
+        <h3>Lorem ipsum dolor sit amet</h3>
+        <div id="response-cards">
+          <div id="available" class="card available"><p></p></div>
+          <div id="disabled" class="card disabled"><p></p></div>
+          <div id="docks" class="card"><p></p></div>
         </div>
-        <button disabled id="search-location" class="location-btn btn" type="submit" aria-label="Buscar por ubicación" value="Buscar por ubicación"><i class="fas fa-location-arrow"></i></button>
       </div>
-    </div>
 
-    <div class="response container">
-      <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
-      <h2>Total</h2>
-      <div class="card available"><p></p></div>
-      <div class="card disabled"><p></p></div>
-      <div class="last-update"><p>Última actualización</p></div>
-    </div>
-
-    <div class="refresh container">
-      <button id="refresh-button" class="refresh-btn btn" value=""><i class="fas fa-sync"></i> Actualizar</button>
+      <div id="refresh" class="container">
+        <button id="refresh-button" class="refresh-btn btn" value=""><i class="fas fa-sync"></i> Actualizar</button>
+        <div class="last-update"><p>Última actualización</p></div>
+      </div>
     </div>
 
     <footer>

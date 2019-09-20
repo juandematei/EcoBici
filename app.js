@@ -13,6 +13,7 @@ const client_secret = config.SECRET;
 //  Initial counters
 var totalAvailable = 0;
 var totalDisabled = 0;
+var totalDocks = 0;
 
 //* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function() {
@@ -94,9 +95,11 @@ function bikesStation() {
           $("h2").html("");
 
           if (numberH2 === nameNum) {
-            $("h2").html("Estación " + name);
+            $("h2").html("Estación");
+            $("h3").html(name);
           } else {
-            $("h2").html("Estación " + numberH2);
+            $("h2").html("Estación");
+            $("h3").html(numberH2);
           }
           console.log("station.name ------> " + name);
           console.log("station.nameNum ---> " + nameNum);
@@ -137,8 +140,9 @@ function bikesStation() {
         console.log(result.num_bikes_available);
         console.log(result.num_bikes_disabled);
 
-        $(".available > p").html("<strong>" + result.num_bikes_available + "</strong><br>disponibles");
-        $(".disabled > p").html("<strong>" + result.num_bikes_disabled + "</strong><br>bloqueadas");
+        $("#available > p").html("<strong>" + result.num_bikes_available + "</strong><br>disponibles");
+        $("#disabled > p").html("<strong>" + result.num_bikes_disabled + "</strong><br>bloqueadas");
+        $("#docks > p").html("<strong>" + result.num_docks_available + "</strong><br>espacios libres");
 
         var stationLastReported = new Date(result.last_reported * 1000);
         var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
@@ -169,7 +173,7 @@ function bikesTotal() {
     },
     success: function(data) {
       var responseBikesTotal = data.data.stations;
-      //console.log(responseBikesTotal);
+      console.log(responseBikesTotal);
 
       var lastUpdated = new Date(data.last_updated * 1000);
       var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
@@ -179,13 +183,17 @@ function bikesTotal() {
       for (var i = 0; i < responseBikesTotal.length; i++) {
         totalAvailable = totalAvailable + responseBikesTotal[i].num_bikes_available;
         totalDisabled = totalDisabled + responseBikesTotal[i].num_bikes_disabled;
+        totalDocks = totalDocks + responseBikesTotal[i].num_docks_available;
       }
 
       //TODO Correct totals
       totalAvailable = totalAvailable - 396;
+      totalDocks = totalDocks - 198;
 
-      $(".available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
-      $(".disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
+      $("#available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
+      $("#disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
+      $("#docks > p").html("<strong>" + totalDocks + "</strong><br>espacios libres");
+
       $(".updating").hide();
       console.log("bikesTotal ---> OK");
     },
