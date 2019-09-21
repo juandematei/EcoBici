@@ -42,7 +42,7 @@ a {
 }
 
 .viewport-wrapper {
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
 }
 
 body {
@@ -53,6 +53,7 @@ body {
 .container {
   padding: 0 2rem;
   margin: 0 auto;
+  width: 100%;
 }
 @media all and (min-width: 1024px) {
   .container {
@@ -85,6 +86,7 @@ body {
 /** HEADER -------------------------------------------------------------------*/
 header {
   width: 100%;
+  height: 100px;
 }
 
 h1 {
@@ -143,7 +145,7 @@ h1 {
   perspective: 1000px;
 }
 
-.error > ::-webkit-input-placeholder {
+.error > .search-box > ::-webkit-input-placeholder {
   color: var(--color-red);
 }
 
@@ -225,6 +227,28 @@ h1 {
   align-items: center;
 }
 
+.bike {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  padding: 1rem 0;
+}
+
+.wheel {
+  width: 130px;
+  font-size: 130px;
+  position: absolute;
+  top: 130px;
+}
+
+.left {
+  left: 0px;
+}
+
+.right {
+  right: 0px;
+}
+
 h2 {
   font-size: 1.2rem;
   text-transform: uppercase;
@@ -239,7 +263,11 @@ h3 {
 
 @media all and (min-width: 768px) {
   h2 {
+    font-size: 1.6rem;
     width: 100%;
+  }
+  h3 {
+    font-size: 1.2rem;
   }
 }
 
@@ -326,6 +354,7 @@ h3 {
   font-size: 0.8rem;
   font-weight: 700;
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 /** FOOTER -------------------------------------------------------------------*/

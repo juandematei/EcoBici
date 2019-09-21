@@ -36,7 +36,7 @@
     <meta name="author" content="Juan Dematei" />
     <meta property="og:title" content="EcoBici" />
     <meta property="og:description" content="Bicicletas disponibles y bloqueadas en tiempo real." />
-    <meta property="og:image" content="https://juandematei.github.io/EcoBici/og-image.jpg" />
+    <meta property="og:image" content="https://juandematei.github.io/EcoBici/img/og-image.jpg" />
     <meta property="og:url" content="https://juandematei.github.io/EcoBici/" />
 
     <!-- Favicon -->
@@ -65,18 +65,18 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LZZDPZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <div class="viewport-wrapper">
-      <header>
-        <div class="container">
-          <h1>EcoBici - Bicicletas bloqueadas en tiempo real.</h1>
-          <div class="logo">
-            <a href="/EcoBici"><img src="logo.svg" alt="BA EcoBici logo"/></a>
-          </div>
+    <header>
+      <div class="container">
+        <h1>EcoBici - Bicicletas bloqueadas en tiempo real.</h1>
+        <div class="logo">
+          <a href="/EcoBici"><img src="img/logo.svg" alt="BA EcoBici logo"/></a>
         </div>
-      </header>
+      </div>
+    </header>
 
+    <div class="viewport-wrapper">
       <div id="search" class="container">
-        <div class="search-box">
+        <div id="search-box" class="search-box">
           <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
           <input id="search-input" class="search-input" type="number" aria-label="Buscar por estación" placeholder="Ingresa una estación" />
           <div class="search-fixed">
@@ -88,7 +88,13 @@
       </div>
 
       <div id="response" class="container">
-        <div class="updating"><i class="fas fa-sync fa-spin"></i></div>
+        <div class="updating">
+          <div class="bike">
+            <img src="img/biking-solid.svg" alt="" />
+            <i class="fas fa-circle-notch fa-spin wheel left"></i>
+            <i class="fas fa-circle-notch fa-spin wheel right"></i>
+          </div>
+        </div>
         <h2>Total</h2>
         <h3>Todas las estaciones</h3>
         <div id="response-cards">
@@ -100,7 +106,7 @@
 
       <div id="refresh" class="container">
         <button id="refresh-button" class="refresh-btn btn" value=""><i class="fas fa-sync"></i> Actualizar</button>
-        <div class="last-update"><p>Última actualización</p></div>
+        <div class="last-update"><p></p></div>
       </div>
     </div>
 
