@@ -127,9 +127,10 @@ function bikesTotal() {
       var responseBikesTotal = data.data.stations;
 
       var lastUpdated = new Date(data.last_updated * 1000);
-      var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
+      var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
+      var lastUpdatedTotal = lastUpdated.toLocaleString("es-AR", options);
 
-      $(".last-update > p").html("Última actualización total " + lastDateTime);
+      $(".last-update > p").html("Última actualización total " + lastUpdatedTotal);
 
       for (var i = 0; i < responseBikesTotal.length; i++) {
         totalAvailable = totalAvailable + responseBikesTotal[i].num_bikes_available;
@@ -147,6 +148,17 @@ function bikesTotal() {
       $("#available > p").html("<strong>" + totalAvailable + "</strong><br>disponibles");
       $("#disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
       $("#docks > p").html("<strong>" + totalDocks + "</strong><br>espacios libres");
+
+      var tweet = "Hay " + totalDisabled + " EcoBici bloqueadas. Probá la app ➡";
+
+      twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter"), {
+        size: "large",
+        text: tweet,
+        hashtags: "EliminenElBotón,EcoBici",
+        via: "juandematei",
+        related: "baecobici,elbotonmalo",
+        url: "https://juandematei.github.io/EcoBici"
+      });
 
       $(".updating").hide();
     },
@@ -216,16 +228,33 @@ function bikesStation() {
 
       let result = search(responseStatus, searchValue);
 
-      $("#available > p").html("<strong>" + result.num_bikes_available + "</strong><br>disponibles");
-      $("#disabled > p").html("<strong>" + result.num_bikes_disabled + "</strong><br>bloqueadas");
-      $("#docks > p").html("<strong>" + result.num_docks_available + "</strong><br>espacios libres");
+      var stationAvailable = result.num_bikes_available;
+      var stationDisabled = result.num_bikes_disabled;
+      var stationDocks = result.num_docks_available;
+
+      $("#available > p").html("<strong>" + stationAvailable + "</strong><br>disponibles");
+      $("#disabled > p").html("<strong>" + stationDisabled + "</strong><br>bloqueadas");
+      $("#docks > p").html("<strong>" + stationDocks + "</strong><br>espacios libres");
 
       var stationLastReported = new Date(result.last_reported * 1000);
-      var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
+      var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
+      var lastUpdatedStation = stationLastReported.toLocaleString("es-AR", options);
 
-      $(".last-update > p").html("Última actualización estación " + lastDateTime);
+      $(".last-update > p").html("Última actualización estación " + lastUpdatedStation);
       document.getElementById("search").classList.remove("error");
       $(".updating").hide();
+
+      var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + numberH2 + ". Probá la app ➡";
+
+      $("#twitter").html("");
+      twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter"), {
+        size: "large",
+        text: tweet,
+        hashtags: "EliminenElBotón,EcoBici",
+        via: "juandematei",
+        related: "baecobici,elbotonmalo",
+        url: "https://juandematei.github.io/EcoBici"
+      });
     },
     error: function() {
       $(".updating").hide();
