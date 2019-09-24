@@ -244,9 +244,9 @@ function bikesStation() {
       document.getElementById("search").classList.remove("error");
       $(".updating").hide();
 
-      var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + numberH2 + ". Probá la app ➡";
+      var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + searchValue + ". Probá la app ➡";
 
-      $("#twitter").innerHTML("");
+      $("#twitter").html("");
       twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter"), {
         size: "large",
         text: tweet,
