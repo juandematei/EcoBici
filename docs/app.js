@@ -246,7 +246,7 @@ function bikesStation() {
 
       var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + numberH2 + ". Probá la app ➡";
 
-      $("#twitter").html("");
+      $("#twitter").innerHTML("");
       twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter"), {
         size: "large",
         text: tweet,
