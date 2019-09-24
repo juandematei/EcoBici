@@ -149,6 +149,17 @@ function bikesTotal() {
       $("#disabled > p").html("<strong>" + totalDisabled + "</strong><br>bloqueadas");
       $("#docks > p").html("<strong>" + totalDocks + "</strong><br>espacios libres");
 
+      var tweet = "Hay " + totalDisabled + " EcoBici bloqueadas. Probá la app ➡";
+
+      twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter-wjs"), {
+        size: "large",
+        text: tweet,
+        hashtags: "EliminenElBotón,EcoBici",
+        via: "juandematei",
+        related: "baecobici,elbotonmalo",
+        url: "https://juandematei.github.io/EcoBici"
+      });
+
       $(".updating").hide();
     },
     error: function() {
