@@ -127,9 +127,10 @@ function bikesTotal() {
       var responseBikesTotal = data.data.stations;
 
       var lastUpdated = new Date(data.last_updated * 1000);
-      var lastDateTime = lastUpdated.toLocaleTimeString("es-AR");
+      var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
+      var lastUpdatedTotal = lastUpdated.toLocaleString("es-AR", options);
 
-      $(".last-update > p").html("Última actualización total " + lastDateTime);
+      $(".last-update > p").html("Última actualización total " + lastUpdatedTotal);
 
       for (var i = 0; i < responseBikesTotal.length; i++) {
         totalAvailable = totalAvailable + responseBikesTotal[i].num_bikes_available;
@@ -221,9 +222,10 @@ function bikesStation() {
       $("#docks > p").html("<strong>" + result.num_docks_available + "</strong><br>espacios libres");
 
       var stationLastReported = new Date(result.last_reported * 1000);
-      var lastDateTime = stationLastReported.toLocaleTimeString("es-AR");
+      var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
+      var lastUpdatedStation = stationLastReported.toLocaleString("es-AR", options);
 
-      $(".last-update > p").html("Última actualización estación " + lastDateTime);
+      $(".last-update > p").html("Última actualización estación " + lastUpdatedStation);
       document.getElementById("search").classList.remove("error");
       $(".updating").hide();
     },
