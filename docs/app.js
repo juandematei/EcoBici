@@ -202,58 +202,58 @@ function bikesStation() {
           $("h3").html(numberH2);
         }
       }
-    },
-    error: function() {
-      $(".updating").hide();
-      $("h2").html("ERROR");
-    }
-  });
-  $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: urlPrefix + urlStatus,
-    data: {
-      client_id: client_id,
-      client_secret: client_secret
-    },
-    success: function(data) {
-      var responseStatus = data.data.stations;
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: urlPrefix + urlStatus,
+        data: {
+          client_id: client_id,
+          client_secret: client_secret
+        },
+        success: function(data) {
+          var responseStatus = data.data.stations;
 
-      const search = function(stations, id) {
-        const index = stations.findIndex(function(station, index) {
-          return station.station_id === id;
-        });
-        return stations[index];
-      };
+          const search = function(stations, id) {
+            const index = stations.findIndex(function(station, index) {
+              return station.station_id === id;
+            });
+            return stations[index];
+          };
 
-      let result = search(responseStatus, searchValue);
+          let result = search(responseStatus, searchValue);
 
-      var stationAvailable = result.num_bikes_available;
-      var stationDisabled = result.num_bikes_disabled;
-      var stationDocks = result.num_docks_available;
+          var stationAvailable = result.num_bikes_available;
+          var stationDisabled = result.num_bikes_disabled;
+          var stationDocks = result.num_docks_available;
 
-      $("#available > p").html("<strong>" + stationAvailable + "</strong><br>disponibles");
-      $("#disabled > p").html("<strong>" + stationDisabled + "</strong><br>bloqueadas");
-      $("#docks > p").html("<strong>" + stationDocks + "</strong><br>espacios libres");
+          $("#available > p").html("<strong>" + stationAvailable + "</strong><br>disponibles");
+          $("#disabled > p").html("<strong>" + stationDisabled + "</strong><br>bloqueadas");
+          $("#docks > p").html("<strong>" + stationDocks + "</strong><br>espacios libres");
 
-      var stationLastReported = new Date(result.last_reported * 1000);
-      var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
-      var lastUpdatedStation = stationLastReported.toLocaleString("es-AR", options);
+          var stationLastReported = new Date(result.last_reported * 1000);
+          var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
+          var lastUpdatedStation = stationLastReported.toLocaleString("es-AR", options);
 
-      $(".last-update > p").html("Última actualización estación " + lastUpdatedStation);
-      document.getElementById("search").classList.remove("error");
-      $(".updating").hide();
+          $(".last-update > p").html("Última actualización estación " + lastUpdatedStation);
 
-      var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + searchValue + ". Probá la app ➡";
+          var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + searchValue + ". Probá la app ➡";
 
-      $("#twitter").html("");
-      twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter"), {
-        size: "large",
-        text: tweet,
-        hashtags: "EliminenElBotón,EcoBici",
-        via: "juandematei",
-        related: "baecobici,elbotonmalo",
-        url: "https://juandematei.github.io/EcoBici"
+          $("#twitter").html("");
+          twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter"), {
+            size: "large",
+            text: tweet,
+            hashtags: "EliminenElBotón,EcoBici",
+            via: "juandematei",
+            related: "baecobici,elbotonmalo",
+            url: "https://juandematei.github.io/EcoBici"
+          });
+          document.getElementById("search").classList.remove("error");
+          $(".updating").hide();
+        },
+        error: function() {
+          $(".updating").hide();
+          $("h2").html("ERROR");
+        }
       });
     },
     error: function() {
