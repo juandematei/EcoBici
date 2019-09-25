@@ -157,7 +157,8 @@ function bikesTotal() {
         hashtags: "EliminenElBotón,EcoBici",
         via: "juandematei",
         related: "baecobici,elbotonmalo",
-        url: "https://juandematei.github.io/EcoBici"
+        url: "https://juandematei.github.io/EcoBici",
+        lang: "es"
       });
 
       $(".updating").hide();
@@ -245,7 +246,8 @@ function bikesStation() {
             hashtags: "EliminenElBotón,EcoBici",
             via: "juandematei",
             related: "baecobici,elbotonmalo",
-            url: "https://juandematei.github.io/EcoBici"
+            url: "https://juandematei.github.io/EcoBici",
+            lang: "es"
           });
           document.getElementById("search").classList.remove("error");
           $(".updating").hide();
