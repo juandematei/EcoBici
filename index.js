@@ -240,13 +240,13 @@ function bikesStation() {
           var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + searchValue + ". Probá la app ➡";
 
           $("#twitter").html("");
-          twttr.widgets.createHashtagButton("EliminenElBotón", document.getElementById("twitter"), {
-            size: "large",
+          twttr.widgets.createHashtagButton(document.getElementById("twitter"), {
             text: tweet,
+            url: "https://juandematei.github.io/EcoBici",
             hashtags: "EliminenElBotón,EcoBici",
             via: "juandematei",
             related: "baecobici,elbotonmalo",
-            url: "https://juandematei.github.io/EcoBici",
+            size: "large",
             lang: "es"
           });
           document.getElementById("search").classList.remove("error");
