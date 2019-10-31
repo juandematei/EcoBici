@@ -151,7 +151,7 @@ function bikesTotal() {
 
       var tweet = "Hay " + totalDisabled + " EcoBici bloqueadas. Probá la app ➡";
 
-      twttr.widgets.createHashtagButton(document.getElementById("twitter"), {
+      twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {
             text: tweet,
             url: "https://juandematei.github.io/EcoBici",
             hashtags: "EliminenElBotón,EcoBici",
@@ -240,7 +240,7 @@ function bikesStation() {
           var tweet = "Hay " + stationDisabled + " EcoBici bloqueadas en la estación " + searchValue + ". Probá la app ➡";
 
           $("#twitter").html("");
-          twttr.widgets.createHashtagButton(document.getElementById("twitter"), {
+          twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {
             text: tweet,
             url: "https://juandematei.github.io/EcoBici",
             hashtags: "EliminenElBotón,EcoBici",
