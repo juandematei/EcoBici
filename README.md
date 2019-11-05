@@ -1,6 +1,6 @@
 # EcoBici
 
-![]https://github.com/juandematei/EcoBici/blob/master/img/og-image.jpg
+![](https://github.com/juandematei/EcoBici/blob/master/img/og-image.jpg)
 
 ## Permite ver en tiempo real el total de EcoBici bloqueadas.
 
