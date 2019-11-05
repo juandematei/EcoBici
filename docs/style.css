@@ -402,6 +402,13 @@ footer {
   margin-top: 3rem;
 }
 
+#search > .disclaimer {
+  background-color: var(--color-red);
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+}
+
 .disclaimer p {
   font-size: 0.8rem;
 }

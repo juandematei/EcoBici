@@ -125,6 +125,7 @@ function bikesTotal() {
     },
     success: function(data) {
       var responseBikesTotal = data.data.stations;
+      console.log(responseBikesTotal);
 
       var lastUpdated = new Date(data.last_updated * 1000);
       var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
@@ -183,6 +184,7 @@ function bikesStation() {
     },
     success: function(data) {
       var responseInfo = data.data.stations;
+      console.log(responseInfo);
 
       let result = search(responseInfo, searchValue);
 
