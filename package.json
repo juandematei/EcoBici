@@ -1,11 +1,8 @@
 {
   "name": "EcoBici",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "![](https://github.com/juandematei/EcoBici/blob/master/img/og-image.jpg)",
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "dependencies": {
     "gh-pages": "^2.0.1"
   },
@@ -17,10 +14,10 @@
     "url": "git+https://github.com/juandematei/EcoBici.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Juan Dematei",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/juandematei/EcoBici/issues"
   },
-  "homepage": "https://github.com/juandematei/EcoBici#readme"
+  "homepage": "https://juandematei.github.io/EcoBici/"
 }
