@@ -1,5 +1,5 @@
 {
-  "name": "EcoBici",
+  "name": "ecobici",
   "version": "1.2.0",
   "description": "Bicicletas bloqueadas en tiempo real.",
   "main": "index.js",
