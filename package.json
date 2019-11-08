@@ -1,0 +1,26 @@
+{
+  "name": "EcoBici",
+  "version": "1.0.0",
+  "description": "![](https://github.com/juandematei/EcoBici/blob/master/img/og-image.jpg)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "gh-pages": "^2.0.1"
+  },
+  "scripts": {
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juandematei/EcoBici.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juandematei/EcoBici/issues"
+  },
+  "homepage": "https://github.com/juandematei/EcoBici#readme"
+}
