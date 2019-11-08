@@ -1,7 +1,7 @@
 {
   "name": "EcoBici",
   "version": "1.2.0",
-  "description": "![](https://github.com/juandematei/EcoBici/blob/master/img/og-image.jpg)",
+  "description": "Bicicletas bloqueadas en tiempo real.",
   "main": "index.js",
   "dependencies": {
     "gh-pages": "^2.0.1"
@@ -13,7 +13,13 @@
     "type": "git",
     "url": "git+https://github.com/juandematei/EcoBici.git"
   },
-  "keywords": [],
+  "keywords": [
+    "ecobici",
+    "buenosaires",
+    "gbfs",
+    "api-transporte",
+    "datos-abiertos"
+  ],
   "author": "Juan Dematei",
   "license": "ISC",
   "bugs": {
