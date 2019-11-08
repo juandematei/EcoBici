@@ -39,6 +39,10 @@
   <body>
     <!-- Google Tag Manager (noscript) -->
     <!-- End Google Tag Manager (noscript) -->
+    <div class="updating">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Actualizando</p>
+    </div>
 
     <header>
       <div class="container">
@@ -53,7 +57,7 @@
       <div id="search" class="container">
         <div id="search-box" class="search-box">
           <button id="search-button" class="search-btn btn" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
-          <input id="search-input" class="search-input" type="number" aria-label="Buscar por estación" placeholder="Ingresa una estación" />
+          <input id="search-input" class="search-input" type="number" aria-label="Buscar por estación" placeholder="Ingresá una estación" />
           <div class="search-fixed">
             <input id="search-fixed" type="checkbox" aria-label="Fijar estación" />
             <label for="search-fixed">Fijar</label>
@@ -62,13 +66,6 @@
       </div>
 
       <div id="response" class="container">
-        <div class="updating">
-          <div class="bike">
-            <img src="img/biking-solid.svg" alt="" />
-            <i class="fas fa-circle-notch fa-spin wheel left"></i>
-            <i class="fas fa-circle-notch fa-spin wheel right"></i>
-          </div>
-        </div>
         <h2>Total</h2>
         <h3>Todas las estaciones</h3>
         <div id="response-cards">
