@@ -11,13 +11,13 @@ var docksAvailable = 0;
 var docksDisabled = 0;
 var searchValue;
 // Valid station numbers
-var validStations = []; //TODO
+var validStations = [];
 // DOM elements
-var searchForm = document.getElementById("search");
+var searchBox = document.getElementById("search-box");
 var searchButton = document.getElementById("search-button");
 var searchInput = document.getElementById("search-input");
 var searchFixed = document.getElementById("search-fixed");
-var searchLocation = document.getElementById("search-location");
+var locationButton = document.getElementById("location-button");
 var refreshButton = document.getElementById("refresh-button");
 //  Add leading zeros to station_id number ------------------------------------>
 function pad(n) {
@@ -36,27 +36,29 @@ $(document).ready(function() {
 //* Search button click ------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
-  searchValue = pad(searchInput.value);
 
-  if (searchValue !== "") {
+  if (typeof searchValue !== "undefined") {
+    searchValue = pad(searchInput.value);
     if (validStations.includes(searchValue)) {
       bikesStation();
     } else {
-      console.log("Estación no existe");
-      document.getElementById("search").classList.add("error");
+      searchBox.classList.add("error");
       searchInput.value = "";
-      document.getElementById("search-input").placeholder = "No existe esa estación";
+      searchValue = undefined;
+      searchInput.placeholder = "No existe esa estación";
       setTimeout(function() {
-        document.getElementById("search").classList.remove("error");
-        document.getElementById("search-input").placeholder = "Ingresá una estación";
+        searchBox.classList.remove("error");
+        searchInput.placeholder = "Buscar una estación";
       }, 4000);
     }
   } else {
-    document.getElementById("search").classList.add("error");
+    searchBox.classList.add("error");
     searchInput.value = "";
-    searchValue = "";
+    searchValue = undefined;
+    searchInput.placeholder = "Ingresá una estación";
     setTimeout(function() {
-      document.getElementById("search").classList.remove("error");
+      searchBox.classList.remove("error");
+      searchInput.placeholder = "Buscar una estación";
     }, 4000);
   }
 });
@@ -64,6 +66,7 @@ searchButton.addEventListener("click", function(event) {
 //* Start search by pressing enter on search box ------------------------------>
 searchInput.addEventListener("keyup", function(event) {
   event.preventDefault();
+  searchValue = pad(searchInput.value);
   if (event.keyCode === 13) {
     searchButton.click();
     searchInput.blur();
@@ -112,10 +115,10 @@ function bikesTotal() {
       bikesAvailable = bikesAvailable - 396;
       docksAvailable = docksAvailable - 198;
 
-      $("#bikes-available > p").html("<strong>" + bikesAvailable + "</strong><br>disponibles");
-      $("#bikes-disabled > p").html("<strong>" + bikesDisabled + "</strong><br>bloqueadas");
-      $("#docks-available > p").html(docksAvailable + " espacios libres");
-      $("#docks-disabled > p").html(docksDisabled + " espacios deshabilitados");
+      $("#bikes-available > p").html("<strong>" + bikesAvailable + "</strong> disponibles");
+      $("#bikes-disabled > p").html("<strong>" + bikesDisabled + "</strong> bloqueadas");
+      $("#docks-available > p").html("<strong>" + docksAvailable + "</strong> libres");
+      $("#docks-disabled > p").html("<strong>" + docksDisabled + "</strong> deshabilitados");
 
       var tweet = "Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app ➡";
 
@@ -211,10 +214,10 @@ function bikesStation() {
           $("h3").html("");
           $("h3").html(result_name);
 
-          $("#bikes-available > p").html("<strong>" + bikesAvailable + "</strong><br>disponibles");
-          $("#bikes-disabled > p").html("<strong>" + bikesDisabled + "</strong><br>bloqueadas");
-          $("#docks-available > p").html(docksAvailable + " espacios libres");
-          $("#docks-disabled > p").html(docksDisabled + " espacios deshabilitados");
+          $("#bikes-available > p").html("<strong>" + bikesAvailable + "</strong> disponibles");
+          $("#bikes-disabled > p").html("<strong>" + bikesDisabled + "</strong> bloqueadas");
+          $("#docks-available > p").html("<strong>" + docksAvailable + "</strong> libres");
+          $("#docks-disabled > p").html("<strong>" + docksDisabled + "</strong> deshabilitados");
 
           var tweet = "Hay " + bikesDisabled + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app ➡";
 

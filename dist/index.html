@@ -57,14 +57,14 @@
     <div class="wrapper">
       <!-- SEARCH -->
       <div id="search" class="container">
-        <div class="search-box">
-          <button id="search-button" class="ripple" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-search"></i></button>
-          <input id="search-input" type="number" aria-label="Buscar por estación" placeholder="Ingresá una estación" />
+        <div id="search-box">
+          <button id="search-button" class="btn ripple" type="submit" aria-label="Buscar por estación" value="Buscar por estación"><i class="fas fa-search"></i></button>
+          <input id="search-input" type="number" aria-label="Buscar por estación" placeholder="Buscar una estación" />
           <div class="search-fixed">
-            <input id="search-fixed" class="ripple" type="checkbox" aria-label="Fijar estación" />
+            <input id="search-fixed" class="btn ripple" type="checkbox" aria-label="Fijar estación" />
             <label for="search-fixed"></label>
           </div>
-          <button id="location-button" class="ripple" type="submit" aria-label="Buscar" value="Buscar"><i class="fas fa-location-arrow"></i></button>
+          <button id="location-button" class="btn ripple" type="submit" aria-label="Buscar por ubicación" value="Buscar por ubicación" disabled><i class="fas fa-location-arrow"></i></button>
         </div>
       </div>
 
@@ -77,8 +77,8 @@
           <div id="bikes-disabled" class="card disabled"><p></p></div>
           <div id="docks-available" class="card"><p></p></div>
           <div id="docks-disabled" class="card"><p></p></div>
-          <div class="last-update"><p></p></div>
         </div>
+        <div class="last-update"><p>Última actualización</p></div>
       </div>
 
       <!-- CTA BUTTONS -->
@@ -87,7 +87,7 @@
           <button id="refresh-button" class="refresh-btn btn ripple" value=""><i class="fas fa-sync"></i> Actualizar</button>
         </div>
         <div id="twitter">
-          <button class="twitter-btn btn ripple" value=""><i class="fab fa-twitter"></i> Compartir</button>
+          <button id="twitter-button" class="twitter-btn btn ripple" value=""><i class="fab fa-twitter"></i> Compartir</button>
         </div>
       </div>
     </div>
