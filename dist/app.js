@@ -1,7 +1,9 @@
 // Variables for jQuery AJAX
 const urlPrefix = "https://cors-anywhere.herokuapp.com/";
-const url_stationStatus = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus";
-const url_stationInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationInformation";
+const url_stationStatus =
+  "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus";
+const url_stationInformation =
+  "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationInformation";
 const client_id = config.ID;
 const client_secret = config.SECRET;
 // Initial variables
@@ -30,12 +32,12 @@ function pad(n) {
 //* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function() {
   bikesTotal();
-  getValidStations();
 });
 
 //* Search button click ------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
   event.preventDefault();
+  getValidStations();
 
   if (typeof searchValue !== "undefined") {
     searchValue = pad(searchInput.value);
@@ -66,7 +68,6 @@ searchButton.addEventListener("click", function(event) {
 //* Start search by pressing enter on search box ------------------------------>
 searchInput.addEventListener("keyup", function(event) {
   event.preventDefault();
-  searchValue = pad(searchInput.value);
   if (event.keyCode === 13) {
     searchButton.click();
     searchInput.blur();
@@ -99,10 +100,18 @@ function bikesTotal() {
       //console.log(stationStatus);
 
       var lastUpdated = new Date(data.last_updated * 1000);
-      var options = { year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" };
+      var options = {
+        year: "2-digit",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      };
       var lastUpdatedTotal = lastUpdated.toLocaleString("es-AR", options);
 
-      $(".last-update > p").html("Última actualización total " + lastUpdatedTotal);
+      $(".last-update > p").html(
+        "Última actualización total " + lastUpdatedTotal
+      );
 
       for (var i = 0; i < stationStatus.length; i++) {
         bikesAvailable = bikesAvailable + stationStatus[i].num_bikes_available;
@@ -115,12 +124,21 @@ function bikesTotal() {
       bikesAvailable = bikesAvailable - 396;
       docksAvailable = docksAvailable - 198;
 
-      $("#bikes-available > p").html("<strong>" + bikesAvailable + "</strong> disponibles");
-      $("#bikes-disabled > p").html("<strong>" + bikesDisabled + "</strong> bloqueadas");
-      $("#docks-available > p").html("<strong>" + docksAvailable + "</strong> libres");
-      $("#docks-disabled > p").html("<strong>" + docksDisabled + "</strong> deshabilitados");
+      $("#bikes-available > p").html(
+        "<strong>" + bikesAvailable + "</strong> disponibles"
+      );
+      $("#bikes-disabled > p").html(
+        "<strong>" + bikesDisabled + "</strong> bloqueadas"
+      );
+      $("#docks-available > p").html(
+        "<strong>" + docksAvailable + "</strong> libres"
+      );
+      $("#docks-disabled > p").html(
+        "<strong>" + docksDisabled + "</strong> deshabilitados"
+      );
 
-      var tweet = "Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app ➡";
+      var tweet =
+        "Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app ➡";
 
       // twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {
       //   text: tweet,
@@ -214,12 +232,25 @@ function bikesStation() {
           $("h3").html("");
           $("h3").html(result_name);
 
-          $("#bikes-available > p").html("<strong>" + bikesAvailable + "</strong> disponibles");
-          $("#bikes-disabled > p").html("<strong>" + bikesDisabled + "</strong> bloqueadas");
-          $("#docks-available > p").html("<strong>" + docksAvailable + "</strong> libres");
-          $("#docks-disabled > p").html("<strong>" + docksDisabled + "</strong> deshabilitados");
+          $("#bikes-available > p").html(
+            "<strong>" + bikesAvailable + "</strong> disponibles"
+          );
+          $("#bikes-disabled > p").html(
+            "<strong>" + bikesDisabled + "</strong> bloqueadas"
+          );
+          $("#docks-available > p").html(
+            "<strong>" + docksAvailable + "</strong> libres"
+          );
+          $("#docks-disabled > p").html(
+            "<strong>" + docksDisabled + "</strong> deshabilitados"
+          );
 
-          var tweet = "Hay " + bikesDisabled + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app ➡";
+          var tweet =
+            "Hay " +
+            bikesDisabled +
+            " EcoBici bloqueadas en la estación " +
+            result_name +
+            ". Probá la app ➡";
 
           // $("#twitter").html("");
           // twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {

@@ -161,6 +161,7 @@ h1 {
   background-color: var(--color-white);
   height: 40px;
   text-align: left;
+  flex: 1;
 }
 #search-input::-webkit-input-placeholder {
   color: #777;
