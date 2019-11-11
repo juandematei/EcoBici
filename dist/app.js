@@ -1,7 +1,9 @@
 // Variables for jQuery AJAX
 const urlPrefix = "https://cors-anywhere.herokuapp.com/";
-const url_stationStatus = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus";
-const url_stationInformation = "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationInformation";
+const url_stationStatus =
+  "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus";
+const url_stationInformation =
+  "https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationInformation";
 const client_id = config.ID;
 const client_secret = config.SECRET;
 // Initial variables
@@ -28,20 +30,20 @@ function pad(n) {
 }
 
 //* Show bikes totals when page loads ----------------------------------------->
-$(document).ready(function () {
+$(document).ready(function() {
   bikesTotal();
   getValidStations();
 });
 
 //* Search button click ------------------------------------------------------->
-searchButton.addEventListener("click", function (event) {
+searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
 
   if (searchValue === "") {
     searchBox.classList.add("error");
     searchInput.placeholder = "Ingresá una estación";
-    setTimeout(function () {
+    setTimeout(function() {
       searchBox.classList.remove("error");
       searchInput.placeholder = "Buscar una estación";
     }, 4000);
@@ -54,7 +56,7 @@ searchButton.addEventListener("click", function (event) {
       searchInput.value = "";
       searchBox.classList.add("error");
       searchInput.placeholder = "No existe esa estación";
-      setTimeout(function () {
+      setTimeout(function() {
         searchBox.classList.remove("error");
         searchInput.placeholder = "Buscar una estación";
       }, 4000);
@@ -63,14 +65,14 @@ searchButton.addEventListener("click", function (event) {
 });
 
 //* Start search by pressing enter on search box ------------------------------>
-searchInput.addEventListener("keyup", function (event) {
+searchInput.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
     searchButton.click();
   }
 });
 
 //* Refresh results ----------------------------------------------------------->
-refreshButton.addEventListener("click", function (event) {
+refreshButton.addEventListener("click", function(event) {
   event.preventDefault();
   if (searchFixed.checked == true) {
     searchButton.click();
@@ -90,7 +92,7 @@ function bikesTotal() {
       client_id: client_id,
       client_secret: client_secret
     },
-    success: function (data) {
+    success: function(data) {
       var stationStatus = data.data.stations;
       //console.log(stationStatus);
 
@@ -147,7 +149,7 @@ function bikesTotal() {
 
       $(".updating").fadeOut(100);
     },
-    error: function (jqXHR, textStatus, errorThrown) {
+    error: function(jqXHR, textStatus, errorThrown) {
       console.log("jqXHR:");
       console.log(jqXHR);
       console.log("textStatus:");
@@ -169,13 +171,13 @@ function bikesStation() {
       client_id: client_id,
       client_secret: client_secret
     },
-    success: function (data) {
+    success: function(data) {
       var stationInformation = data.data.stations;
       //console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
-      const findStationId = function (stations, number) {
-        const resultStationId = stations.find(function (station) {
+      const findStationId = function(stations, number) {
+        const resultStationId = stations.find(function(station) {
           return station.name.slice(0, 3) === number;
         });
         return resultStationId;
@@ -198,13 +200,13 @@ function bikesStation() {
           client_id: client_id,
           client_secret: client_secret
         },
-        success: function (data) {
+        success: function(data) {
           var stationStatus = data.data.stations;
           //console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
-          const getStationStatus = function (stations, result_id) {
-            const resultStationStatus = stations.find(function (station) {
+          const getStationStatus = function(stations, result_id) {
+            const resultStationStatus = stations.find(function(station) {
               return station.station_id === result_id;
             });
             return resultStationStatus;
@@ -251,26 +253,21 @@ function bikesStation() {
             $("#docks-available > p").html(
               "<strong>" + docksAvailable + "</strong> libre"
             );
-
           } else {
             $("#docks-available > p").html(
               "<strong>" + docksAvailable + "</strong> libres"
             );
-
           }
 
           if (docksDisabled === 1) {
             $("#docks-disabled > p").html(
               "<strong>" + docksDisabled + "</strong> deshabilitado"
             );
-
           } else {
             $("#docks-disabled > p").html(
               "<strong>" + docksDisabled + "</strong> deshabilitados"
             );
-
           }
-
 
           var tweet =
             "Hay " +
@@ -291,7 +288,7 @@ function bikesStation() {
           // });
           $(".updating").fadeOut();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function(jqXHR, textStatus, errorThrown) {
           console.log("jqXHR:");
           console.log(jqXHR);
           console.log("textStatus:");
@@ -301,7 +298,7 @@ function bikesStation() {
         }
       });
     },
-    error: function (jqXHR, textStatus, errorThrown) {
+    error: function(jqXHR, textStatus, errorThrown) {
       console.log("jqXHR:");
       console.log(jqXHR);
       console.log("textStatus:");
@@ -325,7 +322,7 @@ function getValidStations() {
       client_id: client_id,
       client_secret: client_secret
     },
-    success: function (data) {
+    success: function(data) {
       var response = data.data.stations;
 
       for (var i = 0; i < response.length; i++) {
@@ -334,7 +331,7 @@ function getValidStations() {
       }
       //console.log(validStations);
     },
-    error: function (jqXHR, textStatus, errorThrown) {
+    error: function(jqXHR, textStatus, errorThrown) {
       console.log("jqXHR:");
       console.log(jqXHR);
       console.log("textStatus:");
