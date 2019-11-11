@@ -30,12 +30,12 @@ function pad(n) {
 //* Show bikes totals when page loads ----------------------------------------->
 $(document).ready(function () {
   bikesTotal();
+  getValidStations();
 });
 
 //* Search button click ------------------------------------------------------->
 searchButton.addEventListener("click", function (event) {
   event.preventDefault();
-  getValidStations();
   searchValue = searchInput.value;
 
   if (searchValue === "") {
@@ -217,17 +217,17 @@ function bikesStation() {
           bikesDisabled = resultStationStatus.num_bikes_disabled;
           docksAvailable = resultStationStatus.num_docks_available;
           docksDisabled = resultStationStatus.num_docks_disabled;
-          //console.log(bikesAvailable);
-          //console.log(bikesDisabled);
-          //console.log(docksAvailable);
-          //console.log(docksDisabled);
+          console.log(bikesAvailable);
+          console.log(bikesDisabled);
+          console.log(docksAvailable);
+          console.log(docksDisabled);
 
           $("h2").html("");
           $("h2").html("Estación");
           $("h3").html("");
           $("h3").html(result_name);
 
-          if ((bikesAvailable = 1)) {
+          if (bikesAvailable === 1) {
             $("#bikes-available > p").html(
               "<strong>" + bikesAvailable + "</strong> disponible"
             );
@@ -237,18 +237,40 @@ function bikesStation() {
             );
           }
 
-          // $("#bikes-available > p").html(
-          //   "<strong>" + bikesAvailable + "</strong> disponibles"
-          // );
-          $("#bikes-disabled > p").html(
-            "<strong>" + bikesDisabled + "</strong> bloqueadas"
-          );
-          $("#docks-available > p").html(
-            "<strong>" + docksAvailable + "</strong> libres"
-          );
-          $("#docks-disabled > p").html(
-            "<strong>" + docksDisabled + "</strong> deshabilitados"
-          );
+          if (bikesDisabled === 1) {
+            $("#bikes-disabled > p").html(
+              "<strong>" + bikesDisabled + "</strong> bloqueada"
+            );
+          } else {
+            $("#bikes-disabled > p").html(
+              "<strong>" + bikesDisabled + "</strong> bloqueadas"
+            );
+          }
+
+          if (docksAvailable === 1) {
+            $("#docks-available > p").html(
+              "<strong>" + docksAvailable + "</strong> libre"
+            );
+
+          } else {
+            $("#docks-available > p").html(
+              "<strong>" + docksAvailable + "</strong> libres"
+            );
+
+          }
+
+          if (docksDisabled === 1) {
+            $("#docks-disabled > p").html(
+              "<strong>" + docksDisabled + "</strong> deshabilitado"
+            );
+
+          } else {
+            $("#docks-disabled > p").html(
+              "<strong>" + docksDisabled + "</strong> deshabilitados"
+            );
+
+          }
+
 
           var tweet =
             "Hay " +
