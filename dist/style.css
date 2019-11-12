@@ -4,7 +4,7 @@
   /* COLORS ------------------------------------------------------------------*/
   --color-primary:   #e66300;
   --color-secondary: #0a4990;
-  --color-black:     #212121;
+  --color-black:     #424242;
   --color-white:     #ffffff;
   --color-green:     #2e7d32; --rgb-green:       46, 125, 50;
   --color-red:       #c62828; --rgb-red:         198, 40, 40;
@@ -264,7 +264,6 @@ h3 {
   border-radius: var(--border-radius);
   padding: 1rem;
   box-shadow: var(--box-shadow);
-  text-transform: uppercase;
   font-size: 1.2rem;
   margin-bottom: 1rem;
   display: flex;
@@ -272,7 +271,14 @@ h3 {
   text-align: left;
 }
 
-.card strong {
+.icon {
+  margin-right: 0.5rem;
+  width: 1.5rem;
+}
+
+.numb {
+  margin-right: 0.5rem;
+  text-align: right;
   font-weight: 700;
 }
 
@@ -331,6 +337,11 @@ h3 {
   background-color: var(--color-secondary);
 }
 
+.refresh-btn.fixed {
+  background-color: var(--color-red);
+}
+
+
 @keyframes ripple {
   from {
     width: 0;
@@ -369,7 +380,7 @@ h3 {
 
 /** FOOTER -------------------------------------------------------------------*/
 footer {
-  background-color: var(--color-black);
+  background-color: var(--color-secondary);
   color: var(--color-white);
   padding: 3rem 0;
   margin-top: 2rem;
