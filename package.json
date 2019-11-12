@@ -1,7 +1,7 @@
 {
   "name": "ecobici",
-  "version": "1.2.0",
-  "description": "Bicicletas bloqueadas en tiempo real.",
+  "version": "2.0.0",
+  "description": "Estado de las estaciones en tiempo real.",
   "main": "index.js",
   "dependencies": {
     "gh-pages": "^2.0.1"

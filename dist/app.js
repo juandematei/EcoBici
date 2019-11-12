@@ -135,14 +135,14 @@ function bikesTotal() {
       $("#bikes-disabled > span.text").html("bicis bloqueadas");
 
       $("#docks-available > span.numb").html(docksAvailable);
-      $("#docks-available > span.text").html("docks disponibles");
+      $("#docks-available > span.text").html("posiciones libres");
 
       $("#docks-disabled > span.numb").html(docksDisabled);
-      $("#docks-disabled > span.text").html("docks bloqueados");
+      $("#docks-disabled > span.text").html("posiciones bloqueadas");
 
 
       var tweet =
-        "Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app ➡";
+        "Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app ➡️";
 
       // twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {
       //   text: tweet,
@@ -251,22 +251,22 @@ function bikesStation() {
 
           if (docksAvailable === 1) {
             $("#docks-available > span.numb").html(docksAvailable);
-            $("#docks-available > span.text").html("dock disponible");
+            $("#docks-available > span.text").html("posición libre");
           } else {
             $("#docks-available > span.numb").html(docksAvailable);
-            $("#docks-available > span.text").html("docks disponibles");
+            $("#docks-available > span.text").html("posiciones libres");
           }
 
           if (docksDisabled === 1) {
             $("#docks-disabled > span.numb").html(docksDisabled);
-            $("#docks-disabled > span.text").html("dock bloqueado");
+            $("#docks-disabled > span.text").html("posición bloqueada");
           } else {
             $("#docks-disabled > span.numb").html(docksDisabled);
-            $("#docks-disabled > span.text").html("docks bloqueados");
+            $("#docks-disabled > span.text").html("posiciones bloqueadas");
           }
 
           var tweet =
-            "Hay " + bikesDisabled + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app ➡";
+            "Hay " + bikesDisabled + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app ➡️";
 
           // $("#twitter").html("");
           // twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {
