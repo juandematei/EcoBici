@@ -19,6 +19,7 @@ var searchFixed = document.getElementById("search-fixed");
 var searchValue = "";
 var locationButton = document.getElementById("location-button");
 var refreshButton = document.getElementById("refresh-button");
+var twitterButton = document.getElementById("twitter-button");
 //  Add leading zeros to station_id number ------------------------------------>
 function pad(n) {
   if (n <= 999) {
@@ -140,19 +141,13 @@ function bikesTotal() {
       $("#docks-disabled > span.numb").html(docksDisabled);
       $("#docks-disabled > span.text").html("posiciones bloqueadas");
 
+      var text = encodeURIComponent("🚳 Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app!");
+      var url = "https://juandematei.github.io/EcoBici/";
+      var hashtags = "EliminenElBotón,EcoBici";
+      var via = "juandematei";
+      var related = "elbotonmalo,baecobici";
 
-      var tweet =
-        "Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app ➡️";
-
-      // twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {
-      //   text: tweet,
-      //   url: "https://juandematei.github.io/EcoBici",
-      //   hashtags: "EliminenElBotón,EcoBici",
-      //   via: "juandematei",
-      //   related: "baecobici,elbotonmalo",
-      //   size: "large",
-      //   lang: "es"
-      // });
+      twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
 
       $(".updating").fadeOut(100);
     },
@@ -265,19 +260,14 @@ function bikesStation() {
             $("#docks-disabled > span.text").html("posiciones bloqueadas");
           }
 
-          var tweet =
-            "Hay " + bikesDisabled + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app ➡️";
+          var text = encodeURIComponent("🚳 Hay " + bikesDisabled + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app!");
+          var url = "https://juandematei.github.io/EcoBici/";
+          var hashtags = "EliminenElBotón,EcoBici";
+          var via = "juandematei";
+          var related = "elbotonmalo,baecobici";
 
-          // $("#twitter").html("");
-          // twttr.widgets.createHashtagButton("", document.getElementById("twitter"), {
-          //   text: tweet,
-          //   url: "https://juandematei.github.io/EcoBici",
-          //   hashtags: "EliminenElBotón,EcoBici",
-          //   via: "juandematei",
-          //   related: "baecobici,elbotonmalo",
-          //   size: "large",
-          //   lang: "es"
-          // });
+          twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
+
           $(".updating").fadeOut();
         },
         error: function (jqXHR, textStatus, errorThrown) {

@@ -16,6 +16,7 @@
   <meta property="og:description" content="Estado de las estaciones en tiempo real." />
   <meta property="og:image" content="https://juandematei.github.io/EcoBici/img/og-image.jpg" />
   <meta property="og:url" content="https://juandematei.github.io/EcoBici/" />
+  <link rel="me" href="https://twitter.com/juandematei">
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
@@ -106,12 +107,13 @@
     <!-- CTA BUTTONS -->
     <div id="cta-buttons" class="container">
       <div id="refresh">
-        <button id="refresh-button" class="refresh-btn btn ripple" value=""><i class="fas fa-sync"></i>
-          Actualizar</button>
+        <a id="refresh-button" class="refresh-btn btn ripple"><i class="fas fa-sync"></i>
+          Actualizar</a>
       </div>
       <div id="twitter">
-        <button id="twitter-button" class="twitter-btn btn ripple" value=""><i class="fab fa-twitter"></i>
-          Compartir</button>
+        <a id="twitter-button" class="twitter-btn btn ripple twitter-share-button"
+          href="https://twitter.com/intent/tweet">
+          <i class="fab fa-twitter"></i> Compartir</a>
       </div>
     </div>
   </div>
@@ -138,7 +140,6 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
   <script type="text/javascript" src="app.js"></script>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 
 </html>
