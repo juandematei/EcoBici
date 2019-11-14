@@ -9,7 +9,7 @@ var bikesAvailable = 0;
 var bikesDisabled = 0;
 var docksAvailable = 0;
 var docksDisabled = 0;
-var bikesAdjust = 0;
+var bikesFake = 0;
 // Valid station numbers
 var validStations = [];
 // DOM elements
@@ -103,7 +103,8 @@ function bikesTotal() {
     },
     success: function (data) {
       var stationStatus = data.data.stations;
-      //console.log(stationStatus);
+      console.log("Resultado bikesTotal: ");
+      console.log(stationStatus);
 
       var lastUpdated = new Date(data.last_updated * 1000);
       var options = {
@@ -124,13 +125,13 @@ function bikesTotal() {
         bikesDisabled = bikesDisabled + stationStatus[i].num_bikes_disabled;
         docksAvailable = docksAvailable + stationStatus[i].num_docks_available;
         docksDisabled = docksDisabled + stationStatus[i].num_docks_disabled;
-        bikesAdjust = bikesAdjust + stationStatus[i].num_bikes_available_types.ebike;
+        bikesFake = bikesFake + stationStatus[i].num_bikes_available_types.ebike;
       }
 
       //! Correct totals
-      //console.log(bikesAdjust);
-      bikesAvailable = bikesAvailable - (bikesAdjust * 2);
-      docksAvailable = docksAvailable - (bikesAdjust * 1);
+      console.log("Total bicis falsas: " + bikesFake);
+      bikesAvailable = bikesAvailable - (bikesFake * 2);
+      docksAvailable = docksAvailable - (bikesFake * 1);
 
       $("#bikes-available > span.numb").html(bikesAvailable);
       $("#bikes-available > span.text").html("bicis disponibles");
@@ -154,10 +155,14 @@ function bikesTotal() {
 
       $(".updating").fadeOut(100);
     },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log("jqXHR: " + jqXHR);
-      console.log("textStatus: " + textStatus);
-      console.log("errorThrown: " + errorThrown);
+    error: function (jqXHR) {
+      console.log("Error: " + jqXHR.status);
+      console.log("Error: " + jqXHR.responseText);
+      $(".updating").fadeOut(100);
+      $("h2").html("");
+      $("h2").html("ERROR");
+      $("h3").html("");
+      $("h3").html("Mensaje");
     }
   });
 }
@@ -175,7 +180,8 @@ function bikesStation() {
     },
     success: function (data) {
       var stationInformation = data.data.stations;
-      //console.log(stationInformation);
+      console.log("Resultado bikesStation INFO: ");
+      console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
       const findStationId = function (stations, number) {
@@ -186,12 +192,12 @@ function bikesStation() {
       };
 
       let resultStationId = findStationId(stationInformation, searchValue);
-      //console.log(resultStationId);
+      console.log("Resultado stationId-name: " + resultStationId);
 
       result_id = resultStationId.station_id;
       result_name = resultStationId.name;
-      //console.log(result_id);
-      //console.log(result_name);
+      console.log("ID info: " + result_id);
+      console.log("Nombre: " + result_name);
 
       // Get station data ----------------------------------------------------->
       $.ajax({
@@ -204,7 +210,8 @@ function bikesStation() {
         },
         success: function (data) {
           var stationStatus = data.data.stations;
-          //console.log(stationStatus);
+          console.log("Resultado bikesStation STATUS: ");
+          console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
           const getStationStatus = function (stations, result_id) {
@@ -215,16 +222,16 @@ function bikesStation() {
           };
 
           let resultStationStatus = getStationStatus(stationStatus, result_id);
-          //console.log(resultStationStatus);
+          console.log(resultStationStatus);
 
           bikesAvailable = resultStationStatus.num_bikes_available;
           bikesDisabled = resultStationStatus.num_bikes_disabled;
           docksAvailable = resultStationStatus.num_docks_available;
           docksDisabled = resultStationStatus.num_docks_disabled;
-          //console.log(bikesAvailable);
-          //console.log(bikesDisabled);
-          //console.log(docksAvailable);
-          //console.log(docksDisabled);
+          console.log("Disponibles: " + bikesAvailable);
+          console.log("Bloqueadas: " + bikesDisabled);
+          console.log("Docks disponibles: " + docksAvailable);
+          console.log("Docks bloqueados: " + docksDisabled);
 
           $("h2").html("");
           $("h2").html("Estación");
@@ -273,10 +280,14 @@ function bikesStation() {
 
           $(".updating").fadeOut();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log("jqXHR: " + jqXHR);
-          console.log("textStatus: " + textStatus);
-          console.log("errorThrown: " + errorThrown);
+        error: function (jqXHR) {
+          console.log("Error: " + jqXHR.status);
+          console.log("Error: " + jqXHR.responseText);
+          $(".updating").fadeOut(100);
+          $("h2").html("");
+          $("h2").html("ERROR");
+          $("h3").html("");
+          $("h3").html("Mensaje");
         }
       });
     },
@@ -308,7 +319,35 @@ function getValidStations() {
         station = response[i].name.slice(0, 3);
         validStations.push(station);
       }
-      //console.log(validStations);
+      console.log("Números de estación válidos: ");
+      console.log(validStations);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log("jqXHR: " + jqXHR);
+      console.log("textStatus: " + textStatus);
+      console.log("errorThrown: " + errorThrown);
+    }
+  });
+}
+
+//* Get number of "PLANNED" stations
+function getStationStatus() {
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: urlPrefix + url_stationStatus,
+    data: {
+      client_id: client_id,
+      client_secret: client_secret
+    },
+    success: function (data) {
+      var stationStatus = data.data.stations;
+      console.log("Resultado bikesTotal: ");
+      console.log(stationStatus);
+
+      var status = "END_OF_LIFE";
+      var count = stationStatus.filter((obj) => obj.status === status).length;
+      console.log("Total: " + count);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log("jqXHR: " + jqXHR);
