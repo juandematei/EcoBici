@@ -9,6 +9,7 @@ var bikesAvailable = 0;
 var bikesDisabled = 0;
 var docksAvailable = 0;
 var docksDisabled = 0;
+var bikesAdjust = 0;
 // Valid station numbers
 var validStations = [];
 // DOM elements
@@ -123,11 +124,13 @@ function bikesTotal() {
         bikesDisabled = bikesDisabled + stationStatus[i].num_bikes_disabled;
         docksAvailable = docksAvailable + stationStatus[i].num_docks_available;
         docksDisabled = docksDisabled + stationStatus[i].num_docks_disabled;
+        bikesAdjust = bikesAdjust + stationStatus[i].num_bikes_available_types.ebike;
       }
 
       //! Correct totals
-      bikesAvailable = bikesAvailable - 396;
-      docksAvailable = docksAvailable - 198;
+      //console.log(bikesAdjust);
+      bikesAvailable = bikesAvailable - (bikesAdjust * 2);
+      docksAvailable = docksAvailable - (bikesAdjust * 1);
 
       $("#bikes-available > span.numb").html(bikesAvailable);
       $("#bikes-available > span.text").html("bicis disponibles");
@@ -218,10 +221,10 @@ function bikesStation() {
           bikesDisabled = resultStationStatus.num_bikes_disabled;
           docksAvailable = resultStationStatus.num_docks_available;
           docksDisabled = resultStationStatus.num_docks_disabled;
-          console.log(bikesAvailable);
-          console.log(bikesDisabled);
-          console.log(docksAvailable);
-          console.log(docksDisabled);
+          //console.log(bikesAvailable);
+          //console.log(bikesDisabled);
+          //console.log(docksAvailable);
+          //console.log(docksDisabled);
 
           $("h2").html("");
           $("h2").html("Estación");
