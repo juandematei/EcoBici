@@ -1,8 +1,7 @@
 {
   "liveServer.settings.root": "/dist",
   "editor.rulers": [
-    80,
-    120
+    80
   ],
-  "editor.wordWrapColumn": 120
+  "editor.wordWrapColumn": 999
 }
