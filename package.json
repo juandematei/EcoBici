@@ -25,5 +25,9 @@
   "bugs": {
     "url": "https://github.com/juandematei/EcoBici/issues"
   },
-  "homepage": "https://juandematei.github.io/EcoBici/"
+  "homepage": "https://juandematei.github.io/EcoBici/",
+  "prettier": {
+    "proseWrap": "preserve",
+    "printWidth": 999
+  }
 }

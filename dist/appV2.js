@@ -16,23 +16,26 @@ urlInformation.searchParams.set("client_secret", client_secret);
 const xhrInformation = urlCors + urlInformation;
 
 // Initial variables
-var bikesAvailable = 0;
-var bikesDisabled = 0;
-var docksAvailable = 0;
-var docksDisabled = 0;
-var bikesFake = 0;
-// Valid station numbers
+var bikesAvailableInitial = 0;
+var bikesDisabledInitial = 0;
+var docksAvailableInitial = 0;
+var docksDisabledInitial = 0;
+var bikesFakeInitial = 0;
+
 var validStations = [];
-// DOM elements
-var searchBox = document.querySelector("#search-box");
-var searchButton = document.querySelector("#search-button");
-var searchInput = document.querySelector("#search-input");
-var searchFixed = document.querySelector("#search-fixed");
 var searchValue = "";
-var locationButton = document.querySelector("#location-button");
-var refreshButton = document.querySelector("#refresh-button");
-var twitterButton = document.querySelector("#twitter-button");
+var searchFixed = false;
+
+// DOM elements
+var searchBox = document.querySelector(".search-box");
+var searchButton = document.querySelector(".search-btn");
+var searchInput = document.querySelector(".search-input");
+var fixedButton = document.querySelector(".fixed-btn");
+var locationButton = document.querySelector(".location-btn");
+var refreshButton = document.querySelector(".refresh-btn");
+var twitterButton = document.querySelector(".twitter-btn");
 var updating = document.querySelector(".updating");
+var updateTime = document.querySelector(".last-update > p > span");
 
 //  Add leading zeros to station_id number ------------------------------------>
 function pad(n) {
@@ -43,20 +46,20 @@ function pad(n) {
 }
 
 // Show bikes totals when page loads ----------------------------------------->
-(function () {
+(function() {
   bikesTotal();
   //getValidStations();
 })();
 
 // Search button click ------------------------------------------------------->
-searchButton.addEventListener("click", function (event) {
+searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
 
   if (searchValue === "") {
     searchBox.classList.add("error");
     searchInput.placeholder = "Ingresá una estación";
-    setTimeout(function () {
+    setTimeout(function() {
       searchBox.classList.remove("error");
       searchInput.placeholder = "Buscar una estación";
     }, 4000);
@@ -69,7 +72,7 @@ searchButton.addEventListener("click", function (event) {
       searchInput.value = "";
       searchBox.classList.add("error");
       searchInput.placeholder = "No existe esa estación";
-      setTimeout(function () {
+      setTimeout(function() {
         searchBox.classList.remove("error");
         searchInput.placeholder = "Buscar una estación";
       }, 4000);
@@ -78,16 +81,16 @@ searchButton.addEventListener("click", function (event) {
 });
 
 // Start search by pressing enter on search box ------------------------------>
-searchInput.addEventListener("keyup", function (event) {
+searchInput.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
     searchButton.click();
   }
 });
 
 // Refresh results ----------------------------------------------------------->
-refreshButton.addEventListener("click", function (event) {
+refreshButton.addEventListener("click", function(event) {
   event.preventDefault();
-  if (searchFixed.checked == true) {
+  if (searchFixed === true) {
     searchButton.click();
   } else {
     location.reload();
@@ -95,8 +98,9 @@ refreshButton.addEventListener("click", function (event) {
 });
 
 // Change refresh-button color when searh is fixed --------------------------->
-searchFixed.addEventListener("click", function (event) {
-  if (searchFixed.checked === true) {
+fixedButton.addEventListener("click", function(event) {
+  searchFixed = !searchFixed;
+  if (searchFixed === true) {
     refreshButton.classList.add("fixed");
   } else {
     refreshButton.classList.remove("fixed");
@@ -109,7 +113,7 @@ function bikesTotal() {
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
-  xhr.onload = function () {
+  xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       var resp = JSON.parse(this.response);
@@ -117,6 +121,7 @@ function bikesTotal() {
       console.log("Resultado bikesTotal: ");
       console.log(stationStatus);
 
+      // Get last update time & date
       var lastUpdated = new Date(resp.last_updated * 1000);
       var options = {
         year: "2-digit",
@@ -126,65 +131,66 @@ function bikesTotal() {
         minute: "2-digit"
       };
       var lastUpdatedTotal = lastUpdated.toLocaleString("es-AR", options);
+      updateTime.append(lastUpdatedTotal);
 
-      //$(".last-update > p").html("Última actualización total " + lastUpdatedTotal);
+      // Get total bikes available
+      var bikesAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
+        return acc + currentValue.num_bikes_available;
+      }, bikesAvailableInitial);
+      console.log(bikesAvailableAcc);
+      var card_available = document.querySelector(".bikes-available > span.numb");
+      card_available.append(bikesAvailableAcc);
 
-      for (var i = 0; i < stationStatus.length; i++) {
-        bikesAvailable = bikesAvailable + stationStatus[i].num_bikes_available;
-        bikesDisabled = bikesDisabled + stationStatus[i].num_bikes_disabled;
-        docksAvailable = docksAvailable + stationStatus[i].num_docks_available;
-        docksDisabled = docksDisabled + stationStatus[i].num_docks_disabled;
-        bikesFake =
-          bikesFake + stationStatus[i].num_bikes_available_types.ebike;
-      }
+      // Get total bikes disabled
+      var bikesDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
+        return acc + currentValue.num_bikes_disabled;
+      }, bikesDisabledInitial);
+      console.log(bikesDisabledAcc);
+      var card_disabled = document.querySelector(".bikes-disabled > span.numb");
+      card_disabled.append(bikesDisabledAcc);
 
-      //! Correct totals
-      console.log("Total bicis falsas: " + bikesFake);
-      bikesAvailable = bikesAvailable - bikesFake * 2;
-      docksAvailable = docksAvailable - bikesFake * 1;
+      // Get total docks available
+      var docksAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
+        return acc + currentValue.num_docks_available;
+      }, docksAvailableInitial);
+      console.log(docksAvailableAcc);
+      var docks_available = document.querySelector(".docks-available > span.numb");
+      docks_available.append(docksAvailableAcc);
 
-      var card_available = document.querySelector("#bikes-available > span.numb");
-      card_available.append(bikesAvailable);
-      //$("#bikes-available > span.text").html("bicis disponibles");
+      // Get total docks disabled
+      var docksDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
+        return acc + currentValue.num_docks_disabled;
+      }, docksDisabledInitial);
+      console.log(docksDisabledAcc);
+      var docks_disabled = document.querySelector(".docks-disabled > span.numb");
+      docks_disabled.append(docksDisabledAcc);
 
-      //$("#bikes-disabled > span.numb").html(bikesDisabled);
-      //$("#bikes-disabled > span.text").html("bicis bloqueadas");
+      // Get total fake bikes
+      var bikesFakeAcc = stationStatus.reduce(function(acc, currentValue) {
+        return acc + currentValue.num_bikes_available_types.ebike;
+      }, bikesFakeInitial);
+      console.log(bikesFakeAcc);
 
-      //$("#docks-available > span.numb").html(docksAvailable);
-      //$("#docks-available > span.text").html("posiciones libres");
+      // Correct totals
+      console.log("Total bicis falsas: " + bikesFakeAcc);
+      bikesAvailableAcc = bikesAvailableAcc - bikesFakeAcc * 2;
+      docksAvailableAcc = docksAvailableAcc - bikesFakeAcc * 1;
 
-      //$("#docks-disabled > span.numb").html(docksDisabled);
-      //$("#docks-disabled > span.text").html("posiciones bloqueadas");
-
-      var text = encodeURIComponent(
-        "🚳 Hay " + bikesDisabled + " EcoBici bloqueadas. Probá la app!"
-      );
+      // Tweet button
+      var text = encodeURIComponent("🚳 Hay " + bikesDisabledAcc + " EcoBici bloqueadas. Probá la app!");
       var url = "https://juandematei.github.io/EcoBici/";
       var hashtags = "EliminenElBotón,EcoBici";
       var via = "juandematei";
       var related = "elbotonmalo,baecobici";
-
-      twitterButton.href =
-        "https://twitter.com/intent/tweet?text=" +
-        text +
-        "&url=" +
-        url +
-        "&hashtags=" +
-        hashtags +
-        "&via=" +
-        via +
-        "&related=" +
-        related;
+      twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
 
       updating.classList.add("hide");
-
-
     } else {
       // We reached our target server, but it returned an error
       console.log("Error 1");
     }
   };
-  xhr.onerror = function () {
+  xhr.onerror = function() {
     // There was a connection error of some sort
     console.log("Error 2");
   };
@@ -202,14 +208,14 @@ function bikesStation() {
       client_id: client_id,
       client_secret: client_secret
     },
-    success: function (data) {
+    success: function(data) {
       var stationInformation = data.data.stations;
       console.log("Resultado bikesStation INFO: ");
       console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
-      const findStationId = function (stations, number) {
-        const resultStationId = stations.find(function (station) {
+      const findStationId = function(stations, number) {
+        const resultStationId = stations.find(function(station) {
           return station.name.slice(0, 3) === number;
         });
         return resultStationId;
@@ -232,14 +238,14 @@ function bikesStation() {
           client_id: client_id,
           client_secret: client_secret
         },
-        success: function (data) {
+        success: function(data) {
           var stationStatus = data.data.stations;
           console.log("Resultado bikesStation STATUS: ");
           console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
-          const getStationStatus = function (stations, result_id) {
-            const resultStationStatus = stations.find(function (station) {
+          const getStationStatus = function(stations, result_id) {
+            const resultStationStatus = stations.find(function(station) {
               return station.station_id === result_id;
             });
             return resultStationStatus;
@@ -294,33 +300,17 @@ function bikesStation() {
             $("#docks-disabled > span.text").html("posiciones bloqueadas");
           }
 
-          var text = encodeURIComponent(
-            "🚳 Hay " +
-            bikesDisabled +
-            " EcoBici bloqueadas en la estación " +
-            result_name +
-            ". Probá la app!"
-          );
+          var text = encodeURIComponent("🚳 Hay " + bikesDisabled + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app!");
           var url = "https://juandematei.github.io/EcoBici/";
           var hashtags = "EliminenElBotón,EcoBici";
           var via = "juandematei";
           var related = "elbotonmalo,baecobici";
 
-          twitterButton.href =
-            "https://twitter.com/intent/tweet?text=" +
-            text +
-            "&url=" +
-            url +
-            "&hashtags=" +
-            hashtags +
-            "&via=" +
-            via +
-            "&related=" +
-            related;
+          twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
 
           $(".updating").fadeOut();
         },
-        error: function (jqXHR) {
+        error: function(jqXHR) {
           console.log("Error: " + jqXHR.status);
           console.log("Error: " + jqXHR.responseText);
           $(".updating").fadeOut(100);
@@ -331,7 +321,7 @@ function bikesStation() {
         }
       });
     },
-    error: function (jqXHR, textStatus, errorThrown) {
+    error: function(jqXHR, textStatus, errorThrown) {
       console.log("jqXHR: " + jqXHR);
       console.log("textStatus: " + textStatus);
       console.log("errorThrown: " + errorThrown);
@@ -343,7 +333,7 @@ function bikesStation() {
 }
 
 //! GET VALID STATION NUMBERS ------------------------------------------------->
-function getValidStations() {
+async function getValidStations() {
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -352,7 +342,7 @@ function getValidStations() {
       client_id: client_id,
       client_secret: client_secret
     },
-    success: function (data) {
+    success: function(data) {
       var response = data.data.stations;
 
       for (var i = 0; i < response.length; i++) {
@@ -362,7 +352,7 @@ function getValidStations() {
       console.log("Números de estación válidos: ");
       console.log(validStations);
     },
-    error: function (jqXHR, textStatus, errorThrown) {
+    error: function(jqXHR, textStatus, errorThrown) {
       console.log("jqXHR: " + jqXHR);
       console.log("textStatus: " + textStatus);
       console.log("errorThrown: " + errorThrown);
@@ -380,7 +370,7 @@ function getStationStatus() {
       client_id: client_id,
       client_secret: client_secret
     },
-    success: function (data) {
+    success: function(data) {
       var stationStatus = data.data.stations;
       console.log("Resultado bikesTotal: ");
       console.log(stationStatus);
@@ -389,7 +379,7 @@ function getStationStatus() {
       var count = stationStatus.filter(obj => obj.status === status).length;
       console.log("Total: " + count);
     },
-    error: function (jqXHR, textStatus, errorThrown) {
+    error: function(jqXHR, textStatus, errorThrown) {
       console.log("jqXHR: " + jqXHR);
       console.log("textStatus: " + textStatus);
       console.log("errorThrown: " + errorThrown);
