@@ -48,7 +48,7 @@ function pad(n) {
 // Show bikes totals when page loads ----------------------------------------->
 (function() {
   bikesTotal();
-  //getValidStations();
+  getValidStations();
 })();
 
 // Search button click ------------------------------------------------------->
@@ -107,7 +107,7 @@ fixedButton.addEventListener("click", function(event) {
   }
 });
 
-//! TOTAL --------------------------------------------------------------------->
+// Get accumulated numbers
 function bikesTotal() {
   updating.classList.remove("hide");
 
@@ -197,7 +197,7 @@ function bikesTotal() {
   xhr.send();
 }
 
-//! STATION ------------------------------------------------------------------->
+//  STATION ------------------------------------------------------------------->
 function bikesStation() {
   $(".updating").fadeIn();
   $.ajax({
@@ -332,35 +332,36 @@ function bikesStation() {
   }
 }
 
-//! GET VALID STATION NUMBERS ------------------------------------------------->
+// Get valid station number from station name
 async function getValidStations() {
-  $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: urlPrefix + url_stationInformation,
-    data: {
-      client_id: client_id,
-      client_secret: client_secret
-    },
-    success: function(data) {
-      var response = data.data.stations;
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", xhrInformation, true);
+  xhr.onload = function() {
+    if (this.status >= 200 && this.status < 400) {
+      // Success!
+      var resp = JSON.parse(this.response);
+      var stationInformation = resp.data.stations;
+      console.log(resp);
+      console.log(stationInformation);
 
-      for (var i = 0; i < response.length; i++) {
-        station = response[i].name.slice(0, 3);
+      for (var i = 0; i < stationInformation.length; i++) {
+        station = stationInformation[i].name.slice(0, 3);
         validStations.push(station);
       }
-      console.log("Números de estación válidos: ");
       console.log(validStations);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log("jqXHR: " + jqXHR);
-      console.log("textStatus: " + textStatus);
-      console.log("errorThrown: " + errorThrown);
+    } else {
+      // We reached our target server, but it returned an error
+      console.log("Error 1");
     }
-  });
+  };
+  xhr.onerror = function() {
+    // There was a connection error of some sort
+    console.log("Error 2");
+  };
+  xhr.send();
 }
 
-//* Get number of "PLANNED" stations
+// Get number of "PLANNED" stations
 function getStationStatus() {
   $.ajax({
     type: "GET",
