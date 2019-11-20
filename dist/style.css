@@ -377,6 +377,10 @@ h3 {
   text-decoration: none;
 }
 
+.twitter-share-button > i {
+  color: #1a91da;
+}
+
 /* FOOTER --------------------------------------------------------------------*/
 footer {
   background-color: var(--color-secondary);
