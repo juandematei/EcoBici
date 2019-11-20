@@ -24,6 +24,7 @@ var bikesDisabledInitial = 0;
 var docksAvailableInitial = 0;
 var docksDisabledInitial = 0;
 var bikesFakeInitial = 0;
+var capacityInitial = 0;
 
 // Search initial values ------------------------------------------------------>
 var validStations = [];
