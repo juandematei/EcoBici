@@ -69,20 +69,20 @@ function pad(n) {
 }
 
 // Show bikes totals when page loads ------------------------------------------>
-(function () {
+(function() {
   bikesTotal();
   getValidStations();
 })();
 
 // Search button click -------------------------------------------------------->
-searchButton.addEventListener("click", function (event) {
+searchButton.addEventListener("click", function(event) {
   event.preventDefault();
   searchValue = searchInput.value;
 
   if (searchValue === "") {
     searchBox.classList.add("error");
     searchInput.placeholder = "Ingresá una estación";
-    setTimeout(function () {
+    setTimeout(function() {
       searchBox.classList.remove("error");
       searchInput.placeholder = "Buscar una estación";
     }, 4000);
@@ -95,7 +95,7 @@ searchButton.addEventListener("click", function (event) {
       searchInput.value = "";
       searchBox.classList.add("error");
       searchInput.placeholder = "No existe esa estación";
-      setTimeout(function () {
+      setTimeout(function() {
         searchBox.classList.remove("error");
         searchInput.placeholder = "Buscar una estación";
       }, 4000);
@@ -104,14 +104,14 @@ searchButton.addEventListener("click", function (event) {
 });
 
 // Start search by pressing enter on search box ------------------------------->
-searchInput.addEventListener("keyup", function (event) {
+searchInput.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
     searchButton.click();
   }
 });
 
 // Refresh results ------------------------------------------------------------>
-refreshButton.addEventListener("click", function (event) {
+refreshButton.addEventListener("click", function(event) {
   event.preventDefault();
   if (searchFixed === true) {
     searchButton.click();
@@ -121,7 +121,7 @@ refreshButton.addEventListener("click", function (event) {
 });
 
 // Change refresh-button color when searh is fixed ---------------------------->
-fixedButton.addEventListener("click", function (event) {
+fixedButton.addEventListener("click", function(event) {
   searchFixed = !searchFixed;
   if (searchFixed === true) {
     refreshButton.classList.add("fixed");
@@ -133,6 +133,7 @@ fixedButton.addEventListener("click", function (event) {
     fixedButton.classList.remove("fixed");
     fixedButtonIcon.classList.remove("fa-lock");
     fixedButtonIcon.classList.add("fa-unlock");
+    searchInput.value = "";
   }
 });
 
@@ -142,7 +143,7 @@ function bikesTotal() {
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
-  xhr.onload = function () {
+  xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       var resp = JSON.parse(this.response);
@@ -163,34 +164,34 @@ function bikesTotal() {
       updateTime.textContent = lastUpdatedTotal;
 
       // Get total bikes available
-      var bikesAvailableAcc = stationStatus.reduce(function (acc, currentValue) {
+      var bikesAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_bikes_available;
       }, bikesAvailableInitial);
       console.log("num_bikes_available: " + bikesAvailableAcc);
       cardBikesAvailableNumb.textContent = bikesAvailableAcc;
 
       // Get total bikes disabled
-      var bikesDisabledAcc = stationStatus.reduce(function (acc, currentValue) {
+      var bikesDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_bikes_disabled;
       }, bikesDisabledInitial);
       console.log("num_bikes_disabled: " + bikesDisabledAcc);
       cardBikesDisabledNumb.textContent = bikesDisabledAcc;
 
       // Get total docks available
-      var docksAvailableAcc = stationStatus.reduce(function (acc, currentValue) {
+      var docksAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_docks_available;
       }, docksAvailableInitial);
       console.log("num_docks_available: " + docksAvailableAcc);
       cardDocksAvailableNumb.textContent = docksAvailableAcc;
 
       // Get total docks disabled
-      var docksDisabledAcc = stationStatus.reduce(function (acc, currentValue) {
+      var docksDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_docks_disabled;
       }, docksDisabledInitial);
       console.log("num_docks_disabled: " + docksDisabledAcc);
 
       // Get total fake bikes
-      var bikesFakeAcc = stationStatus.reduce(function (acc, currentValue) {
+      var bikesFakeAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_bikes_available_types.ebike;
       }, bikesFakeInitial);
       console.log("num_bikes_available_types.ebike: " + bikesFakeAcc);
@@ -211,7 +212,7 @@ function bikesTotal() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function () {
+  xhr.onerror = function() {
     console.log("Error 2");
   };
   xhr.send();
@@ -223,7 +224,7 @@ function bikesStation() {
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
-  xhr.onload = function () {
+  xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       let resp = JSON.parse(this.response);
@@ -232,8 +233,8 @@ function bikesStation() {
       console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
-      const findStationId = function (stations, number) {
-        const resultStationId = stations.find(function (station) {
+      const findStationId = function(stations, number) {
+        const resultStationId = stations.find(function(station) {
           return station.name.slice(0, 3) === number;
         });
         return resultStationId;
@@ -248,7 +249,7 @@ function bikesStation() {
       // Get station data ----------------------------------------------------->
       let xhr = new XMLHttpRequest();
       xhr.open("GET", xhrStatus, true);
-      xhr.onload = function () {
+      xhr.onload = function() {
         if (this.status >= 200 && this.status < 400) {
           // Success!
           let resp = JSON.parse(this.response);
@@ -257,8 +258,8 @@ function bikesStation() {
           console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
-          const getStationStatus = function (stations, result_id) {
-            const resultStationStatus = stations.find(function (station) {
+          const getStationStatus = function(stations, result_id) {
+            const resultStationStatus = stations.find(function(station) {
               return station.station_id === result_id;
             });
             return resultStationStatus;
@@ -276,23 +277,23 @@ function bikesStation() {
 
           cardBikesAvailableNumb.textContent = bikesAvailableStation;
           if (bikesAvailableStation === 1) {
-            cardBikesAvailableText.textContent = "bici disponible"
+            cardBikesAvailableText.textContent = "bici disponible";
           } else {
-            cardBikesAvailableText.textContent = "bicis disponibles"
+            cardBikesAvailableText.textContent = "bicis disponibles";
           }
 
           cardBikesDisabledNumb.textContent = bikesDisabledStation;
           if (bikesDisabledStation === 1) {
-            cardBikesDisabledText.textContent = "bici bloqueada"
+            cardBikesDisabledText.textContent = "bici bloqueada";
           } else {
-            cardBikesDisabledText.textContent = "bicis bloqueadas"
+            cardBikesDisabledText.textContent = "bicis bloqueadas";
           }
 
           cardDocksAvailableNumb.textContent = docksAvailableStation;
           if (docksAvailableStation === 1) {
-            cardDocksAvailableText.textContent = "espacio libre"
+            cardDocksAvailableText.textContent = "espacio libre";
           } else {
-            cardDocksAvailableText.textContent = "espacios libres"
+            cardDocksAvailableText.textContent = "espacios libres";
           }
 
           // Tweet button
@@ -303,12 +304,17 @@ function bikesStation() {
           var related = "elbotonmalo,baecobici";
           twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
 
+          if (searchFixed === false) {
+            searchInput.value = "";
+            searchValue = "";
+          }
+
           updating.classList.add("hide");
         } else {
           console.log("Error 1");
         }
       };
-      xhr.onerror = function () {
+      xhr.onerror = function() {
         console.log("Error 2");
       };
       xhr.send();
@@ -316,7 +322,7 @@ function bikesStation() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function () {
+  xhr.onerror = function() {
     console.log("Error 2");
   };
   xhr.send();
@@ -326,7 +332,7 @@ function bikesStation() {
 async function getValidStations() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
-  xhr.onload = function () {
+  xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       var resp = JSON.parse(this.response);
@@ -342,7 +348,7 @@ async function getValidStations() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function () {
+  xhr.onerror = function() {
     console.log("Error 2");
   };
   xhr.send();
@@ -352,7 +358,7 @@ async function getValidStations() {
 function getUniqueStatus() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
-  xhr.onload = function () {
+  xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       var resp = JSON.parse(this.response);
@@ -371,7 +377,7 @@ function getUniqueStatus() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function () {
+  xhr.onerror = function() {
     console.log("Error 2");
   };
   xhr.send();
