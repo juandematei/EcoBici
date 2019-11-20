@@ -28,7 +28,7 @@ var capacityInitial = 0;
 
 // Search initial values ------------------------------------------------------>
 var validStations = [];
-var searchValue = "399";
+var searchValue = "";
 var searchFixed = false;
 
 // DOM - Search --------------------------------------------------------------->
@@ -50,10 +50,12 @@ const h2 = document.querySelector("h2");
 const h3 = document.querySelector("h3");
 
 // DOM - Response ------------------------------------------------------------->
-const cardBikesAvailable = document.querySelector(".bikes-available > span.numb");
-const cardBikesDisabled = document.querySelector(".bikes-disabled > span.numb");
-const cardDocksAvailable = document.querySelector(".docks-available > span.numb");
-const cardDocksDisabled = document.querySelector(".docks-disabled > span.numb");
+const cardBikesAvailableNumb = document.querySelector(".bikes-available > span.numb");
+const cardBikesAvailableText = document.querySelector(".bikes-available > span.text");
+const cardBikesDisabledNumb = document.querySelector(".bikes-disabled > span.numb");
+const cardBikesDisabledText = document.querySelector(".bikes-disabled > span.text");
+const cardDocksAvailableNumb = document.querySelector(".docks-available > span.numb");
+const cardDocksDisabledNumb = document.querySelector(".docks-disabled > span.numb");
 const updateTime = document.querySelector(".last-update > p > span");
 
 // Add leading zeros to station_id number ------------------------------------->
@@ -65,20 +67,20 @@ function pad(n) {
 }
 
 // Show bikes totals when page loads ------------------------------------------>
-(function() {
+(function () {
   bikesTotal();
   getValidStations();
 })();
 
 // Search button click -------------------------------------------------------->
-searchButton.addEventListener("click", function(event) {
+searchButton.addEventListener("click", function (event) {
   event.preventDefault();
   searchValue = searchInput.value;
 
   if (searchValue === "") {
     searchBox.classList.add("error");
     searchInput.placeholder = "Ingresá una estación";
-    setTimeout(function() {
+    setTimeout(function () {
       searchBox.classList.remove("error");
       searchInput.placeholder = "Buscar una estación";
     }, 4000);
@@ -91,7 +93,7 @@ searchButton.addEventListener("click", function(event) {
       searchInput.value = "";
       searchBox.classList.add("error");
       searchInput.placeholder = "No existe esa estación";
-      setTimeout(function() {
+      setTimeout(function () {
         searchBox.classList.remove("error");
         searchInput.placeholder = "Buscar una estación";
       }, 4000);
@@ -100,14 +102,14 @@ searchButton.addEventListener("click", function(event) {
 });
 
 // Start search by pressing enter on search box ------------------------------->
-searchInput.addEventListener("keyup", function(event) {
+searchInput.addEventListener("keyup", function (event) {
   if (event.keyCode === 13) {
     searchButton.click();
   }
 });
 
 // Refresh results ------------------------------------------------------------>
-refreshButton.addEventListener("click", function(event) {
+refreshButton.addEventListener("click", function (event) {
   event.preventDefault();
   if (searchFixed === true) {
     searchButton.click();
@@ -117,7 +119,7 @@ refreshButton.addEventListener("click", function(event) {
 });
 
 // Change refresh-button color when searh is fixed ---------------------------->
-fixedButton.addEventListener("click", function(event) {
+fixedButton.addEventListener("click", function (event) {
   searchFixed = !searchFixed;
   if (searchFixed === true) {
     refreshButton.classList.add("fixed");
@@ -132,7 +134,7 @@ function bikesTotal() {
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       var resp = JSON.parse(this.response);
@@ -153,35 +155,33 @@ function bikesTotal() {
       updateTime.textContent = lastUpdatedTotal;
 
       // Get total bikes available
-      var bikesAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
+      var bikesAvailableAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_bikes_available;
       }, bikesAvailableInitial);
       console.log("num_bikes_available: " + bikesAvailableAcc);
-      cardBikesAvailable.textContent = bikesAvailableAcc;
+      cardBikesAvailableNumb.textContent = bikesAvailableAcc;
 
       // Get total bikes disabled
-      var bikesDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
+      var bikesDisabledAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_bikes_disabled;
       }, bikesDisabledInitial);
       console.log("num_bikes_disabled: " + bikesDisabledAcc);
-      cardBikesDisabled.textContent = bikesDisabledAcc;
+      cardBikesDisabledNumb.textContent = bikesDisabledAcc;
 
       // Get total docks available
-      var docksAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
+      var docksAvailableAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_docks_available;
       }, docksAvailableInitial);
       console.log("num_docks_available: " + docksAvailableAcc);
-      //cardDocksAvailable.append(docksAvailableAcc);
 
       // Get total docks disabled
-      var docksDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
+      var docksDisabledAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_docks_disabled;
       }, docksDisabledInitial);
       console.log("num_docks_disabled: " + docksDisabledAcc);
-      //cardDocksDisabled.append(docksDisabledAcc);
 
       // Get total fake bikes
-      var bikesFakeAcc = stationStatus.reduce(function(acc, currentValue) {
+      var bikesFakeAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_bikes_available_types.ebike;
       }, bikesFakeInitial);
       console.log("num_bikes_available_types.ebike: " + bikesFakeAcc);
@@ -202,7 +202,7 @@ function bikesTotal() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function() {
+  xhr.onerror = function () {
     console.log("Error 2");
   };
   xhr.send();
@@ -214,7 +214,7 @@ function bikesStation() {
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       let resp = JSON.parse(this.response);
@@ -223,8 +223,8 @@ function bikesStation() {
       console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
-      const findStationId = function(stations, number) {
-        const resultStationId = stations.find(function(station) {
+      const findStationId = function (stations, number) {
+        const resultStationId = stations.find(function (station) {
           return station.name.slice(0, 3) === number;
         });
         return resultStationId;
@@ -239,7 +239,7 @@ function bikesStation() {
       // Get station data ----------------------------------------------------->
       let xhr = new XMLHttpRequest();
       xhr.open("GET", xhrStatus, true);
-      xhr.onload = function() {
+      xhr.onload = function () {
         if (this.status >= 200 && this.status < 400) {
           // Success!
           let resp = JSON.parse(this.response);
@@ -248,8 +248,8 @@ function bikesStation() {
           console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
-          const getStationStatus = function(stations, result_id) {
-            const resultStationStatus = stations.find(function(station) {
+          const getStationStatus = function (stations, result_id) {
+            const resultStationStatus = stations.find(function (station) {
               return station.station_id === result_id;
             });
             return resultStationStatus;
@@ -265,8 +265,19 @@ function bikesStation() {
           h2.textContent = "Estación";
           h3.textContent = result_name;
 
-          cardBikesAvailable.textContent = bikesAvailableStation;
-          cardBikesDisabled.textContent = bikesDisabledStation;
+          cardBikesAvailableNumb.textContent = bikesAvailableStation;
+          if (bikesAvailableStation === 1) {
+            cardBikesAvailableText.textContent = "bici disponible"
+          } else {
+            cardBikesAvailableText.textContent = "bicis disponibles"
+          }
+
+          cardBikesDisabledNumb.textContent = bikesDisabledStation;
+          if (bikesDisabledStation === 1) {
+            cardBikesDisabledText.textContent = "bici bloqueada"
+          } else {
+            cardBikesDisabledText.textContent = "bicis bloqueadas"
+          }
 
           // Tweet button
           var text = encodeURIComponent("🚳 Hay " + bikesDisabledStation + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app!");
@@ -281,7 +292,7 @@ function bikesStation() {
           console.log("Error 1");
         }
       };
-      xhr.onerror = function() {
+      xhr.onerror = function () {
         console.log("Error 2");
       };
       xhr.send();
@@ -289,7 +300,7 @@ function bikesStation() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function() {
+  xhr.onerror = function () {
     console.log("Error 2");
   };
   xhr.send();
@@ -299,7 +310,7 @@ function bikesStation() {
 async function getValidStations() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       var resp = JSON.parse(this.response);
@@ -315,7 +326,7 @@ async function getValidStations() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function() {
+  xhr.onerror = function () {
     console.log("Error 2");
   };
   xhr.send();
@@ -325,7 +336,7 @@ async function getValidStations() {
 function getUniqueStatus() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       var resp = JSON.parse(this.response);
@@ -344,7 +355,7 @@ function getUniqueStatus() {
       console.log("Error 1");
     }
   };
-  xhr.onerror = function() {
+  xhr.onerror = function () {
     console.log("Error 2");
   };
   xhr.send();
