@@ -324,6 +324,7 @@ h3 {
   margin-right: 0.5rem;
   text-align: right;
   font-weight: 700;
+  min-width: 1.8rem;
 }
 
 .card.available {

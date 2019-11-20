@@ -55,6 +55,7 @@ const cardBikesAvailableText = document.querySelector(".bikes-available > span.t
 const cardBikesDisabledNumb = document.querySelector(".bikes-disabled > span.numb");
 const cardBikesDisabledText = document.querySelector(".bikes-disabled > span.text");
 const cardDocksAvailableNumb = document.querySelector(".docks-available > span.numb");
+const cardDocksAvailableText = document.querySelector(".docks-available > span.text");
 const cardDocksDisabledNumb = document.querySelector(".docks-disabled > span.numb");
 const updateTime = document.querySelector(".last-update > p > span");
 
@@ -173,6 +174,7 @@ function bikesTotal() {
         return acc + currentValue.num_docks_available;
       }, docksAvailableInitial);
       console.log("num_docks_available: " + docksAvailableAcc);
+      cardDocksAvailableNumb.textContent = docksAvailableAcc;
 
       // Get total docks disabled
       var docksDisabledAcc = stationStatus.reduce(function (acc, currentValue) {
@@ -277,6 +279,13 @@ function bikesStation() {
             cardBikesDisabledText.textContent = "bici bloqueada"
           } else {
             cardBikesDisabledText.textContent = "bicis bloqueadas"
+          }
+
+          cardDocksAvailableNumb.textContent = docksAvailableStation;
+          if (docksAvailableStation === 1) {
+            cardDocksAvailableText.textContent = "espacio libre"
+          } else {
+            cardDocksAvailableText.textContent = "espacios libres"
           }
 
           // Tweet button
