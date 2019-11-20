@@ -36,6 +36,7 @@ const searchBox = document.querySelector(".search-box");
 const searchButton = document.querySelector(".search-btn");
 const searchInput = document.querySelector(".search-input");
 const fixedButton = document.querySelector(".fixed-btn");
+const fixedButtonIcon = document.querySelector(".fixed-icon");
 const locationButton = document.querySelector(".location-btn");
 
 // DOM - CTA buttons ---------------------------------------------------------->
@@ -124,8 +125,14 @@ fixedButton.addEventListener("click", function (event) {
   searchFixed = !searchFixed;
   if (searchFixed === true) {
     refreshButton.classList.add("fixed");
+    fixedButton.classList.add("fixed");
+    fixedButtonIcon.classList.remove("fa-unlock");
+    fixedButtonIcon.classList.add("fa-lock");
   } else {
     refreshButton.classList.remove("fixed");
+    fixedButton.classList.remove("fixed");
+    fixedButtonIcon.classList.remove("fa-lock");
+    fixedButtonIcon.classList.add("fa-unlock");
   }
 });
 
