@@ -138,7 +138,7 @@ a.btn > i {
 }
 
 .wrapper {
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
 }
 
 .updating {
@@ -383,10 +383,22 @@ h3 {
 
 /* FOOTER --------------------------------------------------------------------*/
 footer {
-  background-color: var(--color-secondary);
+  background-color: #212121;
   color: var(--color-white);
   padding: 3rem 0;
-  margin-top: 2rem;
+  position: relative;
+}
+
+footer::before {
+  content: "⬇";
+  display: block;
+  width: 50px;
+  height: 50px;
+  color: #212121;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  margin-left: -25px;
 }
 
 .author {
