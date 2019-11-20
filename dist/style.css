@@ -130,6 +130,10 @@ a {
   outline: none;
 }
 
+a.btn > i {
+  margin-right: 0.5rem;
+}
+
 .wrapper {
   min-height: 100vh;
 }
