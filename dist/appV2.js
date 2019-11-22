@@ -36,7 +36,7 @@ const searchBox = document.querySelector(".search-box");
 const searchButton = document.querySelector(".search-btn");
 const searchInput = document.querySelector(".search-input");
 const fixedButton = document.querySelector(".fixed-btn");
-const fixedButtonIcon = document.querySelector(".fixed-icon");
+const fixedButtonIcon = document.querySelector(".fixed-btn > ion-icon");
 const locationButton = document.querySelector(".location-btn");
 
 // DOM - CTA buttons ---------------------------------------------------------->
@@ -73,9 +73,14 @@ function pad(n) {
   if ("geolocation" in navigator) {
     /* geolocation is available */
     locationButton.disabled = false;
+    locationButton.classList.add("watching");
+    navigator.geolocation.watchPosition(function(position) {
+      console.log(position.coords.latitude, position.coords.longitude);
+    });
   } else {
     /* geolocation IS NOT available */
     locationButton.disabled = true;
+    locationButton.classList.remove("watching");
   }
   bikesTotal();
   getValidStations();
@@ -389,3 +394,8 @@ function getUniqueStatus() {
   };
   xhr.send();
 }
+
+// Get user location ---------------------------------------------------------->
+locationButton.addEventListener("click", function(event) {
+  event.preventDefault();
+});

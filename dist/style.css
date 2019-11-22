@@ -64,6 +64,8 @@ body {
   overflow: hidden;
   transition: var(--transition);
   border-radius: 50px;
+  display: flex;
+  justify-content: center;
 }
 
 .btn:hover,
@@ -133,7 +135,7 @@ a {
   outline: none;
 }
 
-a.btn > i {
+a.btn > ion-icon {
   margin-right: 0.5rem;
 }
 
@@ -160,7 +162,7 @@ a.btn > i {
   visibility: hidden;
 }
 
-.updating i {
+.updating ion-icon {
   font-size: 3rem;
 }
 
@@ -181,6 +183,10 @@ h1 {
   padding: 0 !important;
   margin: 0 !important;
   clip: rect(1px, 1px, 1px, 1px);
+}
+
+ion-icon {
+  font-size: 1.5rem;
 }
 
 /* HEADER --------------------------------------------------------------------*/
@@ -239,10 +245,16 @@ header > .container {
   box-shadow: none;
   margin: 0;
   padding: 0;
+  align-content: center;
+  background-color: lightgrey;
 }
 
 .fixed-btn.fixed {
   color: var(--color-red);
+}
+
+.location-btn.watching {
+  color: var(--color-green);
 }
 
 .search-input {
@@ -335,7 +347,13 @@ h3 {
 
 .icon {
   margin-right: 0.5rem;
-  width: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon > ion-icon {
+  font-size: 2rem;
 }
 
 .numb {
@@ -384,7 +402,7 @@ h3 {
   text-decoration: none;
 }
 
-.twitter-share-button > i {
+.twitter-share-button > ion-icon {
   color: #1a91da;
 }
 
@@ -397,7 +415,7 @@ footer {
 }
 
 footer::before {
-  content: "⬇";
+  content: "flecha";
   display: block;
   width: 50px;
   height: 50px;
@@ -408,12 +426,20 @@ footer::before {
   margin-left: -25px;
 }
 
-.author {
-  font-size: 1rem;
+.author > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.author i {
+.author > p > ion-icon {
   color: var(--color-red);
+  font-size: 2rem;
+  margin: 0 0.5rem;
+}
+
+.author > p > a {
+  margin-left: 0.5rem;
 }
 
 .social {
