@@ -60,6 +60,46 @@ const cardDocksAvailableText = document.querySelector(".docks-available > span.t
 const cardDocksDisabledNumb = document.querySelector(".docks-disabled > span.numb");
 const updateTime = document.querySelector(".last-update > p > span");
 
+// Test stations
+var testStations = [
+  {
+    name: "002 - Retiro",
+    lat: -34.5341955,
+    lon: -58.4744959999
+  },
+  {
+    name: "008 - Congreso",
+    lat: -34.6094218,
+    lon: -58.3893364
+  },
+  {
+    name: "009 - Parque Las Heras",
+    lat: -34.585443,
+    lon: -58.407741
+  }
+];
+
+function distance(lat1, lon1, lat2, lon2, unit) {
+  var radlat1 = (Math.PI * lat1) / 180;
+  var radlat2 = (Math.PI * lat2) / 180;
+  var theta = lon1 - lon2;
+  var radtheta = (Math.PI * theta) / 180;
+  var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+  if (dist > 1) {
+    dist = 1;
+  }
+  dist = Math.acos(dist);
+  dist = (dist * 180) / Math.PI;
+  dist = dist * 60 * 1.1515;
+  if (unit == "K") {
+    dist = dist * 1.609344;
+  }
+  if (unit == "N") {
+    dist = dist * 0.8684;
+  }
+  return dist;
+}
+
 // Add leading zeros to station_id number ------------------------------------->
 function pad(n) {
   if (n <= 999) {
@@ -76,6 +116,17 @@ function pad(n) {
     locationButton.classList.add("watching");
     navigator.geolocation.watchPosition(function(position) {
       console.log(position.coords.latitude, position.coords.longitude);
+      var html = "";
+      var poslat = position.coords.latitude;
+      var poslng = position.coords.longitude;
+      for (var i = 0; i < testStations.length; i++) {
+        // if this location is within 0.1KM of the user, add it to the list
+        if (distance(poslat, poslng, testStations[i].lat, testStations[i].lon, "K") <= 0.1) {
+          html = testStations[i].name;
+        }
+      }
+
+      console.log(html);
     });
   } else {
     /* geolocation IS NOT available */
