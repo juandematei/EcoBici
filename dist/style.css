@@ -174,7 +174,12 @@ a.btn > i {
 header {
   background-color: var(--color-primary);
   width: 100%;
+  height: 80px;
   z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
 }
 
 h1 {
@@ -191,15 +196,7 @@ h1 {
 }
 
 .logo {
-  margin: 0 auto;
-  padding: 20px 0;
-  height: 80px;
   width: 60%;
-}
-
-.logo-img {
-  width: 100%;
-  height: 100%;
 }
 
 /* SEARCH --------------------------------------------------------------------*/
@@ -224,6 +221,7 @@ h1 {
   box-shadow: var(--box-shadow-hov);
 }
 
+.menu-toggler,
 .search-btn,
 .fixed-btn,
 .location-btn {

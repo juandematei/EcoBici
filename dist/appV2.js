@@ -70,6 +70,13 @@ function pad(n) {
 
 // Show bikes totals when page loads ------------------------------------------>
 (function() {
+  if ("geolocation" in navigator) {
+    /* geolocation is available */
+    locationButton.disabled = false;
+  } else {
+    /* geolocation IS NOT available */
+    locationButton.disabled = true;
+  }
   bikesTotal();
   getValidStations();
 })();
