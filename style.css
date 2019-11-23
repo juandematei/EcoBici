@@ -36,7 +36,7 @@ body {
 }
 
 .container {
-  padding: 0 2rem;
+  padding: 0 1rem;
   margin: 0 auto;
   width: 100%;
 }
@@ -219,10 +219,7 @@ header > .container {
   background: linear-gradient(to bottom, #e66300 50%, #f2f2f2 0%);
 }
 .search-box {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: inline-flex;
   color: var(--color-black);
   background-color: var(--color-white);
   box-shadow: var(--box-shadow);
@@ -258,9 +255,9 @@ header > .container {
 
 .search-input {
   background-color: var(--color-white);
+  width: calc(100% - 120px);
   height: 40px;
   text-align: left;
-  flex: 1;
 }
 .search-input::-webkit-input-placeholder {
   color: #777;
