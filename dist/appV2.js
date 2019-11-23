@@ -27,7 +27,8 @@ var bikesFakeInitial = 0;
 var capacityInitial = 0;
 
 // Search initial values ------------------------------------------------------>
-var validStations = [];
+var stationsValid = [];
+var stationsLocation = [];
 var searchValue = "";
 var searchFixed = false;
 
@@ -63,33 +64,12 @@ const updateTime = document.querySelector(".last-update > p > span");
 //!  -------------------------------------------------------------------------->
 (function() {
   bikesTotal();
-  getValidStations();
-
-  if ("geolocation" in navigator) {
-    /* geolocation is available */
-    locationButton.disabled = false;
-    locationButton.classList.add("watching");
-    navigator.geolocation.watchPosition(function(position) {
-      var closestStation = "";
-      var poslat = position.coords.latitude;
-      var poslon = position.coords.longitude;
-      for (var i = 0; i < validStations.length; i++) {
-        // if this location is within 0.1KM of the user, add it to the list
-        if (distance(poslat, poslon, validStations[i].lat, validStations[i].lon, "K") <= 0.1) {
-          closestStation = validStations[i].id;
-        }
-      }
-      console.log("User position: " + position.coords.latitude + position.coords.longitude);
-      console.log("Estacion mas cercana: " + closestStation);
-    });
-  } else {
-    /* geolocation IS NOT available */
-    locationButton.disabled = true;
-    locationButton.classList.remove("watching");
-  }
+  getstationsValid();
+  checkGeolocation();
 })();
 
 searchButton.addEventListener("click", function(event) {
+  searchValue = searchInput.value;
   searchButtonClick();
 });
 
@@ -99,6 +79,10 @@ searchInput.addEventListener("keyup", function(event) {
 
 fixedButton.addEventListener("click", function() {
   fixedButtonClick();
+});
+
+locationButton.addEventListener("click", function() {
+  bikesStation();
 });
 
 refreshButton.addEventListener("click", function(event) {
@@ -297,7 +281,7 @@ function bikesStation() {
 }
 
 // Get valid station number from station name --------------------------------->
-function getValidStations() {
+function getstationsValid() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function() {
@@ -307,13 +291,15 @@ function getValidStations() {
       var stationInformation = resp.data.stations;
 
       for (var i = 0; i < stationInformation.length; i++) {
-        validStations.id = stationInformation[i].name.slice(0, 3);
-        validStations.lat = stationInformation[i].lat;
-        validStations.lon = stationInformation[i].lon;
-        validStations.push({ id: validStations.id, lat: validStations.lat, lon: validStations.lon });
+        stationNumber = stationInformation[i].name.slice(0, 3);
+        stationsValid.push(stationNumber);
+        stationsLocation.id = stationInformation[i].name.slice(0, 3);
+        stationsLocation.lat = stationInformation[i].lat;
+        stationsLocation.lon = stationInformation[i].lon;
+        stationsLocation.push({ id: stationsLocation.id, lat: stationsLocation.lat, lon: stationsLocation.lon });
       }
       console.log("Stations id, lat, lon: ");
-      console.log(validStations);
+      console.log(stationsLocation);
     } else {
       console.log("Error 1");
     }
@@ -383,7 +369,6 @@ function refreshButtonClick() {
 // Search button click -------------------------------------------------------->
 function searchButtonClick() {
   event.preventDefault();
-  searchValue = searchInput.value;
 
   if (searchValue === "") {
     searchBox.classList.add("error");
@@ -394,7 +379,7 @@ function searchButtonClick() {
     }, 4000);
   } else {
     searchValue = pad(searchInput.value);
-    if (validStations.includes(searchValue)) {
+    if (stationsValid.includes(searchValue)) {
       bikesStation();
       searchInput.blur();
     } else {
@@ -444,4 +429,31 @@ function distance(lat1, lon1, lat2, lon2, unit) {
     dist = dist * 0.8684;
   }
   return dist;
+}
+
+// Check geolocation
+function checkGeolocation() {
+  if ("geolocation" in navigator) {
+    /* geolocation is available */
+    navigator.geolocation.watchPosition(function(position) {
+      var closestStation = "";
+      var poslat = position.coords.latitude;
+      var poslon = position.coords.longitude;
+      for (var i = 0; i < stationsLocation.length; i++) {
+        // if this location is within 0.1KM of the user, add it to the list
+        if (distance(poslat, poslon, stationsLocation[i].lat, stationsLocation[i].lon, "K") <= 1) {
+          var closestStation = stationsLocation[i].id;
+          searchValue = closestStation;
+          locationButton.disabled = false;
+          locationButton.classList.add("watching");
+        }
+      }
+      console.log("User position: " + position.coords.latitude + position.coords.longitude);
+      console.log("Estacion mas cercana: " + closestStation);
+    });
+  } else {
+    /* geolocation IS NOT available */
+    locationButton.disabled = true;
+    locationButton.classList.remove("watching");
+  }
 }
