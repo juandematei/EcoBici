@@ -354,6 +354,7 @@ function fixedButtonClick() {
     fixedButtonIcon.classList.add("fa-unlock");
     searchInput.value = "";
   }
+  searchInput.focus();
 }
 
 // Refresh results ------------------------------------------------------------>
