@@ -60,144 +60,49 @@ const cardDocksAvailableText = document.querySelector(".docks-available > span.t
 const cardDocksDisabledNumb = document.querySelector(".docks-disabled > span.numb");
 const updateTime = document.querySelector(".last-update > p > span");
 
-// Test stations
-var testStations = [
-  {
-    name: "002 - Retiro",
-    lat: -34.5341955,
-    lon: -58.4744959999
-  },
-  {
-    name: "008 - Congreso",
-    lat: -34.6094218,
-    lon: -58.3893364
-  },
-  {
-    name: "009 - Parque Las Heras",
-    lat: -34.585443,
-    lon: -58.407741
-  }
-];
-
-function distance(lat1, lon1, lat2, lon2, unit) {
-  var radlat1 = (Math.PI * lat1) / 180;
-  var radlat2 = (Math.PI * lat2) / 180;
-  var theta = lon1 - lon2;
-  var radtheta = (Math.PI * theta) / 180;
-  var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-  if (dist > 1) {
-    dist = 1;
-  }
-  dist = Math.acos(dist);
-  dist = (dist * 180) / Math.PI;
-  dist = dist * 60 * 1.1515;
-  if (unit == "K") {
-    dist = dist * 1.609344;
-  }
-  if (unit == "N") {
-    dist = dist * 0.8684;
-  }
-  return dist;
-}
-
-// Add leading zeros to station_id number ------------------------------------->
-function pad(n) {
-  if (n <= 999) {
-    n = ("00" + n).slice(-3);
-  }
-  return n;
-}
-
-// Show bikes totals when page loads ------------------------------------------>
+//!  -------------------------------------------------------------------------->
 (function() {
+  bikesTotal();
+  getValidStations();
+
   if ("geolocation" in navigator) {
     /* geolocation is available */
     locationButton.disabled = false;
     locationButton.classList.add("watching");
     navigator.geolocation.watchPosition(function(position) {
-      console.log(position.coords.latitude, position.coords.longitude);
-      var html = "";
+      var closestStation = "";
       var poslat = position.coords.latitude;
-      var poslng = position.coords.longitude;
-      for (var i = 0; i < testStations.length; i++) {
+      var poslon = position.coords.longitude;
+      for (var i = 0; i < validStations.length; i++) {
         // if this location is within 0.1KM of the user, add it to the list
-        if (distance(poslat, poslng, testStations[i].lat, testStations[i].lon, "K") <= 0.1) {
-          html = testStations[i].name;
+        if (distance(poslat, poslon, validStations[i].lat, validStations[i].lon, "K") <= 0.1) {
+          closestStation = validStations[i].id;
         }
       }
-
-      console.log(html);
+      console.log("User position: " + position.coords.latitude + position.coords.longitude);
+      console.log("Estacion mas cercana: " + closestStation);
     });
   } else {
     /* geolocation IS NOT available */
     locationButton.disabled = true;
     locationButton.classList.remove("watching");
   }
-  bikesTotal();
-  getValidStations();
 })();
 
-// Search button click -------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
-  event.preventDefault();
-  searchValue = searchInput.value;
-
-  if (searchValue === "") {
-    searchBox.classList.add("error");
-    searchInput.placeholder = "Ingresá una estación";
-    setTimeout(function() {
-      searchBox.classList.remove("error");
-      searchInput.placeholder = "Buscar una estación";
-    }, 4000);
-  } else {
-    searchValue = pad(searchInput.value);
-    if (validStations.includes(searchValue)) {
-      bikesStation();
-      searchInput.blur();
-    } else {
-      searchInput.value = "";
-      searchBox.classList.add("error");
-      searchInput.placeholder = "No existe esa estación";
-      setTimeout(function() {
-        searchBox.classList.remove("error");
-        searchInput.placeholder = "Buscar una estación";
-      }, 4000);
-    }
-  }
+  searchButtonClick();
 });
 
-// Start search by pressing enter on search box ------------------------------->
 searchInput.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
-    searchButton.click();
-  }
+  searchInputEnter();
 });
 
-// Refresh results ------------------------------------------------------------>
+fixedButton.addEventListener("click", function() {
+  fixedButtonClick();
+});
+
 refreshButton.addEventListener("click", function(event) {
-  event.preventDefault();
-  if (searchFixed === true) {
-    searchButton.click();
-  } else {
-    location.reload();
-  }
-});
-
-// Change refresh-button color when searh is fixed ---------------------------->
-fixedButton.addEventListener("click", function(event) {
-  searchFixed = !searchFixed;
-  if (searchFixed === true) {
-    refreshButton.classList.add("fixed");
-    fixedButton.classList.add("fixed");
-    fixedButtonIcon.classList.remove("fa-unlock");
-    fixedButtonIcon.classList.add("fa-lock");
-  } else {
-    refreshButton.classList.remove("fixed");
-    fixedButton.classList.remove("fixed");
-    fixedButtonIcon.classList.remove("fa-lock");
-    fixedButtonIcon.classList.add("fa-unlock");
-    searchInput.value = "";
-  }
+  refreshButtonClick();
 });
 
 // Get accumulated numbers ---------------------------------------------------->
@@ -392,7 +297,7 @@ function bikesStation() {
 }
 
 // Get valid station number from station name --------------------------------->
-async function getValidStations() {
+function getValidStations() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function() {
@@ -402,10 +307,12 @@ async function getValidStations() {
       var stationInformation = resp.data.stations;
 
       for (var i = 0; i < stationInformation.length; i++) {
-        station = stationInformation[i].name.slice(0, 3);
-        validStations.push(station);
+        validStations.id = stationInformation[i].name.slice(0, 3);
+        validStations.lat = stationInformation[i].lat;
+        validStations.lon = stationInformation[i].lon;
+        validStations.push({ id: validStations.id, lat: validStations.lat, lon: validStations.lon });
       }
-      console.log("Números estación válidos: ");
+      console.log("Stations id, lat, lon: ");
       console.log(validStations);
     } else {
       console.log("Error 1");
@@ -446,7 +353,95 @@ function getUniqueStatus() {
   xhr.send();
 }
 
-// Get user location ---------------------------------------------------------->
-locationButton.addEventListener("click", function(event) {
+// Change refresh-button color when searh is fixed ---------------------------->
+function fixedButtonClick() {
+  searchFixed = !searchFixed;
+  if (searchFixed === true) {
+    refreshButton.classList.add("fixed");
+    fixedButton.classList.add("fixed");
+    fixedButtonIcon.classList.remove("fa-unlock");
+    fixedButtonIcon.classList.add("fa-lock");
+  } else {
+    refreshButton.classList.remove("fixed");
+    fixedButton.classList.remove("fixed");
+    fixedButtonIcon.classList.remove("fa-lock");
+    fixedButtonIcon.classList.add("fa-unlock");
+    searchInput.value = "";
+  }
+}
+
+// Refresh results ------------------------------------------------------------>
+function refreshButtonClick() {
   event.preventDefault();
-});
+  if (searchFixed === true) {
+    searchButton.click();
+  } else {
+    location.reload();
+  }
+}
+
+// Search button click -------------------------------------------------------->
+function searchButtonClick() {
+  event.preventDefault();
+  searchValue = searchInput.value;
+
+  if (searchValue === "") {
+    searchBox.classList.add("error");
+    searchInput.placeholder = "Ingresá una estación";
+    setTimeout(function() {
+      searchBox.classList.remove("error");
+      searchInput.placeholder = "Buscar una estación";
+    }, 4000);
+  } else {
+    searchValue = pad(searchInput.value);
+    if (validStations.includes(searchValue)) {
+      bikesStation();
+      searchInput.blur();
+    } else {
+      searchInput.value = "";
+      searchBox.classList.add("error");
+      searchInput.placeholder = "No existe esa estación";
+      setTimeout(function() {
+        searchBox.classList.remove("error");
+        searchInput.placeholder = "Buscar una estación";
+      }, 4000);
+    }
+  }
+}
+
+// Start search by pressing enter on search box ------------------------------->
+function searchInputEnter() {
+  if (event.keyCode === 13) {
+    searchButton.click();
+  }
+}
+
+// Add leading zeros to station_id number ------------------------------------->
+function pad(n) {
+  if (n <= 999) {
+    n = ("00" + n).slice(-3);
+  }
+  return n;
+}
+
+// Distance function ---------------------------------------------------------->
+function distance(lat1, lon1, lat2, lon2, unit) {
+  var radlat1 = (Math.PI * lat1) / 180;
+  var radlat2 = (Math.PI * lat2) / 180;
+  var theta = lon1 - lon2;
+  var radtheta = (Math.PI * theta) / 180;
+  var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+  if (dist > 1) {
+    dist = 1;
+  }
+  dist = Math.acos(dist);
+  dist = (dist * 180) / Math.PI;
+  dist = dist * 60 * 1.1515;
+  if (unit == "K") {
+    dist = dist * 1.609344;
+  }
+  if (unit == "N") {
+    dist = dist * 0.8684;
+  }
+  return dist;
+}
