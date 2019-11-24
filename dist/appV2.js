@@ -69,7 +69,6 @@ const updateTime = document.querySelector(".last-update > p > span");
 })();
 
 searchButton.addEventListener("click", function(event) {
-  searchValue = searchInput.value;
   searchButtonClick();
 });
 
@@ -82,6 +81,7 @@ fixedButton.addEventListener("click", function() {
 });
 
 locationButton.addEventListener("click", function() {
+  testGeolocation();
   bikesStation();
 });
 
@@ -296,7 +296,7 @@ function getstationsValid() {
         stationsLocation.id = stationInformation[i].name.slice(0, 3);
         stationsLocation.lat = stationInformation[i].lat;
         stationsLocation.lon = stationInformation[i].lon;
-        stationsLocation.push({ id: stationsLocation.id, lat: stationsLocation.lat, lon: stationsLocation.lon });
+        stationsLocation.push([stationsLocation.id, stationsLocation.lat, stationsLocation.lon]);
       }
       console.log("Stations id, lat, lon: ");
       console.log(stationsLocation);
@@ -345,13 +345,11 @@ function fixedButtonClick() {
   if (searchFixed === true) {
     refreshButton.classList.add("fixed");
     fixedButton.classList.add("fixed");
-    fixedButtonIcon.classList.remove("fa-unlock");
-    fixedButtonIcon.classList.add("fa-lock");
+    fixedButtonIcon.setAttribute("name", "lock");
   } else {
     refreshButton.classList.remove("fixed");
     fixedButton.classList.remove("fixed");
-    fixedButtonIcon.classList.remove("fa-lock");
-    fixedButtonIcon.classList.add("fa-unlock");
+    fixedButtonIcon.setAttribute("name", "unlock");
     searchInput.value = "";
   }
   searchInput.focus();
@@ -410,51 +408,68 @@ function pad(n) {
   return n;
 }
 
-// Distance function ---------------------------------------------------------->
-function distance(lat1, lon1, lat2, lon2, unit) {
-  var radlat1 = (Math.PI * lat1) / 180;
-  var radlat2 = (Math.PI * lat2) / 180;
-  var theta = lon1 - lon2;
-  var radtheta = (Math.PI * theta) / 180;
-  var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-  if (dist > 1) {
-    dist = 1;
-  }
-  dist = Math.acos(dist);
-  dist = (dist * 180) / Math.PI;
-  dist = dist * 60 * 1.1515;
-  if (unit == "K") {
-    dist = dist * 1.609344;
-  }
-  if (unit == "N") {
-    dist = dist * 0.8684;
-  }
-  return dist;
-}
-
 // Check geolocation
 function checkGeolocation() {
   if ("geolocation" in navigator) {
     /* geolocation is available */
-    navigator.geolocation.watchPosition(function(position) {
-      var closestStation = "";
-      var poslat = position.coords.latitude;
-      var poslon = position.coords.longitude;
-      for (var i = 0; i < stationsLocation.length; i++) {
-        // if this location is within 0.1KM of the user, add it to the list
-        if (distance(poslat, poslon, stationsLocation[i].lat, stationsLocation[i].lon, "K") <= 1) {
-          var closestStation = stationsLocation[i].id;
-          searchValue = closestStation;
-          locationButton.disabled = false;
-          locationButton.classList.add("watching");
-        }
-      }
-      console.log("User position: " + position.coords.latitude + position.coords.longitude);
-      console.log("Estacion mas cercana: " + closestStation);
-    });
+    locationButton.disabled = false;
+    locationButton.classList.add("watching");
   } else {
     /* geolocation IS NOT available */
     locationButton.disabled = true;
     locationButton.classList.remove("watching");
   }
+}
+
+//* Test
+// Get User's Coordinate from their Browser
+function testGeolocation() {
+  // HTML5/W3C Geolocation
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(UserLocation);
+    locationButton.disabled = false;
+    locationButton.classList.add("watching");
+  }
+  // Default to Washington, DC
+  else {
+    locationButton.disabled = true;
+    locationButton.classList.remove("watching");
+  }
+}
+
+// Callback function for asynchronous call to HTML5 geolocation
+async function UserLocation(position) {
+  nearestStation(position.coords.latitude, position.coords.longitude);
+}
+
+// Convert Degress to Radians
+function Deg2Rad(deg) {
+  return (deg * Math.PI) / 180;
+}
+
+function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
+  lat1 = Deg2Rad(lat1);
+  lat2 = Deg2Rad(lat2);
+  lon1 = Deg2Rad(lon1);
+  lon2 = Deg2Rad(lon2);
+  var R = 6371; // km
+  var x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2);
+  var y = lat2 - lat1;
+  var d = Math.sqrt(x * x + y * y) * R;
+  return d;
+}
+
+function nearestStation(latitude, longitude) {
+  var minDif = 99999;
+  var closest;
+
+  for (index = 0; index < stationsLocation.length; ++index) {
+    var dif = PythagorasEquirectangular(latitude, longitude, stationsLocation[index][1], stationsLocation[index][2]);
+    if (dif < minDif) {
+      closest = index;
+      minDif = dif;
+    }
+  }
+  searchValue = stationsLocation[closest][0];
+  console.log(searchValue);
 }
