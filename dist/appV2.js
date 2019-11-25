@@ -149,7 +149,7 @@ function bikesTotal() {
 }
 
 // Get quantities by station (search) ----------------------------------------->
-function bikesStation() {
+function bikesStation(busqueda) {
   updating.classList.remove("hide");
 
   let xhr = new XMLHttpRequest();
@@ -170,7 +170,7 @@ function bikesStation() {
         return resultStationId;
       };
 
-      let resultStationId = findStationId(stationInformation, searchValue);
+      let resultStationId = findStationId(stationInformation, busqueda);
 
       result_id = resultStationId.station_id;
       result_name = resultStationId.name;
@@ -238,7 +238,7 @@ function bikesStation() {
 
           if (searchFixed === false) {
             searchInput.value = "";
-            searchValue = "";
+            searchValue = ""; //TODO Check
           }
 
           updating.classList.add("hide");
@@ -332,14 +332,13 @@ function fixedButtonClick() {
     refreshButton.classList.add("fixed");
     fixedButton.classList.add("fixed");
     fixedButtonIcon.setAttribute("name", "lock");
+    searchInput.focus();
   } else {
     refreshButton.classList.remove("fixed");
     fixedButton.classList.remove("fixed");
     fixedButtonIcon.setAttribute("name", "unlock");
     searchInput.value = "";
   }
-  searchInput.focus();
-  searchBox.focus();
 }
 
 // Refresh results ------------------------------------------------------------>
@@ -368,7 +367,7 @@ function searchButtonClick() {
   } else {
     searchValue = pad(searchInput.value);
     if (stationsValid.includes(searchValue)) {
-      bikesStation();
+      bikesStation(searchValue);
       searchInput.blur();
     } else {
       searchInput.value = "";
@@ -459,8 +458,8 @@ function nearestStation(latitude, longitude) {
       minDif = dif;
     }
   }
-  //searchValue = stationsLocation[closest][0];
-  //console.log(searchValue);
+  searchLocation = stationsLocation[closest][0];
+  console.log(searchLocation);
 }
 
 //* Event listeners ----------------------------------------------------------->
@@ -475,7 +474,7 @@ fixedButton.addEventListener("click", function() {
 });
 locationButton.addEventListener("click", function() {
   testGeolocation();
-  bikesStation();
+  bikesStation(searchLocation);
 });
 refreshButton.addEventListener("click", function(event) {
   refreshButtonClick();

@@ -265,7 +265,8 @@ header > .container {
 
 .search-box:hover,
 .searh-box:focus {
-  box-shadow: var(--box-shadow-hov);
+  box-shadow: var(--box-shadow-hov) !important;
+  outline: none;
 }
 
 .menu-toggler,
