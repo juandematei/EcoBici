@@ -52,20 +52,18 @@ body {
   background-color: var(--color-white);
   color: var(--color-black);
   box-shadow: var(--box-shadow);
-  -webkit-box-shadow: var(--box-shadow);
-  -moz-box-shadow: var(--box-shadow);
-  width: 100%;
-  padding: 6px 18px;
+  width: 40px;
   height: 40px;
-  display: inline-block;
-  line-height: 28px;
   font-size: 1rem;
   cursor: pointer;
   overflow: hidden;
-  transition: var(--transition);
   border-radius: 50px;
   display: flex;
   justify-content: center;
+  align-content: center;
+  margin: 0;
+  padding: 0;
+  transition: var(--transition);
 }
 
 .btn:hover,
@@ -133,10 +131,6 @@ a {
   color: inherit;
   font-weight: 700;
   outline: none;
-}
-
-a.btn > ion-icon {
-  margin-right: 0.5rem;
 }
 
 .wrapper {
@@ -273,12 +267,7 @@ header > .container {
 .search-btn,
 .fixed-btn,
 .location-btn {
-  width: 40px;
-  height: 40px;
   box-shadow: none;
-  margin: 0;
-  padding: 0;
-  align-content: center;
 }
 
 .fixed-btn.fixed {
@@ -411,15 +400,9 @@ h3 {
 
 /**CTA BUTTONS ---------------------------------------------------------------*/
 #cta-buttons {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
-  align-items: center;
-  align-content: center;
-}
-
-.refresh,
-.twitter {
-  width: calc(50% - 10px);
+  padding: 5px;
 }
 
 .refresh-btn {
