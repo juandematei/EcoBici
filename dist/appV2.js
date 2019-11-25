@@ -62,9 +62,8 @@ const updateTime = document.querySelector(".last-update > p > span");
 
 //! Main ---------------------------------------------------------------------->
 (function() {
-  bikesTotal();
   getStationsValid();
-  checkGeolocation();
+  bikesTotal();
 })();
 
 // Get accumulated quantities ------------------------------------------------->
@@ -271,7 +270,7 @@ function getStationsValid() {
       var stationInformation = resp.data.stations;
 
       for (var i = 0; i < stationInformation.length; i++) {
-        //TODO Unificar en un único array
+        //TODO Unificar en un único array??
         // Get each station number from station name
         stationNumber = stationInformation[i].name.slice(0, 3);
         stationsValid.push(stationNumber);
@@ -286,6 +285,8 @@ function getStationsValid() {
 
       console.log("Stations id, lat, lon: ");
       console.log(stationsLocation);
+
+      checkGeolocation();
     } else {
       console.log("Error 1");
     }
@@ -332,7 +333,6 @@ function fixedButtonClick() {
     refreshButton.classList.add("fixed");
     fixedButton.classList.add("fixed");
     fixedButtonIcon.setAttribute("name", "lock");
-    searchInput.focus();
   } else {
     refreshButton.classList.remove("fixed");
     fixedButton.classList.remove("fixed");
@@ -343,7 +343,6 @@ function fixedButtonClick() {
 
 // Refresh results ------------------------------------------------------------>
 function refreshButtonClick() {
-  event.preventDefault();
   if (searchFixed === true) {
     searchButton.click();
   } else {
@@ -353,8 +352,6 @@ function refreshButtonClick() {
 
 // Search button click -------------------------------------------------------->
 function searchButtonClick() {
-  event.preventDefault();
-
   searchValue = searchInput.value;
 
   if (searchValue === "") {
@@ -396,29 +393,16 @@ function pad(n) {
   return n;
 }
 
-// Check geolocation
-function checkGeolocation() {
-  if ("geolocation" in navigator) {
-    /* geolocation is available */
-    locationButton.disabled = false;
-    locationButton.classList.add("watching");
-  } else {
-    /* geolocation IS NOT available */
-    locationButton.disabled = true;
-    locationButton.classList.remove("watching");
-  }
-}
-
 //* Search by user location --------------------------------------------------->
 // Get User's Coordinate from their Browser
-function testGeolocation() {
-  // HTML5/W3C Geolocation
+function checkGeolocation() {
+  // Geolocation OK
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(UserLocation);
     locationButton.disabled = false;
     locationButton.classList.add("watching");
   }
-  // Default to Washington, DC
+  // Geolocation not available
   else {
     locationButton.disabled = true;
     locationButton.classList.remove("watching");
@@ -426,8 +410,9 @@ function testGeolocation() {
 }
 
 // Callback function for asynchronous call to HTML5 geolocation
-async function UserLocation(position) {
+function UserLocation(position) {
   nearestStation(position.coords.latitude, position.coords.longitude);
+  console.log("User location: " + position.coords.latitude + position.coords.longitude);
 }
 
 // Convert Degress to Radians
@@ -458,24 +443,33 @@ function nearestStation(latitude, longitude) {
       minDif = dif;
     }
   }
+
   searchLocation = stationsLocation[closest][0];
-  console.log(searchLocation);
+  console.log("Closests station: " + searchLocation);
+
+  var origin = latitude + "," + longitude;
+  var destination = stationsLocation[closest][1] + "," + stationsLocation[closest][2];
+  var mapLink = "https://www.google.com/maps/dir/?api=1&origin=" + origin + "&destination=" + destination + "&travelmode=walking";
+  console.log(mapLink);
 }
 
 //* Event listeners ----------------------------------------------------------->
 searchButton.addEventListener("click", function(event) {
+  event.preventDefault();
   searchButtonClick();
 });
 searchInput.addEventListener("keyup", function(event) {
   searchInputEnter();
 });
 fixedButton.addEventListener("click", function() {
+  event.preventDefault();
   fixedButtonClick();
 });
 locationButton.addEventListener("click", function() {
-  testGeolocation();
+  event.preventDefault();
   bikesStation(searchLocation);
 });
 refreshButton.addEventListener("click", function(event) {
+  event.preventDefault();
   refreshButtonClick();
 });
