@@ -58,38 +58,16 @@ const cardBikesDisabledNumb = document.querySelector(".bikes-disabled > span.num
 const cardBikesDisabledText = document.querySelector(".bikes-disabled > span.text");
 const cardDocksAvailableNumb = document.querySelector(".docks-available > span.numb");
 const cardDocksAvailableText = document.querySelector(".docks-available > span.text");
-const cardDocksDisabledNumb = document.querySelector(".docks-disabled > span.numb");
 const updateTime = document.querySelector(".last-update > p > span");
 
-//!  -------------------------------------------------------------------------->
+//! Main ---------------------------------------------------------------------->
 (function() {
   bikesTotal();
-  getstationsValid();
+  getStationsValid();
   checkGeolocation();
 })();
 
-searchButton.addEventListener("click", function(event) {
-  searchButtonClick();
-});
-
-searchInput.addEventListener("keyup", function(event) {
-  searchInputEnter();
-});
-
-fixedButton.addEventListener("click", function() {
-  fixedButtonClick();
-});
-
-locationButton.addEventListener("click", function() {
-  testGeolocation();
-  bikesStation();
-});
-
-refreshButton.addEventListener("click", function(event) {
-  refreshButtonClick();
-});
-
-// Get accumulated numbers ---------------------------------------------------->
+// Get accumulated quantities ------------------------------------------------->
 function bikesTotal() {
   updating.classList.remove("hide");
 
@@ -170,7 +148,7 @@ function bikesTotal() {
   xhr.send();
 }
 
-// Get station numbers (search) ----------------------------------------------->
+// Get quantities by station (search) ----------------------------------------->
 function bikesStation() {
   updating.classList.remove("hide");
 
@@ -196,7 +174,7 @@ function bikesStation() {
 
       result_id = resultStationId.station_id;
       result_name = resultStationId.name;
-      console.log(result_id, result_name);
+      console.log("station_id: " + result_id + " - station_name: " + result_name);
 
       // Get station data ----------------------------------------------------->
       let xhr = new XMLHttpRequest();
@@ -206,8 +184,8 @@ function bikesStation() {
           // Success!
           let resp = JSON.parse(this.response);
           let stationStatus = resp.data.stations;
-          console.log("Respuesta stationStatus: ");
-          console.log(stationStatus);
+          //console.log("Respuesta stationStatus: ");
+          //console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
           const getStationStatus = function(stations, result_id) {
@@ -222,6 +200,8 @@ function bikesStation() {
           bikesDisabledStation = resultStationStatus.num_bikes_disabled;
           docksAvailableStation = resultStationStatus.num_docks_available;
           docksDisabledStation = resultStationStatus.num_docks_disabled;
+
+          console.log(resultStationStatus);
           console.log(bikesAvailableStation, bikesDisabledStation, docksAvailableStation, docksDisabledStation);
 
           h2.textContent = "Estación";
@@ -280,8 +260,8 @@ function bikesStation() {
   xhr.send();
 }
 
-// Get valid station number from station name --------------------------------->
-function getstationsValid() {
+// Get valid station numbers & location --------------------------------------->
+function getStationsValid() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function() {
@@ -291,13 +271,19 @@ function getstationsValid() {
       var stationInformation = resp.data.stations;
 
       for (var i = 0; i < stationInformation.length; i++) {
+        //TODO Unificar en un único array
+        // Get each station number from station name
         stationNumber = stationInformation[i].name.slice(0, 3);
         stationsValid.push(stationNumber);
+        // Get each station location (lat & lon)
         stationsLocation.id = stationInformation[i].name.slice(0, 3);
         stationsLocation.lat = stationInformation[i].lat;
         stationsLocation.lon = stationInformation[i].lon;
         stationsLocation.push([stationsLocation.id, stationsLocation.lat, stationsLocation.lon]);
       }
+      console.log("Valid station numbers: ");
+      console.log(stationsValid);
+
       console.log("Stations id, lat, lon: ");
       console.log(stationsLocation);
     } else {
@@ -353,6 +339,7 @@ function fixedButtonClick() {
     searchInput.value = "";
   }
   searchInput.focus();
+  searchBox.focus();
 }
 
 // Refresh results ------------------------------------------------------------>
@@ -368,6 +355,8 @@ function refreshButtonClick() {
 // Search button click -------------------------------------------------------->
 function searchButtonClick() {
   event.preventDefault();
+
+  searchValue = searchInput.value;
 
   if (searchValue === "") {
     searchBox.classList.add("error");
@@ -421,7 +410,7 @@ function checkGeolocation() {
   }
 }
 
-//* Test
+//* Search by user location --------------------------------------------------->
 // Get User's Coordinate from their Browser
 function testGeolocation() {
   // HTML5/W3C Geolocation
@@ -470,6 +459,24 @@ function nearestStation(latitude, longitude) {
       minDif = dif;
     }
   }
-  searchValue = stationsLocation[closest][0];
-  console.log(searchValue);
+  //searchValue = stationsLocation[closest][0];
+  //console.log(searchValue);
 }
+
+//* Event listeners ----------------------------------------------------------->
+searchButton.addEventListener("click", function(event) {
+  searchButtonClick();
+});
+searchInput.addEventListener("keyup", function(event) {
+  searchInputEnter();
+});
+fixedButton.addEventListener("click", function() {
+  fixedButtonClick();
+});
+locationButton.addEventListener("click", function() {
+  testGeolocation();
+  bikesStation();
+});
+refreshButton.addEventListener("click", function(event) {
+  refreshButtonClick();
+});
