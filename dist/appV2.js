@@ -32,17 +32,21 @@ var stationsLocation = [];
 var searchValue = "";
 var searchFixed = false;
 
+// DOM - Menu ----------------------------------------------------------------->
+const menuToggler = document.querySelector(".menu-toggler");
+const menuSidebar = document.querySelector("#menu");
+
 // DOM - Search --------------------------------------------------------------->
 const searchBox = document.querySelector(".search-box");
 const searchButton = document.querySelector(".search-btn");
 const searchInput = document.querySelector(".search-input");
-const fixedButton = document.querySelector(".fixed-btn");
-const fixedButtonIcon = document.querySelector(".fixed-btn > ion-icon");
 const locationButton = document.querySelector(".location-btn");
 
 // DOM - CTA buttons ---------------------------------------------------------->
 const refreshButton = document.querySelector(".refresh-btn");
 const twitterButton = document.querySelector(".twitter-btn");
+const fixedButton = document.querySelector(".fixed-btn");
+const fixedButtonIcon = document.querySelector(".fixed-btn > ion-icon");
 
 // DOM - Updating ------------------------------------------------------------->
 const updating = document.querySelector(".updating");
@@ -461,15 +465,23 @@ searchButton.addEventListener("click", function(event) {
 searchInput.addEventListener("keyup", function(event) {
   searchInputEnter();
 });
-fixedButton.addEventListener("click", function() {
-  event.preventDefault();
-  fixedButtonClick();
-});
-locationButton.addEventListener("click", function() {
+//fixedButton.addEventListener("click", function(event) {
+//  event.preventDefault();
+//  fixedButtonClick();
+//});
+locationButton.addEventListener("click", function(event) {
   event.preventDefault();
   bikesStation(searchLocation);
 });
-refreshButton.addEventListener("click", function(event) {
+//refreshButton.addEventListener("click", function(event) {
+//  event.preventDefault();
+//  refreshButtonClick();
+//});
+menuToggler.addEventListener("click", function(event) {
   event.preventDefault();
-  refreshButtonClick();
+  if (menuSidebar.style.right === "-80%") {
+    menuSidebar.style.right = "0";
+  } else {
+    menuSidebar.style.right = "-80%";
+  }
 });

@@ -65,102 +65,104 @@
   </head>
 
   <body>
-    <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
+    <div class="body-wrapper">
+      <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
-    <div class="updating">
-      <div class="load-3">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
+      <div class="updating">
+        <div class="load-3">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        <p>Actualizando</p>
       </div>
-      <p>Actualizando</p>
+
+      <header>
+        <div class="container">
+          <div class="logo">
+            <a href="/EcoBici"><img class="logo-img" src="img/logo.svg" alt="BA EcoBici logo"/></a>
+          </div>
+          <button class="menu-toggler btn ripple"><ion-icon name="menu"></ion-icon></button>
+        </div>
+      </header>
+
+      <aside id="menu" style="right: -80%;">
+        <ul>
+          <li>Link 1</li>
+          <li>Link 2</li>
+          <li>Link 3</li>
+        </ul>
+      </aside>
+
+      <div class="wrapper">
+        <!--START WRAPPER-->
+        <section id="search">
+          <div class="container">
+            <div class="search-box">
+              <button class="search-btn btn ripple" type="submit" aria-label="Buscar por estación" value="Buscar por estación"><ion-icon name="search"></ion-icon></button>
+              <input class="search-input" type="number" aria-label="Buscar por estación" placeholder="Buscar una estación" />
+              <button class="location-btn btn ripple" aria-label="Buscar por ubicación" value="Buscar por ubicación" disabled><ion-icon name="locate"></ion-icon></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="response">
+          <div class="container">
+            <h2>Total</h2>
+            <h3>Todas las estaciones</h3>
+            <div class="response-cards">
+              <div class="bikes-available card available">
+                <span class="icon"><ion-icon name="bicycle"></ion-icon></span>
+                <span class="numb"></span>
+                <span class="text">bicis disponibles</span>
+              </div>
+              <div class="bikes-disabled card disabled">
+                <span class="icon"><ion-icon name="warning" ios="ios-warning" md="md-warning"></ion-icon></span>
+                <span class="numb"></span>
+                <span class="text">bicis bloqueadas</span>
+              </div>
+              <div class="docks-available card">
+                <span class="icon"><ion-icon name="key"></ion-icon></span>
+                <span class="numb"></span>
+                <span class="text">espacios libres</span>
+              </div>
+            </div>
+            <div class="last-update">
+              <p>Última actualización <span></span></p>
+            </div>
+          </div>
+        </section>
+
+        <section id="cta-buttons">
+          <div class="container">
+            <div class="cta-buttons-box">
+              <a class="refresh-btn btn ripple"><ion-icon name="refresh"></ion-icon></a>
+              <a class="lock-btn btn ripple"><ion-icon name="lock"></ion-icon></a>
+              <a class="map-btn btn ripple"><ion-icon name="map"></ion-icon></a>
+              <a class="twitter-btn btn ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon></a>
+            </div>
+          </div>
+        </section>
+        <!--END WRAPPER-->
+      </div>
+
+      <footer>
+        <div class="container">
+          <div class="author">
+            <p>Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
+          </div>
+          <div class="social">
+            <a class="btn ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
+          </div>
+          <div class="disclaimer">
+            <p>Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Scripts -->
+      <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
+      <script type="text/javascript" src="appV2.js"></script>
     </div>
-
-    <header>
-      <div class="container">
-        <div class="logo">
-          <a href="/EcoBici"><img class="logo-img" src="img/logo.svg" alt="BA EcoBici logo"/></a>
-        </div>
-        <button class="menu-toggler btn ripple"><ion-icon name="menu"></ion-icon></button>
-      </div>
-    </header>
-
-    <aside id="menu">
-      <ul>
-        <li>Link 1</li>
-        <li>Link 2</li>
-        <li>Link 3</li>
-      </ul>
-    </aside>
-
-    <div class="wrapper">
-      <!--START WRAPPER-->
-      <section id="search">
-        <div class="container">
-          <div class="search-box">
-            <button class="search-btn btn ripple" type="submit" aria-label="Buscar por estación" value="Buscar por estación"><ion-icon name="search"></ion-icon></button>
-            <input class="search-input" type="number" aria-label="Buscar por estación" placeholder="Buscar una estación" />
-            <button class="location-btn btn ripple" aria-label="Buscar por ubicación" value="Buscar por ubicación" disabled><ion-icon name="locate"></ion-icon></button>
-          </div>
-        </div>
-      </section>
-
-      <section id="response">
-        <div class="container">
-          <h2>Total</h2>
-          <h3>Todas las estaciones</h3>
-          <div class="response-cards">
-            <div class="bikes-available card available">
-              <span class="icon"><ion-icon name="bicycle"></ion-icon></span>
-              <span class="numb"></span>
-              <span class="text">bicis disponibles</span>
-            </div>
-            <div class="bikes-disabled card disabled">
-              <span class="icon"><ion-icon name="warning" ios="ios-warning" md="md-warning"></ion-icon></span>
-              <span class="numb"></span>
-              <span class="text">bicis bloqueadas</span>
-            </div>
-            <div class="docks-available card">
-              <span class="icon"><ion-icon name="key"></ion-icon></span>
-              <span class="numb"></span>
-              <span class="text">espacios libres</span>
-            </div>
-          </div>
-          <div class="last-update">
-            <p>Última actualización <span></span></p>
-          </div>
-        </div>
-      </section>
-
-      <section id="cta-buttons">
-        <div class="container">
-          <div class="cta-buttons-box">
-            <a class="refresh-btn btn ripple"><ion-icon name="refresh"></ion-icon></a>
-            <a class="lock-btn btn ripple"><ion-icon name="lock"></ion-icon></a>
-            <a class="map-btn btn ripple"><ion-icon name="map"></ion-icon></a>
-            <a class="twitter-btn btn ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon></a>
-          </div>
-        </div>
-      </section>
-      <!--END WRAPPER-->
-    </div>
-
-    <footer>
-      <div class="container">
-        <div class="author">
-          <p>Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
-        </div>
-        <div class="social">
-          <a class="btn ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
-        </div>
-        <div class="disclaimer">
-          <p>Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
-    <script type="text/javascript" src="appV2.js"></script>
   </body>
 </html>
