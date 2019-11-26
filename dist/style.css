@@ -35,7 +35,7 @@ body {
   position: relative;
 }
 
-.body-wrapper {
+.overflow-wrapper {
   overflow-x: hidden;
   position: relative;
 }
@@ -417,22 +417,8 @@ h3 {
 
 /* FOOTER --------------------------------------------------------------------*/
 footer {
-  background-color: #212121;
-  color: var(--color-white);
-  padding: 3rem 0;
-  position: relative;
-}
-
-footer::before {
-  content: "";
-  display: block;
-  width: 50px;
-  height: 50px;
-  color: #212121;
   position: absolute;
-  top: -50px;
-  left: 50%;
-  margin-left: -25px;
+  bottom: 0;
 }
 
 .author > p {

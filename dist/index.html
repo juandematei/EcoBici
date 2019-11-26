@@ -1,25 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- Google Tag Manager -->
-    <script>
-      (function(w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-          "gtm.start": new Date().getTime(),
-          event: "gtm.js"
-        });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-5LZZDPZ");
-    </script>
-    <!-- End Google Tag Manager -->
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10440680-22"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -65,7 +47,9 @@
   </head>
 
   <body>
-    <div class="body-wrapper">
+    <div class="overflow-wrapper">
+      <!--START OVERFLOW WRAPPER-->
+
       <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
       <div class="updating">
@@ -87,11 +71,20 @@
       </header>
 
       <aside id="menu" style="right: -80%;">
-        <ul>
-          <li>Link 1</li>
-          <li>Link 2</li>
-          <li>Link 3</li>
-        </ul>
+        <a>Link 1</a>
+        <a>Link 2</a>
+        <a>Link 3</a>
+        <footer>
+          <div class="author">
+            <p>Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
+          </div>
+          <div class="social">
+            <a class="btn ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
+          </div>
+          <div class="disclaimer">
+            <p>Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
+          </div>
+        </footer>
       </aside>
 
       <div class="wrapper">
@@ -146,23 +139,11 @@
         <!--END WRAPPER-->
       </div>
 
-      <footer>
-        <div class="container">
-          <div class="author">
-            <p>Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
-          </div>
-          <div class="social">
-            <a class="btn ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
-          </div>
-          <div class="disclaimer">
-            <p>Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
-          </div>
-        </div>
-      </footer>
-
-      <!-- Scripts -->
-      <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
-      <script type="text/javascript" src="appV2.js"></script>
+      <!--END OVERFLOW WRAPPER-->
     </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
+    <script type="text/javascript" src="appV2.js"></script>
   </body>
 </html>
