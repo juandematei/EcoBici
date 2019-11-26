@@ -60,7 +60,7 @@ body {
   border-radius: 50px;
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   margin: 0;
   padding: 0;
   transition: var(--transition);
@@ -265,13 +265,8 @@ header > .container {
 
 .menu-toggler,
 .search-btn,
-.fixed-btn,
 .location-btn {
   box-shadow: none;
-}
-
-.fixed-btn.fixed {
-  color: var(--color-red);
 }
 
 .location-btn.watching {
@@ -281,7 +276,7 @@ header > .container {
 
 .search-input {
   background-color: var(--color-white);
-  width: calc(100% - 120px);
+  width: calc(100% - 80px);
   height: 40px;
   text-align: left;
 }
@@ -399,26 +394,19 @@ h3 {
 }
 
 /**CTA BUTTONS ---------------------------------------------------------------*/
-#cta-buttons {
+.cta-buttons-box {
   display: inline-flex;
   justify-content: space-between;
-  padding: 5px;
-}
-
-.refresh-btn {
-  color: var(--color-white);
-  background-color: var(--color-secondary);
+  width: 100%;
 }
 
 .refresh-btn.fixed {
   background-color: var(--color-red);
+  color: var(--color-white);
 }
 
-.twitter-share-button {
+.twitter-btn > ion-icon {
   text-decoration: none;
-}
-
-.twitter-share-button > ion-icon {
   color: #1a91da;
 }
 
@@ -464,6 +452,7 @@ footer::before {
 
 .social a {
   text-decoration: none;
+  width: 100%;
 }
 
 .social a:hover,
