@@ -1,5 +1,5 @@
-//* Variables
-// Colors
+//* Variables ----------------------------------------------------------------->
+// Colors --------------------------------------------------------------------->
 $primary: #e66300;
 $secondary: #0a4990;
 $red: #c62828;
@@ -7,15 +7,15 @@ $green: #2e7d32;
 $dark: #424242;
 $light: #f2f2f2;
 $white: #ffffff;
-// Border radius
+// Border radius -------------------------------------------------------------->
 $border-radius: 6px;
-// Shadows
+// Shadows -------------------------------------------------------------------->
 $box-shadow: 0 1px 3px rgba($dark, 0.12), 0 1px 2px rgba($dark, 0.24);
 $box-shadow-hov: 0 10px 20px rgba($dark, 0.19), 0 6px 6px rgba($dark, 0.23);
-// Transition
+// Transition ----------------------------------------------------------------->
 $transition: all 0.25s ease-in-out;
 
-//! Base
+//! Base----------------------------------------------------------------------->
 * {
   margin: 0;
   padding: 0;
@@ -75,6 +75,8 @@ ion-icon {
   font-size: 1.5rem;
 }
 
+//! Layout -------------------------------------------------------------------->
+// Wrappers ------------------------------------------------------------------->
 .wrapper__overflow {
   overflow-x: hidden;
   position: relative;
@@ -86,8 +88,7 @@ ion-icon {
   min-height: calc(100vh - 80px);
 }
 
-//! Layout
-// Header
+// Header --------------------------------------------------------------------->
 .header {
   height: 80px;
   z-index: 99;
@@ -107,7 +108,7 @@ ion-icon {
   }
 }
 
-// Side menu
+// Side menu ------------------------------------------------------------------>
 .side-menu {
   color: $light;
   background-color: rgba(0, 0, 0, 0.8);
@@ -130,7 +131,7 @@ ion-icon {
   z-index: 99;
 }
 
-// Search
+// Search --------------------------------------------------------------------->
 .search {
   &__box {
     display: inline-flex;
@@ -151,26 +152,25 @@ ion-icon {
     .btn {
       box-shadow: none;
     }
+  }
+  &__input {
+    background-color: $white;
+    width: calc(100% - 80px);
+    height: 40px;
+    text-align: left;
 
-    &__input {
-      background-color: $light;
-      width: calc(100% - 80px);
-      height: 40px;
-      text-align: left;
-
-      &::-webkit-input-placeholder {
-        color: #777;
-      }
+    &::-webkit-input-placeholder {
+      color: #777;
     }
+  }
 
-    &__location.watching {
-      background-color: $secondary;
-      color: $white;
-    }
+  &__location.watching {
+    background-color: $secondary;
+    color: $white;
   }
 }
 
-// Response
+// Response ------------------------------------------------------------------->
 .response {
   font-size: 2rem;
   display: flex;
@@ -245,26 +245,26 @@ ion-icon {
   }
 }
 
-// CTA
+// CTA ------------------------------------------------------------------------>
 .cta {
   &__box {
     display: inline-flex;
     justify-content: space-between;
     width: 100%;
-  }
 
-  &__refresh {
-    background-color: $secondary;
-    color: $white;
-  }
+    .cta__refresh {
+      background-color: $secondary;
+      color: $white;
+    }
 
-  &__twitter > ion-icon {
-    text-decoration: none;
-    color: #1a91da;
+    .cta__twitter > ion-icon {
+      text-decoration: none;
+      color: #1a91da;
+    }
   }
 }
 
-// Footer
+// Footer --------------------------------------------------------------------->
 .footer {
   position: absolute;
   bottom: 0;
@@ -297,8 +297,8 @@ ion-icon {
   }
 }
 
-//! Module
-// Updating overlay
+//! Module -------------------------------------------------------------------->
+// Updating overlay ----------------------------------------------------------->
 .updating {
   background-color: rgba($dark, 0.8);
   color: $light;
@@ -345,7 +345,7 @@ ion-icon {
   }
 }
 
-// Buttons
+// Buttons -------------------------------------------------------------------->
 .btn {
   position: relative;
   background-color: $light;
@@ -393,8 +393,8 @@ ion-icon {
   }
 }
 
-//! State
-// Loading icon animation
+//! State --------------------------------------------------------------------->
+// Loading icon animation ----------------------------------------------------->
 @keyframes loading {
   0% {
     transform: translate(0, 0);
@@ -407,7 +407,7 @@ ion-icon {
   }
 }
 
-// Button ripple animation
+// Button ripple animation ---------------------------------------------------->
 @keyframes ripple {
   from {
     width: 0;
@@ -421,7 +421,7 @@ ion-icon {
   }
 }
 
-// Search-bos error animation
+// Search-bos error animation ------------------------------------------------->
 @keyframes shake {
   10%,
   90% {

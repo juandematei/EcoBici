@@ -156,18 +156,18 @@ ion-icon {
           box-shadow: none;
 }
 
-.search__box__input {
-  background-color: #f2f2f2;
+.search__input {
+  background-color: #ffffff;
   width: calc(100% - 80px);
   height: 40px;
   text-align: left;
 }
 
-.search__box__input::-webkit-input-placeholder {
+.search__input::-webkit-input-placeholder {
   color: #777;
 }
 
-.search__box__location.watching {
+.search__location.watching {
   background-color: #0a4990;
   color: #ffffff;
 }
@@ -285,12 +285,12 @@ ion-icon {
   width: 100%;
 }
 
-.cta__refresh {
+.cta__box .cta__refresh {
   background-color: #0a4990;
   color: #ffffff;
 }
 
-.cta__twitter > ion-icon {
+.cta__box .cta__twitter > ion-icon {
   text-decoration: none;
   color: #1a91da;
 }
