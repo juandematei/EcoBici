@@ -41,7 +41,7 @@
     <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.min.css" />
 
     <title>EcoBici - Estado de las estaciones en tiempo real.</title>
   </head>
@@ -50,12 +50,12 @@
     <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
     <div class="updating">
-      <div class="load-3">
+      <div class="updating__icon">
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
       </div>
-      <p>Actualizando</p>
+      <p class="updating__text">Actualizando</p>
     </div>
 
     <div class="wrapper__overflow">
@@ -65,7 +65,7 @@
         <div class="logo">
           <a href="/EcoBici"><img class="logo__img" src="img/logo.svg" alt="BA EcoBici logo"/></a>
         </div>
-        <button class="menu-toggler btn ripple"><ion-icon name="menu"></ion-icon></button>
+        <button class="menu-toggler btn btn--ripple"><ion-icon name="menu"></ion-icon></button>
       </header>
 
       <div class="side-menu">

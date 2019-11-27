@@ -1,7 +1,17 @@
 {
   "liveServer.settings.root": "/dist",
-  "editor.rulers": [
-    80
-  ],
-  "editor.wordWrapColumn": 999
+  "editor.rulers": [80],
+  "editor.wordWrapColumn": 999,
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": null
+    },
+    {
+      "format": "compressed",
+      "extensionName": ".min.css",
+      "savePath": "/dist"
+    }
+  ]
 }
