@@ -34,35 +34,35 @@ var searchFixed = false;
 
 // DOM - Menu ----------------------------------------------------------------->
 const menuToggler = document.querySelector(".menu-toggler");
-const menuSidebar = document.querySelector("#menu");
+const menuSidebar = document.querySelector(".side-menu");
 
 // DOM - Search --------------------------------------------------------------->
-const searchBox = document.querySelector(".search-box");
-const searchButton = document.querySelector(".search-btn");
-const searchInput = document.querySelector(".search-input");
-const locationButton = document.querySelector(".location-btn");
+const searchBox = document.querySelector(".search__box");
+const searchButton = document.querySelector(".search__submit");
+const searchInput = document.querySelector(".search__input");
+const locationButton = document.querySelector(".search__location");
 
 // DOM - CTA buttons ---------------------------------------------------------->
-const refreshButton = document.querySelector(".refresh-btn");
-const twitterButton = document.querySelector(".twitter-btn");
-const fixedButton = document.querySelector(".fixed-btn");
-const fixedButtonIcon = document.querySelector(".fixed-btn > ion-icon");
+const refreshButton = document.querySelector(".cta__refresh");
+const twitterButton = document.querySelector(".cta__twitter");
+const fixedButton = document.querySelector(".cta__lock");
+const fixedButtonIcon = document.querySelector(".cta__lock > ion-icon");
 
 // DOM - Updating ------------------------------------------------------------->
 const updating = document.querySelector(".updating");
 
 // DOM - Headers -------------------------------------------------------------->
-const h2 = document.querySelector("h2");
-const h3 = document.querySelector("h3");
+const h2 = document.querySelector(".response__header");
+const h3 = document.querySelector(".response__name");
 
 // DOM - Response ------------------------------------------------------------->
-const cardBikesAvailableNumb = document.querySelector(".bikes-available > span.numb");
-const cardBikesAvailableText = document.querySelector(".bikes-available > span.text");
-const cardBikesDisabledNumb = document.querySelector(".bikes-disabled > span.numb");
-const cardBikesDisabledText = document.querySelector(".bikes-disabled > span.text");
-const cardDocksAvailableNumb = document.querySelector(".docks-available > span.numb");
-const cardDocksAvailableText = document.querySelector(".docks-available > span.text");
-const updateTime = document.querySelector(".last-update > p > span");
+const cardBikesAvailableNumb = document.querySelector(".card--bikes.card--available > .card__numb");
+const cardBikesAvailableText = document.querySelector(".card--bikes.card--available > .card__text");
+const cardBikesDisabledNumb = document.querySelector(".card--bikes.card--disabled > .card__numb");
+const cardBikesDisabledText = document.querySelector(".card--bikes.card--disabled > .card__text");
+const cardDocksAvailableNumb = document.querySelector(".card--docks > .card__numb");
+const cardDocksAvailableText = document.querySelector(".card--docks > .card__text");
+const updateTime = document.querySelector(".update-time");
 
 //! Main ---------------------------------------------------------------------->
 (function() {
@@ -72,7 +72,7 @@ const updateTime = document.querySelector(".last-update > p > span");
 
 // Get accumulated quantities ------------------------------------------------->
 function bikesTotal() {
-  updating.classList.remove("hide");
+  updating.classList.remove("updating--hide");
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
@@ -140,7 +140,7 @@ function bikesTotal() {
       var related = "elbotonmalo,baecobici";
       twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
 
-      updating.classList.add("hide");
+      updating.classList.add("updating--hide");
     } else {
       console.log("Error 1");
     }
