@@ -246,6 +246,16 @@ ion-icon {
       background-color: $disabled;
       opacity: 0.8;
     }
+
+    &--fixed {
+      background-color: $red;
+    }
+
+    &--disabled {
+      background-color: $disabled;
+      opacity: 0.8;
+      pointer-events: none;
+    }
   }
 }
 
@@ -278,6 +288,11 @@ ion-icon {
       a {
         text-decoration: none;
       }
+    }
+    &__text {
+      color: $white;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
     }
   }
 }

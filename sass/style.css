@@ -268,6 +268,16 @@ ion-icon {
   opacity: 0.8;
 }
 
+.cta .btn--fixed {
+  background-color: #c62828;
+}
+
+.cta .btn--disabled {
+  background-color: #777777;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
 .side-menu {
   color: #f2f2f2;
   background-color: rgba(0, 0, 0, 0.8);
@@ -307,6 +317,12 @@ ion-icon {
 
 .side-menu .nav__link a {
   text-decoration: none;
+}
+
+.side-menu .nav__text {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .toggler {
@@ -574,4 +590,3 @@ ion-icon {
 .error > .search__input::-webkit-input-placeholder {
   color: #c62828;
 }
-/*# sourceMappingURL=style.css.map */
