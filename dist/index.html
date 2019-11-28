@@ -52,9 +52,7 @@
     <!--START OVERFLOW WRAPPER-->
     <div class="overflow">
       <header class="header">
-        <div class="logo">
-          <a href="/EcoBici"><img class="logo__img" src="img/logo.svg" alt="BA EcoBici logo"/></a>
-        </div>
+        <a class="logo" href="/EcoBici"></a>
         <button class="toggler btn btn--ripple"><ion-icon name="menu"></ion-icon></button>
       </header>
 
@@ -91,22 +89,27 @@
         </section>
 
         <section class="cta">
-          <a class="cta__refresh btn btn--ripple"><ion-icon name="refresh"></ion-icon></a>
-          <a class="cta__favorite btn btn--ripple"><ion-icon name="star"></ion-icon></a>
-          <a class="cta__location btn btn--ripple"><ion-icon name="locate"></ion-icon></a>
-          <a class="cta__map btn btn--ripple"><ion-icon name="map"></ion-icon></a>
+          <button class="cta__refresh btn btn--ripple"><ion-icon name="refresh"></ion-icon></button>
+          <button class="cta__favorite btn btn--ripple" disabled><ion-icon name="star"></ion-icon></button>
+          <button class="cta__location btn btn--ripple" disabled><ion-icon name="locate"></ion-icon></button>
+          <button class="cta__map btn btn--ripple" disabled><ion-icon name="map"></ion-icon></button>
           <a class="cta__twitter btn btn--ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon></a>
         </section>
       </main>
 
       <div class="side-menu" style="right: -90vw;">
-        <nav class="nav">
-          <a class="nav__link">Link 1</a>
-          <a class="nav__link">Link 2</a>
-          <a class="nav__link">Link 3</a>
-        </nav>
+        <ul class="nav">
+          <li class="nav__link"><a href="#">Link</a></li>
+          <li class="nav__link"><a href="#">Link</a></li>
+          <li class="nav__link"><a href="#">Link</a></li>
+        </ul>
         <footer class="footer">
-          <p class="footer__author">Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
+          <p class="footer__author">
+            <span>Hecho con</span>
+            <ion-icon name="heart"></ion-icon>
+            <span>por</span>
+            <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a>
+          </p>
           <a class="footer__social btn btn--ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
           <p class="footer__text">Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
         </footer>
