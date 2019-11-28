@@ -490,6 +490,7 @@ locationButton.addEventListener("click", function(event) {
   fixedButtonIcon.setAttribute("name", "unlock");
   searchFixed = false;
   bikesStation(searchLocation);
+  responseHeader.textContent = "Estación más cercana";
   mapButton.classList.remove("btn--disabled");
 });
 refreshButton.addEventListener("click", function(event) {
