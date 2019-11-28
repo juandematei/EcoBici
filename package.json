@@ -1,6 +1,6 @@
 {
   "name": "ecobici",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Estado de las estaciones en tiempo real.",
   "main": "index.js",
   "dependencies": {
