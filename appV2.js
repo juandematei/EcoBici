@@ -19,160 +19,143 @@ urlInformation.searchParams.set("client_secret", client_secret);
 const xhrInformation = urlCors + urlInformation;
 
 // Initial variables ---------------------------------------------------------->
-var bikesAvailableInitial = 0;
-var bikesDisabledInitial = 0;
-var docksAvailableInitial = 0;
-var docksDisabledInitial = 0;
-var bikesFakeInitial = 0;
-var capacityInitial = 0;
+let bikesAvailableInitial = 0;
+let bikesDisabledInitial = 0;
+let docksAvailableInitial = 0;
+let docksDisabledInitial = 0;
+let bikesFakeInitial = 0;
+let capacityInitial = 0;
 
 // Search initial values ------------------------------------------------------>
-var stationsValid = [];
-var stationsLocation = [];
-var searchValue = "";
-var searchFixed = false;
+let stationsValid = [];
+let stationsLocation = [];
+let searchValue = "";
+let searchFixed = false;
+
+// DOM - Menu ----------------------------------------------------------------->
+const menuToggler = document.querySelector(".toggler");
+const menuSidebar = document.querySelector(".side-menu");
 
 // DOM - Search --------------------------------------------------------------->
-const searchBox = document.querySelector(".search-box");
-const searchButton = document.querySelector(".search-btn");
-const searchInput = document.querySelector(".search-input");
-const fixedButton = document.querySelector(".fixed-btn");
-const fixedButtonIcon = document.querySelector(".fixed-btn > ion-icon");
-const locationButton = document.querySelector(".location-btn");
+const searchBox = document.querySelector(".search__box");
+const searchButton = document.querySelector(".search__submit");
+const searchInput = document.querySelector(".search__input");
+const fixedButton = document.querySelector(".search__fixed");
+const fixedButtonIcon = document.querySelector(".search__fixed > ion-icon");
 
 // DOM - CTA buttons ---------------------------------------------------------->
-const refreshButton = document.querySelector(".refresh-btn");
-const twitterButton = document.querySelector(".twitter-btn");
+const refreshButton = document.querySelector(".cta__refresh");
+const favoriteButton = document.querySelector(".cta__favorite");
+const locationButton = document.querySelector(".cta__location");
+const mapButton = document.querySelector(".cta__map");
+const twitterButton = document.querySelector(".cta__twitter");
 
 // DOM - Updating ------------------------------------------------------------->
 const updating = document.querySelector(".updating");
 
 // DOM - Headers -------------------------------------------------------------->
-const h2 = document.querySelector("h2");
-const h3 = document.querySelector("h3");
+const responseHeader = document.querySelector(".response__header");
+const responseName = document.querySelector(".response__name");
 
 // DOM - Response ------------------------------------------------------------->
-const cardBikesAvailableNumb = document.querySelector(".bikes-available > span.numb");
-const cardBikesAvailableText = document.querySelector(".bikes-available > span.text");
-const cardBikesDisabledNumb = document.querySelector(".bikes-disabled > span.numb");
-const cardBikesDisabledText = document.querySelector(".bikes-disabled > span.text");
-const cardDocksAvailableNumb = document.querySelector(".docks-available > span.numb");
-const cardDocksAvailableText = document.querySelector(".docks-available > span.text");
-const cardDocksDisabledNumb = document.querySelector(".docks-disabled > span.numb");
-const updateTime = document.querySelector(".last-update > p > span");
+const cardBikesAvailableNumb = document.querySelector(".card--bikes.card--available > .card__numb");
+const cardBikesAvailableText = document.querySelector(".card--bikes.card--available > .card__text");
+const cardBikesDisabledNumb = document.querySelector(".card--bikes.card--disabled > .card__numb");
+const cardBikesDisabledText = document.querySelector(".card--bikes.card--disabled > .card__text");
+const cardDocksAvailableNumb = document.querySelector(".card--docks > .card__numb");
+const cardDocksAvailableText = document.querySelector(".card--docks > .card__text");
+const updateTime = document.querySelector(".update-time");
 
-//!  -------------------------------------------------------------------------->
+//! Main ---------------------------------------------------------------------->
 (function() {
+  getStationsValid();
   bikesTotal();
-  getstationsValid();
-  checkGeolocation();
 })();
 
-searchButton.addEventListener("click", function(event) {
-  searchValue = searchInput.value;
-  searchButtonClick();
-});
-
-searchInput.addEventListener("keyup", function(event) {
-  searchInputEnter();
-});
-
-fixedButton.addEventListener("click", function() {
-  fixedButtonClick();
-});
-
-locationButton.addEventListener("click", function() {
-  bikesStation();
-});
-
-refreshButton.addEventListener("click", function(event) {
-  refreshButtonClick();
-});
-
-// Get accumulated numbers ---------------------------------------------------->
+// Get accumulated quantities ------------------------------------------------->
 function bikesTotal() {
-  updating.classList.remove("hide");
+  updating.classList.remove("updating--hide");
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
   xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
-      var resp = JSON.parse(this.response);
-      var stationStatus = resp.data.stations;
-      console.log("Resultado bikesTotal: ");
+      let resp = JSON.parse(this.response);
+      let stationStatus = resp.data.stations;
+      console.log("Response stationStatus - bikesTotal: ");
       console.log(stationStatus);
 
       // Get last update time & date
-      var lastUpdated = new Date(resp.last_updated * 1000);
-      var options = {
+      let lastUpdated = new Date(resp.last_updated * 1000);
+      let options = {
         year: "2-digit",
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit"
       };
-      var lastUpdatedTotal = lastUpdated.toLocaleString("es-AR", options);
+      let lastUpdatedTotal = lastUpdated.toLocaleString("es-AR", options);
       updateTime.textContent = lastUpdatedTotal;
 
       // Get total bikes available
-      var bikesAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
+      let bikesAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_bikes_available;
       }, bikesAvailableInitial);
-      console.log("num_bikes_available: " + bikesAvailableAcc);
       cardBikesAvailableNumb.textContent = bikesAvailableAcc;
 
       // Get total bikes disabled
-      var bikesDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
+      let bikesDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_bikes_disabled;
       }, bikesDisabledInitial);
-      console.log("num_bikes_disabled: " + bikesDisabledAcc);
       cardBikesDisabledNumb.textContent = bikesDisabledAcc;
 
       // Get total docks available
-      var docksAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
+      let docksAvailableAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_docks_available;
       }, docksAvailableInitial);
-      console.log("num_docks_available: " + docksAvailableAcc);
       cardDocksAvailableNumb.textContent = docksAvailableAcc;
 
       // Get total docks disabled
-      var docksDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
+      let docksDisabledAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_docks_disabled;
       }, docksDisabledInitial);
-      console.log("num_docks_disabled: " + docksDisabledAcc);
+
+      console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc} docks: ${docksAvailableAcc} / ${docksDisabledAcc}`);
 
       // Get total fake bikes
-      var bikesFakeAcc = stationStatus.reduce(function(acc, currentValue) {
+      let bikesFakeAcc = stationStatus.reduce(function(acc, currentValue) {
         return acc + currentValue.num_bikes_available_types.ebike;
       }, bikesFakeInitial);
-      console.log("num_bikes_available_types.ebike: " + bikesFakeAcc);
+      console.log(`bikes_available_types.ebike: ${bikesFakeAcc}`);
       // Correct totals
       bikesAvailableAcc = bikesAvailableAcc - bikesFakeAcc * 2;
       docksAvailableAcc = docksAvailableAcc - bikesFakeAcc * 1;
 
       // Tweet button
-      var text = encodeURIComponent("🚳 Hay " + bikesDisabledAcc + " EcoBici bloqueadas. Probá la app!");
-      var url = "https://juandematei.github.io/EcoBici/";
-      var hashtags = "EliminenElBotón,EcoBici";
-      var via = "juandematei";
-      var related = "elbotonmalo,baecobici";
-      twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
+      let text = encodeURIComponent(`🚳 Hay ${bikesDisabledAcc} EcoBici bloqueadas. Probá la app!`);
+      let url = "https://juandematei.github.io/EcoBici/";
+      let hashtags = "EliminenElBotón,EcoBici";
+      let via = "juandematei";
+      let related = "elbotonmalo,baecobici";
+      twitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
 
-      updating.classList.add("hide");
+      updating.classList.add("updating--hide");
     } else {
-      console.log("Error 1");
+      responseHeader.textContent = "Error";
+      updating.classList.add("updating--hide");
     }
   };
   xhr.onerror = function() {
-    console.log("Error 2");
+    responseHeader.textContent = "Error";
+    updating.classList.add("updating--hide");
   };
   xhr.send();
 }
 
-// Get station numbers (search) ----------------------------------------------->
-function bikesStation() {
-  updating.classList.remove("hide");
+// Get quantities by station (search) ----------------------------------------->
+function bikesStation(busqueda) {
+  updating.classList.remove("updating--hide");
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
@@ -181,7 +164,7 @@ function bikesStation() {
       // Success!
       let resp = JSON.parse(this.response);
       let stationInformation = resp.data.stations;
-      console.log("Respuesta stationInformation: ");
+      console.log("Response stationInformation - bikesStation:");
       console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
@@ -192,11 +175,11 @@ function bikesStation() {
         return resultStationId;
       };
 
-      let resultStationId = findStationId(stationInformation, searchValue);
+      let resultStationId = findStationId(stationInformation, busqueda);
 
       result_id = resultStationId.station_id;
       result_name = resultStationId.name;
-      console.log(result_id, result_name);
+      console.log(`station_id: ${result_id} - station_name: ${result_name}`);
 
       // Get station data ----------------------------------------------------->
       let xhr = new XMLHttpRequest();
@@ -206,7 +189,7 @@ function bikesStation() {
           // Success!
           let resp = JSON.parse(this.response);
           let stationStatus = resp.data.stations;
-          console.log("Respuesta stationStatus: ");
+          console.log("Response stationStatus - bikesStation:");
           console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
@@ -222,10 +205,12 @@ function bikesStation() {
           bikesDisabledStation = resultStationStatus.num_bikes_disabled;
           docksAvailableStation = resultStationStatus.num_docks_available;
           docksDisabledStation = resultStationStatus.num_docks_disabled;
-          console.log(bikesAvailableStation, bikesDisabledStation, docksAvailableStation, docksDisabledStation);
 
-          h2.textContent = "Estación";
-          h3.textContent = result_name;
+          console.log(resultStationStatus);
+          console.log(`bikes: ${bikesAvailableStation} / ${bikesDisabledStation} docks: ${docksAvailableStation} / ${docksDisabledStation}`);
+
+          responseHeader.textContent = "Estación";
+          responseName.textContent = result_name;
 
           cardBikesAvailableNumb.textContent = bikesAvailableStation;
           if (bikesAvailableStation === 1) {
@@ -249,63 +234,80 @@ function bikesStation() {
           }
 
           // Tweet button
-          var text = encodeURIComponent("🚳 Hay " + bikesDisabledStation + " EcoBici bloqueadas en la estación " + result_name + ". Probá la app!");
-          var url = "https://juandematei.github.io/EcoBici/";
-          var hashtags = "EliminenElBotón,EcoBici";
-          var via = "juandematei";
-          var related = "elbotonmalo,baecobici";
-          twitterButton.href = "https://twitter.com/intent/tweet?text=" + text + "&url=" + url + "&hashtags=" + hashtags + "&via=" + via + "&related=" + related;
+          let text = encodeURIComponent(`🚳 Hay ${bikesDisabledStation} EcoBici bloqueadas en la estación ${result_name}. Probá la app!`);
+          let url = "https://juandematei.github.io/EcoBici/";
+          let hashtags = "EliminenElBotón,EcoBici";
+          let via = "juandematei";
+          let related = "elbotonmalo,baecobici";
+          twitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
 
           if (searchFixed === false) {
-            searchInput.value = "";
-            searchValue = "";
+            searchInput.value = ""; //! Important
+            searchValue = ""; //! Important
           }
 
-          updating.classList.add("hide");
+          //TODO favoriteButton.disabled = false;
+          //TODO mapButton.disabled = false;
+
+          updating.classList.add("updating--hide");
         } else {
-          console.log("Error 1");
+          responseHeader.textContent = "Error";
+          updating.classList.add("updating--hide");
         }
       };
       xhr.onerror = function() {
-        console.log("Error 2");
+        responseHeader.textContent = "Error";
+        updating.classList.add("updating--hide");
       };
       xhr.send();
     } else {
-      console.log("Error 1");
+      responseHeader.textContent = "Error";
+      updating.classList.add("updating--hide");
     }
   };
   xhr.onerror = function() {
-    console.log("Error 2");
+    responseHeader.textContent = "Error";
+    updating.classList.add("updating--hide");
   };
   xhr.send();
 }
 
-// Get valid station number from station name --------------------------------->
-function getstationsValid() {
+// Get valid station numbers & location --------------------------------------->
+function getStationsValid() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
-      var resp = JSON.parse(this.response);
-      var stationInformation = resp.data.stations;
+      let resp = JSON.parse(this.response);
+      let stationInformation = resp.data.stations;
 
-      for (var i = 0; i < stationInformation.length; i++) {
+      for (let i = 0; i < stationInformation.length; i++) {
+        //TODO Unificar en un único array??
+        // Get each station number from station name
         stationNumber = stationInformation[i].name.slice(0, 3);
         stationsValid.push(stationNumber);
+        // Get each station location (lat & lon)
         stationsLocation.id = stationInformation[i].name.slice(0, 3);
         stationsLocation.lat = stationInformation[i].lat;
         stationsLocation.lon = stationInformation[i].lon;
-        stationsLocation.push({ id: stationsLocation.id, lat: stationsLocation.lat, lon: stationsLocation.lon });
+        stationsLocation.push([stationsLocation.id, stationsLocation.lat, stationsLocation.lon]);
       }
-      console.log("Stations id, lat, lon: ");
+      console.log("stationsValid");
+      console.log(stationsValid);
+
+      console.log("stationsLocation");
       console.log(stationsLocation);
+
+      checkGeolocation();
     } else {
-      console.log("Error 1");
+      responseHeader.textContent = "Error";
+      updating.classList.add("updating--hide");
     }
   };
   xhr.onerror = function() {
-    console.log("Error 2");
+    responseHeader.textContent = "Error";
+    updating.classList.add("updating--hide");
   };
   xhr.send();
 }
@@ -317,24 +319,24 @@ function getUniqueStatus() {
   xhr.onload = function() {
     if (this.status >= 200 && this.status < 400) {
       // Success!
-      var resp = JSON.parse(this.response);
-      var stationStatus = resp.data.stations;
+      let resp = JSON.parse(this.response);
+      let stationStatus = resp.data.stations;
 
       let uniqueStatus = [...new Set(stationStatus.map(item => item.status))];
-
-      console.log("Unique status: ");
-      console.log(uniqueStatus);
+      console.log(`Unique status: ${uniqueStatus}`);
 
       uniqueStatus.forEach(element => {
         let count = stationStatus.filter(obj => obj.status === element).length;
-        console.log("Total " + element + ": " + count);
+        console.log(`Total ${element}: ${count}`);
       });
     } else {
-      console.log("Error 1");
+      responseHeader.textContent = "Error";
+      updating.classList.add("updating--hide");
     }
   };
   xhr.onerror = function() {
-    console.log("Error 2");
+    responseHeader.textContent = "Error";
+    updating.classList.add("updating--hide");
   };
   xhr.send();
 }
@@ -343,23 +345,18 @@ function getUniqueStatus() {
 function fixedButtonClick() {
   searchFixed = !searchFixed;
   if (searchFixed === true) {
-    refreshButton.classList.add("fixed");
-    fixedButton.classList.add("fixed");
-    fixedButtonIcon.classList.remove("fa-unlock");
-    fixedButtonIcon.classList.add("fa-lock");
+    refreshButton.classList.add("btn--fixed");
+    fixedButton.classList.add("btn--fixed");
+    fixedButtonIcon.setAttribute("name", "lock");
   } else {
-    refreshButton.classList.remove("fixed");
-    fixedButton.classList.remove("fixed");
-    fixedButtonIcon.classList.remove("fa-lock");
-    fixedButtonIcon.classList.add("fa-unlock");
-    searchInput.value = "";
+    refreshButton.classList.remove("btn--fixed");
+    fixedButton.classList.remove("btn--fixed");
+    fixedButtonIcon.setAttribute("name", "unlock");
   }
-  searchInput.focus();
 }
 
 // Refresh results ------------------------------------------------------------>
 function refreshButtonClick() {
-  event.preventDefault();
   if (searchFixed === true) {
     searchButton.click();
   } else {
@@ -369,9 +366,10 @@ function refreshButtonClick() {
 
 // Search button click -------------------------------------------------------->
 function searchButtonClick() {
-  event.preventDefault();
+  searchValue = searchInput.value; //! Important
 
   if (searchValue === "") {
+    //! Important
     searchBox.classList.add("error");
     searchInput.placeholder = "Ingresá una estación";
     setTimeout(function() {
@@ -379,9 +377,10 @@ function searchButtonClick() {
       searchInput.placeholder = "Buscar una estación";
     }, 4000);
   } else {
-    searchValue = pad(searchInput.value);
+    searchValue = pad(searchInput.value); //! Important
     if (stationsValid.includes(searchValue)) {
-      bikesStation();
+      //! Important
+      bikesStation(searchValue); //! Important
       searchInput.blur();
     } else {
       searchInput.value = "";
@@ -410,51 +409,98 @@ function pad(n) {
   return n;
 }
 
-// Distance function ---------------------------------------------------------->
-function distance(lat1, lon1, lat2, lon2, unit) {
-  var radlat1 = (Math.PI * lat1) / 180;
-  var radlat2 = (Math.PI * lat2) / 180;
-  var theta = lon1 - lon2;
-  var radtheta = (Math.PI * theta) / 180;
-  var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-  if (dist > 1) {
-    dist = 1;
-  }
-  dist = Math.acos(dist);
-  dist = (dist * 180) / Math.PI;
-  dist = dist * 60 * 1.1515;
-  if (unit == "K") {
-    dist = dist * 1.609344;
-  }
-  if (unit == "N") {
-    dist = dist * 0.8684;
-  }
-  return dist;
-}
-
-// Check geolocation
+//* Search by user location --------------------------------------------------->
+// Get User's Coordinate from their Browser
 function checkGeolocation() {
-  if ("geolocation" in navigator) {
-    /* geolocation is available */
-    navigator.geolocation.watchPosition(function(position) {
-      var closestStation = "";
-      var poslat = position.coords.latitude;
-      var poslon = position.coords.longitude;
-      for (var i = 0; i < stationsLocation.length; i++) {
-        // if this location is within 0.1KM of the user, add it to the list
-        if (distance(poslat, poslon, stationsLocation[i].lat, stationsLocation[i].lon, "K") <= 1) {
-          var closestStation = stationsLocation[i].id;
-          searchValue = closestStation;
-          locationButton.disabled = false;
-          locationButton.classList.add("watching");
-        }
-      }
-      console.log("User position: " + position.coords.latitude + position.coords.longitude);
-      console.log("Estacion mas cercana: " + closestStation);
-    });
-  } else {
-    /* geolocation IS NOT available */
+  // Geolocation OK
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(UserLocation);
+    locationButton.disabled = false;
+    locationButton.classList.add("watching");
+  }
+  // Geolocation not available
+  else {
     locationButton.disabled = true;
     locationButton.classList.remove("watching");
   }
 }
+
+// Callback function for asynchronous call to HTML5 geolocation
+function UserLocation(position) {
+  nearestStation(position.coords.latitude, position.coords.longitude);
+  console.log(`User location: ${position.coords.latitude} ${position.coords.longitude}`);
+}
+
+// Convert Degress to Radians
+function Deg2Rad(deg) {
+  return (deg * Math.PI) / 180;
+}
+
+function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
+  lat1 = Deg2Rad(lat1);
+  lat2 = Deg2Rad(lat2);
+  lon1 = Deg2Rad(lon1);
+  lon2 = Deg2Rad(lon2);
+  let R = 6371; // km
+  let x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2);
+  let y = lat2 - lat1;
+  let d = Math.sqrt(x * x + y * y) * R;
+  return d;
+}
+
+function nearestStation(latitude, longitude) {
+  let minDif = 99999;
+  let closest;
+
+  for (index = 0; index < stationsLocation.length; ++index) {
+    let dif = PythagorasEquirectangular(latitude, longitude, stationsLocation[index][1], stationsLocation[index][2]);
+    if (dif < minDif) {
+      closest = index;
+      minDif = dif;
+    }
+  }
+
+  searchLocation = stationsLocation[closest][0];
+  console.log(`Closest station: ${searchLocation}`);
+
+  let origin = latitude + "," + longitude;
+  let destination = stationsLocation[closest][1] + "," + stationsLocation[closest][2];
+  let mapLink = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
+  console.log(mapLink);
+
+  mapButton.href = mapLink;
+}
+
+//* Event listeners ----------------------------------------------------------->
+searchButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  searchButtonClick();
+});
+searchInput.addEventListener("keyup", function(event) {
+  searchInputEnter();
+});
+fixedButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  fixedButtonClick();
+});
+locationButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  refreshButton.classList.remove("btn--fixed");
+  fixedButton.classList.remove("btn--fixed");
+  fixedButtonIcon.setAttribute("name", "unlock");
+  searchFixed = false;
+  bikesStation(searchLocation);
+  mapButton.classList.remove("btn--disabled");
+});
+refreshButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  refreshButtonClick();
+});
+menuToggler.addEventListener("click", function(event) {
+  event.preventDefault();
+  if (menuSidebar.style.right === "-90vw") {
+    menuSidebar.style.right = "0";
+  } else {
+    menuSidebar.style.right = "-90vw";
+  }
+});

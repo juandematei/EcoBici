@@ -1,25 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- Google Tag Manager -->
-    <script>
-      (function(w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-          "gtm.start": new Date().getTime(),
-          event: "gtm.js"
-        });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-5LZZDPZ");
-    </script>
-    <!-- End Google Tag Manager -->
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-10440680-22"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -59,100 +41,93 @@
     <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.min.css" />
 
     <title>EcoBici - Estado de las estaciones en tiempo real.</title>
   </head>
 
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LZZDPZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
+    <!--START OVERFLOW WRAPPER-->
+    <div class="overflow">
+      <header class="header">
+        <a class="logo" href="/EcoBici"></a>
+        <button class="toggler btn btn--ripple"><ion-icon name="menu"></ion-icon></button>
+      </header>
+
+      <main class="main">
+        <section class="search">
+          <div class="search__box">
+            <button class="search__submit btn btn--ripple" aria-label="Buscar por estación"><ion-icon name="search"></ion-icon></button>
+            <input class="search__input" type="number" aria-label="Buscar por estación" placeholder="Buscar una estación" />
+            <button class="search__fixed btn btn--ripple" aria-label="Fijar estación"><ion-icon name="unlock"></ion-icon></button>
+          </div>
+        </section>
+
+        <section class="response">
+          <h2 class="response__header">Total</h2>
+          <h3 class="response__name">Todas las estaciones</h3>
+          <div class="response__cards">
+            <div class="card card--bikes card--available">
+              <span class="card__icon"><ion-icon name="bicycle"></ion-icon></span>
+              <span class="card__numb"></span>
+              <span class="card__text">bicis disponibles</span>
+            </div>
+            <div class="card card--bikes card--disabled">
+              <span class="card__icon"><ion-icon name="warning" ios="ios-warning" md="md-warning"></ion-icon></span>
+              <span class="card__numb"></span>
+              <span class="card__text">bicis bloqueadas</span>
+            </div>
+            <div class="card card--docks">
+              <span class="card__icon"><ion-icon name="key"></ion-icon></span>
+              <span class="card__numb"></span>
+              <span class="card__text">espacios libres</span>
+            </div>
+          </div>
+          <p class="response__time">Última actualización <span class="update-time"></span></p>
+        </section>
+
+        <section class="cta">
+          <button class="cta__refresh btn btn--ripple"><ion-icon name="refresh"></ion-icon></button>
+          <button class="cta__favorite btn btn--ripple" disabled><ion-icon name="star"></ion-icon></button>
+          <button class="cta__location btn btn--ripple" disabled><ion-icon name="locate"></ion-icon></button>
+          <a class="cta__map btn btn--ripple btn--disabled" href="#"><ion-icon name="map"></ion-icon></a>
+          <a class="cta__twitter btn btn--ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon></a>
+        </section>
+      </main>
+
+      <div class="side-menu" style="right: -90vw;">
+        <ul class="nav">
+          <li class="nav__link">Búsqueda por estación</li>
+          <p class="nav__text">Para buscar una estación ingresá el número y presioná ENTER o el ícono de la lupa.</p>
+          <p class="nav__text">Si querés fijar una estación, presioná el candado, el botón de actualizar también se pondrá en rojo.</p>
+          <li class="nav__link">Estación más cercana</li>
+          <p class="nav__text">Cuando la ubicación de tu dispositivo esté disponible el botón se pondrá en azul y podés buscar la estación más cercana.</p>
+          <p class="nav__text">Una vez que aparece el resultado podés usar el botón del mapa para abrir Google Maps y ver el camino hasta esa estación.</p>
+        </ul>
+        <footer class="footer">
+          <p class="footer__author">
+            <span>Hecho con</span>
+            <ion-icon name="heart"></ion-icon>
+            <span>por</span>
+            <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a>
+          </p>
+          <a class="footer__social btn btn--ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
+          <p class="footer__text">Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
+        </footer>
+      </div>
+    </div>
+    <!--END OVERFLOW WRAPPER-->
+
     <div class="updating">
-      <p>Actualizando</p>
-    </div>
-
-    <header>
-      <div class="container">
-        <div class="logo">
-          <a href="/EcoBici"><img class="logo-img" src="img/logo.svg" alt="BA EcoBici logo"/></a>
-        </div>
-        <button class="menu-toggler btn ripple"><ion-icon name="menu"></ion-icon></button>
+      <div class="updating__icon">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
       </div>
-    </header>
-
-    <!--START WRAPPER-->
-    <div class="wrapper">
-      <section id="search">
-        <div class="container">
-          <div class="search-box">
-            <button class="search-btn btn ripple" type="submit" aria-label="Buscar por estación" value="Buscar por estación"><ion-icon name="search"></ion-icon></button>
-            <input class="search-input" type="number" aria-label="Buscar por estación" placeholder="Buscar una estación" />
-            <button class="fixed-btn btn ripple" aria-label="Fijar estación" value="Fijar estación"><ion-icon name="lock"></ion-icon></button>
-            <button class="location-btn btn ripple" aria-label="Buscar por ubicación" value="Buscar por ubicación" disabled><ion-icon name="locate"></ion-icon></button>
-          </div>
-        </div>
-      </section>
-
-      <section id="response">
-        <div class="container">
-          <h2>Total</h2>
-          <h3>Todas las estaciones</h3>
-          <div class="response-cards">
-            <div class="bikes-available card available">
-              <span class="icon"><ion-icon name="bicycle"></ion-icon></span>
-              <span class="numb"></span>
-              <span class="text">bicis disponibles</span>
-            </div>
-            <div class="bikes-disabled card disabled">
-              <span class="icon"><ion-icon name="warning" ios="ios-warning" md="md-warning"></ion-icon></span>
-              <span class="numb"></span>
-              <span class="text">bicis bloqueadas</span>
-            </div>
-            <div class="docks-available card">
-              <span class="icon"><ion-icon name="key"></ion-icon></span>
-              <span class="numb"></span>
-              <span class="text">espacios libres</span>
-            </div>
-            <!-- <div class="docks-disabled card">
-            <span class="icon"><i class="fas fa-minus-circle"></i></span>
-            <span class="numb"></span>
-            <span class="text">espacios bloqueados</span>
-          </div> -->
-          </div>
-        </div>
-        <div class="last-update">
-          <p>Última actualización <span></span></p>
-        </div>
-      </section>
-
-      <section id="cta-buttons" class="container">
-        <div class="refresh">
-          <a class="refresh-btn btn ripple"><ion-icon name="refresh"></ion-icon>Actualizar</a>
-        </div>
-        <div class="twitter">
-          <a class="twitter-btn btn ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon>Twittear</a>
-        </div>
-      </section>
+      <p class="updating__text">Actualizando</p>
     </div>
-    <!--END WRAPPER-->
-
-    <footer>
-      <div class="container">
-        <div class="author">
-          <p>Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
-        </div>
-        <div class="social">
-          <a class="btn ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
-        </div>
-        <div class="disclaimer">
-          <p>Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
-        </div>
-      </div>
-    </footer>
 
     <!-- Scripts -->
     <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
