@@ -77,14 +77,14 @@ ion-icon {
 
 //! Layout -------------------------------------------------------------------->
 // Wrappers ------------------------------------------------------------------->
-.wrapper__overflow {
+.overflow {
   overflow-x: hidden;
   position: relative;
   margin: 0 -1rem;
   padding: 0 1rem;
 }
 
-.wrapper__main {
+.main {
   min-height: calc(100vh - 80px);
 }
 
@@ -106,29 +106,6 @@ ion-icon {
       height: auto !important;
     }
   }
-}
-
-// Side menu ------------------------------------------------------------------>
-.side-menu {
-  color: $light;
-  background-color: rgba(0, 0, 0, 0.8);
-  position: absolute;
-  top: 0;
-  right: -80%;
-  height: 100vh;
-  width: 80%;
-  padding: 80px 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  z-index: 9;
-  backdrop-filter: blur(10px);
-  transition: $transition;
-}
-
-.menu-toggler {
-  z-index: 99;
 }
 
 // Search --------------------------------------------------------------------->
@@ -177,7 +154,7 @@ ion-icon {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2rem auto;
+  margin: 1.5rem auto;
 
   &__header {
     text-transform: uppercase;
@@ -196,6 +173,51 @@ ion-icon {
     justify-content: center;
     align-items: center;
     margin: 1rem auto;
+
+    .card {
+      background-color: $white;
+      color: $dark;
+      width: 100%;
+      min-height: 60px;
+      border-radius: $border-radius;
+      padding: 1rem;
+      box-shadow: $box-shadow;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      text-align: left;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &__icon {
+        margin-right: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-icon {
+          font-size: 2rem;
+        }
+      }
+
+      &__numb {
+        margin-right: 0.5rem;
+        text-align: right;
+        font-weight: 700;
+        min-width: 1.8rem;
+      }
+
+      &--available {
+        color: $green;
+      }
+
+      &--disabled {
+        color: $red;
+      }
+    }
   }
 
   &__time {
@@ -204,103 +226,86 @@ ion-icon {
   }
 }
 
-.card {
-  background-color: $white;
-  color: $dark;
-  width: 100%;
-  min-height: 60px;
-  border-radius: $border-radius;
-  padding: 1rem;
-  box-shadow: $box-shadow;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  text-align: left;
-
-  &__icon {
-    margin-right: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    ion-icon {
-      font-size: 2rem;
-    }
-  }
-
-  &__numb {
-    margin-right: 0.5rem;
-    text-align: right;
-    font-weight: 700;
-    min-width: 1.8rem;
-  }
-
-  &--available {
-    color: $green;
-  }
-
-  &--disabled {
-    color: $red;
-  }
-}
-
 // CTA ------------------------------------------------------------------------>
 .cta {
-  &__box {
-    display: inline-flex;
-    justify-content: space-between;
-    width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
 
-    .cta__refresh {
-      background-color: $secondary;
-      color: $white;
-    }
+  .btn {
+    width: 50px;
+    height: 50px;
+  }
 
-    .cta__twitter > ion-icon {
+  .cta__refresh {
+    background-color: $secondary;
+    color: $white;
+  }
+
+  .cta__twitter {
+    ion-icon[name="logo-twitter"] {
       text-decoration: none;
       color: #1a91da;
     }
   }
 }
 
+// Side menu ------------------------------------------------------------------>
+.side-menu {
+  color: $light;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: 0;
+  right: -90vw;
+  height: 100vh;
+  width: 90vw;
+  padding: 80px 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 9;
+  backdrop-filter: blur(10px);
+  transition: $transition;
+}
+
+.toggler {
+  z-index: 99;
+}
+
 // Footer --------------------------------------------------------------------->
 .footer {
-  position: absolute;
-  bottom: 0;
-
   &__author {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 0.8rem;
+    vertical-align: middle;
 
-    ion-icon {
+    ion-icon[name="heart"] {
       color: $red;
-      font-size: 2rem;
+      //font-size: 2rem;
       margin: 0 0.5rem;
     }
   }
 
   &__social {
-    text-decoration: none;
-    width: 100%;
+    &.btn {
+      text-decoration: none;
+      width: 100%;
+      margin: 1.5rem 0;
 
-    a:hover,
-    a:active {
-      background-color: var(--color-white);
-      background: var(--color-white);
+      ion-icon[name="logo-github"] {
+        margin-right: 0.5rem;
+      }
     }
   }
-
   &__text {
     font-size: 0.8rem;
+    margin-bottom: 0.5rem;
   }
 }
 
 //! Module -------------------------------------------------------------------->
 // Updating overlay ----------------------------------------------------------->
 .updating {
-  background-color: rgba($dark, 0.8);
+  background-color: rgba($dark, 0.9);
   color: $light;
   backdrop-filter: blur(10px);
   position: absolute;
@@ -348,7 +353,7 @@ ion-icon {
 // Buttons -------------------------------------------------------------------->
 .btn {
   position: relative;
-  background-color: $light;
+  background-color: $white;
   color: $dark;
   box-shadow: $box-shadow;
   width: 40px;

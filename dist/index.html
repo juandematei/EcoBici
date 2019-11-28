@@ -49,45 +49,21 @@
   <body>
     <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
-    <div class="updating">
-      <div class="updating__icon">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-      </div>
-      <p class="updating__text">Actualizando</p>
-    </div>
-
-    <div class="wrapper__overflow">
-      <!--START OVERFLOW WRAPPER-->
-
+    <!--START OVERFLOW WRAPPER-->
+    <div class="overflow">
       <header class="header">
         <div class="logo">
           <a href="/EcoBici"><img class="logo__img" src="img/logo.svg" alt="BA EcoBici logo"/></a>
         </div>
-        <button class="menu-toggler btn btn--ripple"><ion-icon name="menu"></ion-icon></button>
+        <button class="toggler btn btn--ripple"><ion-icon name="menu"></ion-icon></button>
       </header>
 
-      <div class="side-menu">
-        <nav class="nav" style="right: -80%;">
-          <a class="nav__link">Link 1</a>
-          <a class="nav__link">Link 2</a>
-          <a class="nav__link">Link 3</a>
-        </nav>
-        <footer class="footer">
-          <p class="footer__author">Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
-          <a class="footer__social btn btn--ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
-          <p class="footer__text">Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
-        </footer>
-      </div>
-
-      <main class="wrapper__main">
-        <!--START WRAPPER-->
+      <main class="main">
         <section class="search">
           <div class="search__box">
-            <button class="search__submit btn btn--ripple" type="submit" aria-label="Buscar por estación" value="Buscar por estación"><ion-icon name="search"></ion-icon></button>
+            <button class="search__submit btn btn--ripple" aria-label="Buscar por estación"><ion-icon name="search"></ion-icon></button>
             <input class="search__input" type="number" aria-label="Buscar por estación" placeholder="Buscar una estación" />
-            <button class="search__location btn btn--ripple" aria-label="Buscar por ubicación" value="Buscar por ubicación" disabled><ion-icon name="locate"></ion-icon></button>
+            <button class="search__fixed btn btn--ripple" aria-label="Fijar estación"><ion-icon name="unlock"></ion-icon></button>
           </div>
         </section>
 
@@ -115,17 +91,36 @@
         </section>
 
         <section class="cta">
-          <div class="cta__box">
-            <a class="cta__refresh btn btn--ripple"><ion-icon name="refresh"></ion-icon></a>
-            <a class="cta__lock btn btn--ripple"><ion-icon name="lock"></ion-icon></a>
-            <a class="cta__map btn btn--ripple"><ion-icon name="map"></ion-icon></a>
-            <a class="cta__twitter btn btn--ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon></a>
-          </div>
+          <a class="cta__refresh btn btn--ripple"><ion-icon name="refresh"></ion-icon></a>
+          <a class="cta__favorite btn btn--ripple"><ion-icon name="star"></ion-icon></a>
+          <a class="cta__location btn btn--ripple"><ion-icon name="locate"></ion-icon></a>
+          <a class="cta__map btn btn--ripple"><ion-icon name="map"></ion-icon></a>
+          <a class="cta__twitter btn btn--ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon></a>
         </section>
-        <!--END WRAPPER-->
       </main>
 
-      <!--END OVERFLOW WRAPPER-->
+      <div class="side-menu" style="right: -90vw;">
+        <nav class="nav">
+          <a class="nav__link">Link 1</a>
+          <a class="nav__link">Link 2</a>
+          <a class="nav__link">Link 3</a>
+        </nav>
+        <footer class="footer">
+          <p class="footer__author">Hecho con <ion-icon name="heart"></ion-icon> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
+          <a class="footer__social btn btn--ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><ion-icon name="logo-github"></ion-icon>Ver en GitHub</a>
+          <p class="footer__text">Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
+        </footer>
+      </div>
+    </div>
+    <!--END OVERFLOW WRAPPER-->
+
+    <div class="updating">
+      <div class="updating__icon">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <p class="updating__text">Actualizando</p>
     </div>
 
     <!-- Scripts -->

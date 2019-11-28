@@ -61,14 +61,14 @@ ion-icon {
   font-size: 1.5rem;
 }
 
-.wrapper__overflow {
+.overflow {
   overflow-x: hidden;
   position: relative;
   margin: 0 -1rem;
   padding: 0 1rem;
 }
 
-.wrapper__main {
+.main {
   min-height: calc(100vh - 80px);
 }
 
@@ -95,39 +95,6 @@ ion-icon {
   max-width: 100%;
   max-height: 40px;
   height: auto !important;
-}
-
-.side-menu {
-  color: #f2f2f2;
-  background-color: rgba(0, 0, 0, 0.8);
-  position: absolute;
-  top: 0;
-  right: -80%;
-  height: 100vh;
-  width: 80%;
-  padding: 80px 1rem 1rem 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  z-index: 9;
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
-  -webkit-transition: all 0.25s ease-in-out;
-  transition: all 0.25s ease-in-out;
-}
-
-.menu-toggler {
-  z-index: 99;
 }
 
 .search__box {
@@ -187,7 +154,7 @@ ion-icon {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 2rem auto;
+  margin: 1.5rem auto;
 }
 
 .response__header {
@@ -218,12 +185,7 @@ ion-icon {
   margin: 1rem auto;
 }
 
-.response__time {
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.card {
+.response__cards .card {
   background-color: #ffffff;
   color: #424242;
   width: 100%;
@@ -243,7 +205,11 @@ ion-icon {
   text-align: left;
 }
 
-.card__icon {
+.response__cards .card:last-of-type {
+  margin-bottom: 0;
+}
+
+.response__cards .card__icon {
   margin-right: 0.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -256,26 +222,31 @@ ion-icon {
           align-items: center;
 }
 
-.card__icon ion-icon {
+.response__cards .card__icon ion-icon {
   font-size: 2rem;
 }
 
-.card__numb {
+.response__cards .card__numb {
   margin-right: 0.5rem;
   text-align: right;
   font-weight: 700;
   min-width: 1.8rem;
 }
 
-.card--available {
+.response__cards .card--available {
   color: #2e7d32;
 }
 
-.card--disabled {
+.response__cards .card--disabled {
   color: #c62828;
 }
 
-.cta__box {
+.response__time {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.cta {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -285,56 +256,78 @@ ion-icon {
   width: 100%;
 }
 
-.cta__box .cta__refresh {
+.cta .btn {
+  width: 50px;
+  height: 50px;
+}
+
+.cta .cta__refresh {
   background-color: #0a4990;
   color: #ffffff;
 }
 
-.cta__box .cta__twitter > ion-icon {
+.cta .cta__twitter ion-icon[name="logo-twitter"] {
   text-decoration: none;
   color: #1a91da;
 }
 
-.footer {
+.side-menu {
+  color: #f2f2f2;
+  background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
-  bottom: 0;
-}
-
-.footer__author {
+  top: 0;
+  right: -90vw;
+  height: 100vh;
+  width: 90vw;
+  padding: 80px 1rem 1rem 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  z-index: 9;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
-.footer__author ion-icon {
+.toggler {
+  z-index: 99;
+}
+
+.footer__author {
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.footer__author ion-icon[name="heart"] {
   color: #c62828;
-  font-size: 2rem;
   margin: 0 0.5rem;
 }
 
-.footer__social {
+.footer__social.btn {
   text-decoration: none;
   width: 100%;
+  margin: 1.5rem 0;
 }
 
-.footer__social a:hover,
-.footer__social a:active {
-  background-color: var(--color-white);
-  background: var(--color-white);
+.footer__social.btn ion-icon[name="logo-github"] {
+  margin-right: 0.5rem;
 }
 
 .footer__text {
   font-size: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
 .updating {
-  background-color: rgba(66, 66, 66, 0.8);
+  background-color: rgba(66, 66, 66, 0.9);
   color: #f2f2f2;
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
@@ -394,7 +387,7 @@ ion-icon {
 
 .btn {
   position: relative;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   color: #424242;
   -webkit-box-shadow: 0 1px 3px rgba(66, 66, 66, 0.12), 0 1px 2px rgba(66, 66, 66, 0.24);
           box-shadow: 0 1px 3px rgba(66, 66, 66, 0.12), 0 1px 2px rgba(66, 66, 66, 0.24);

@@ -33,27 +33,28 @@ var searchValue = "";
 var searchFixed = false;
 
 // DOM - Menu ----------------------------------------------------------------->
-const menuToggler = document.querySelector(".menu-toggler");
+const menuToggler = document.querySelector(".toggler");
 const menuSidebar = document.querySelector(".side-menu");
 
 // DOM - Search --------------------------------------------------------------->
 const searchBox = document.querySelector(".search__box");
 const searchButton = document.querySelector(".search__submit");
 const searchInput = document.querySelector(".search__input");
-const locationButton = document.querySelector(".search__location");
+const fixedButton = document.querySelector(".search__fixed");
 
 // DOM - CTA buttons ---------------------------------------------------------->
 const refreshButton = document.querySelector(".cta__refresh");
+const favoriteButton = document.querySelector(".cta__favorite");
+const locationButton = document.querySelector(".cta__location");
+const mapButton = document.querySelector(".cta__map");
 const twitterButton = document.querySelector(".cta__twitter");
-const fixedButton = document.querySelector(".cta__lock");
-const fixedButtonIcon = document.querySelector(".cta__lock > ion-icon");
 
 // DOM - Updating ------------------------------------------------------------->
 const updating = document.querySelector(".updating");
 
 // DOM - Headers -------------------------------------------------------------->
-const h2 = document.querySelector(".response__header");
-const h3 = document.querySelector(".response__name");
+const responseHeader = document.querySelector(".response__header");
+const responseName = document.querySelector(".response__name");
 
 // DOM - Response ------------------------------------------------------------->
 const cardBikesAvailableNumb = document.querySelector(".card--bikes.card--available > .card__numb");
@@ -207,8 +208,8 @@ function bikesStation(busqueda) {
           console.log(resultStationStatus);
           console.log(bikesAvailableStation, bikesDisabledStation, docksAvailableStation, docksDisabledStation);
 
-          h2.textContent = "Estación";
-          h3.textContent = result_name;
+          responseHeader.textContent = "Estación";
+          responseName.textContent = result_name;
 
           cardBikesAvailableNumb.textContent = bikesAvailableStation;
           if (bikesAvailableStation === 1) {
@@ -479,9 +480,9 @@ locationButton.addEventListener("click", function(event) {
 //});
 menuToggler.addEventListener("click", function(event) {
   event.preventDefault();
-  if (menuSidebar.style.right === "-80%") {
+  if (menuSidebar.style.right === "-90vw") {
     menuSidebar.style.right = "0";
   } else {
-    menuSidebar.style.right = "-80%";
+    menuSidebar.style.right = "-90vw";
   }
 });
