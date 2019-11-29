@@ -34,7 +34,9 @@ let searchFixed = false;
 
 // DOM - Menu ----------------------------------------------------------------->
 const menuToggler = document.querySelector(".toggler");
-const menuSidebar = document.querySelector(".side-menu");
+const menuTogglerIcon = document.querySelector(".toggler__icon");
+const menuSidebar = document.querySelector(".menu");
+let menuOpen = false;
 
 // DOM - Search --------------------------------------------------------------->
 const searchBox = document.querySelector(".search__box");
@@ -415,12 +417,12 @@ function checkGeolocation() {
   // Geolocation OK
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(UserLocation);
-    locationButton.disabled = false;
+    locationButton.classList.remove("btn--disabled");
     locationButton.classList.add("watching");
   }
   // Geolocation not available
   else {
-    locationButton.disabled = true;
+    locationButton.classList.add("btn--disabled");
     locationButton.classList.remove("watching");
   }
 }
@@ -484,13 +486,11 @@ fixedButton.addEventListener("click", function(event) {
   fixedButtonClick();
 });
 locationButton.addEventListener("click", function(event) {
-  event.preventDefault();
   refreshButton.classList.remove("btn--fixed");
   fixedButton.classList.remove("btn--fixed");
   fixedButtonIcon.setAttribute("name", "unlock");
   searchFixed = false;
   bikesStation(searchLocation);
-  responseHeader.textContent = "Estación más cercana";
   mapButton.classList.remove("btn--disabled");
 });
 refreshButton.addEventListener("click", function(event) {
@@ -499,9 +499,13 @@ refreshButton.addEventListener("click", function(event) {
 });
 menuToggler.addEventListener("click", function(event) {
   event.preventDefault();
-  if (menuSidebar.style.right === "-90vw") {
-    menuSidebar.style.right = "0";
+
+  menuOpen = !menuOpen;
+  if (menuOpen === true) {
+    menuTogglerIcon.classList.add("menu--open");
+    menuSidebar.classList.add("menu--show");
   } else {
-    menuSidebar.style.right = "-90vw";
+    menuTogglerIcon.classList.remove("menu--open");
+    menuSidebar.classList.remove("menu--show");
   }
 });

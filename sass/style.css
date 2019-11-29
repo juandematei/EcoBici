@@ -277,11 +277,6 @@ ion-icon {
   color: #ffffff;
 }
 
-.cta .btn:disabled {
-  background-color: #777777;
-  opacity: 0.8;
-}
-
 .cta .btn--fixed {
   background-color: #c62828;
 }
@@ -292,14 +287,14 @@ ion-icon {
   pointer-events: none;
 }
 
-.side-menu {
+.menu {
   color: #f2f2f2;
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 0;
-  right: -90vw;
+  left: 100vw;
   height: 100vh;
-  width: 90vw;
+  width: 100%;
   padding: 80px 1rem 2rem 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -318,22 +313,26 @@ ion-icon {
   transition: all 0.25s ease-in-out;
 }
 
-.side-menu .nav {
+.menu.menu--show {
+  left: 0;
+}
+
+.menu .nav {
   list-style-type: none;
   text-align: left;
   color: #e66300;
   font-size: 1.2rem;
 }
 
-.side-menu .nav__link {
+.menu .nav__link {
   margin-bottom: 1rem;
 }
 
-.side-menu .nav__link a {
+.menu .nav__link a {
   text-decoration: none;
 }
 
-.side-menu .nav__text {
+.menu .nav__text {
   color: #ffffff;
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -341,6 +340,48 @@ ion-icon {
 
 .toggler {
   z-index: 99;
+}
+
+.toggler .toggler__icon {
+  background-color: #424242;
+  height: 3px;
+  width: 24px;
+  position: relative;
+}
+
+.toggler .toggler__icon:before, .toggler .toggler__icon:after {
+  content: "";
+  background-color: #424242;
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  -webkit-transition: opacity 0.1s linear, -webkit-transform 0.1s ease-in-out;
+  transition: opacity 0.1s linear, -webkit-transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out, opacity 0.1s linear;
+  transition: transform 0.1s ease-in-out, opacity 0.1s linear, -webkit-transform 0.1s ease-in-out;
+}
+
+.toggler .toggler__icon:before {
+  top: -6px;
+}
+
+.toggler .toggler__icon:after {
+  top: 6px;
+}
+
+.toggler .toggler__icon.menu--open {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.toggler .toggler__icon.menu--open::before {
+  opacity: 0;
+}
+
+.toggler .toggler__icon.menu--open::after {
+  -webkit-transform: rotate(90deg) translate(-6px);
+          transform: rotate(90deg) translate(-6px);
 }
 
 .footer__author span,
@@ -454,10 +495,6 @@ ion-icon {
   padding: 0;
   -webkit-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
-}
-
-.btn:hover, .btn:focus {
-  opacity: 0.9;
 }
 
 .btn--ripple::before {
