@@ -19,6 +19,12 @@ body {
   color: #424242;
 }
 
+@media (min-width: 768px) {
+  body {
+    padding: 0 25%;
+  }
+}
+
 input,
 textarea,
 button,

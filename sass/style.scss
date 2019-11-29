@@ -32,6 +32,10 @@ body {
   padding: 0 1rem;
   background: linear-gradient(to bottom, $primary 105px, $light 0%);
   color: $dark;
+
+  @media (min-width: 768px) {
+    padding: 0 25%;
+  }
 }
 
 input,
