@@ -49,11 +49,12 @@
   <body>
     <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
-    <!--START OVERFLOW WRAPPER-->
     <div class="overflow">
+      <!--START OVERFLOW WRAPPER-->
+
       <header class="header">
         <a class="logo" href="/EcoBici"></a>
-        <button class="toggler btn btn--ripple"><ion-icon name="menu"></ion-icon></button>
+        <button class="toggler btn btn--ripple"><span class="toggler__icon"></span></button>
       </header>
 
       <main class="main">
@@ -75,7 +76,7 @@
               <span class="card__text">bicis disponibles</span>
             </div>
             <div class="card card--bikes card--disabled">
-              <span class="card__icon"><ion-icon name="warning" ios="ios-warning" md="md-warning"></ion-icon></span>
+              <span class="card__icon"><ion-icon name="warning"></ion-icon></span>
               <span class="card__numb"></span>
               <span class="card__text">bicis bloqueadas</span>
             </div>
@@ -90,14 +91,14 @@
 
         <section class="cta">
           <button class="cta__refresh btn btn--ripple"><ion-icon name="refresh"></ion-icon></button>
-          <button class="cta__favorite btn btn--ripple" disabled><ion-icon name="star"></ion-icon></button>
-          <button class="cta__location btn btn--ripple" disabled><ion-icon name="locate"></ion-icon></button>
+          <!-- <button class="cta__favorite btn btn--ripple btn--disabled"><ion-icon name="star"></ion-icon></button> -->
+          <button class="cta__location btn btn--ripple btn--disabled"><ion-icon name="locate"></ion-icon></button>
           <a class="cta__map btn btn--ripple btn--disabled" href="#"><ion-icon name="map"></ion-icon></a>
           <a class="cta__twitter btn btn--ripple twitter-share-button" href="https://twitter.com/intent/tweet"><ion-icon name="logo-twitter"></ion-icon></a>
         </section>
       </main>
 
-      <div class="side-menu" style="right: -90vw;">
+      <div class="menu">
         <ul class="nav">
           <li class="nav__link">Búsqueda por estación</li>
           <p class="nav__text">Para buscar una estación ingresá el número y presioná ENTER o el ícono de la lupa.</p>
@@ -117,8 +118,8 @@
           <p class="footer__text">Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
         </footer>
       </div>
+      <!--END OVERFLOW WRAPPER-->
     </div>
-    <!--END OVERFLOW WRAPPER-->
 
     <div class="updating">
       <div class="updating__icon">
