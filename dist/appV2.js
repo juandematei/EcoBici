@@ -138,7 +138,7 @@ function bikesTotal() {
 
       // Tweet button
       let text = encodeURIComponent(`🚳 Hay ${bikesDisabledAcc} EcoBici bloqueadas. Probá la app!`);
-      let url = "https://juandematei.github.io/EcoBici/";
+      let url = "http://ecobici.juandematei.com";
       let hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
       let via = "juandematei";
       let related = "elbotonmalo,baecobici";
@@ -239,7 +239,7 @@ function bikesStation(busqueda) {
 
           // Tweet button
           let text = encodeURIComponent(`🚳 Hay ${bikesDisabledStation} EcoBici bloqueadas en la estación ${result_name}. Probá la app!`);
-          let url = "https://juandematei.github.io/EcoBici/";
+          let url = "http://ecobici.juandematei.com";
           let hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
           let via = "juandematei";
           let related = "elbotonmalo,baecobici";
