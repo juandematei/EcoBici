@@ -25,6 +25,10 @@ body {
   }
 }
 
+body.status {
+  background: linear-gradient(to bottom, #e66300 80px, #f2f2f2 0%);
+}
+
 input,
 textarea,
 button,
@@ -640,4 +644,32 @@ ion-icon {
 
 .error > .search__input::-webkit-input-placeholder {
   color: #c62828;
+}
+
+/* 
+Generic Styling, for Desktops/Laptops 
+*/
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+/* Zebra striping */
+tr:nth-of-type(odd) {
+  background: #eee;
+}
+
+th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+}
+
+td,
+th {
+  font-size: 0.8rem;
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
 }
