@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- Google Analytics -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-10440680-22");
+    </script>
+
+    <!-- Meta -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Una web app para consultar en tiempo real las bicicletas disponibles y bloquedas en el sistema EcoBici de Buenos Aires." />
+    <meta name="author" content="Juan Dematei" />
+    <meta property="og:title" content="EcoBici" />
+    <meta property="og:description" content="Estado de las estaciones en tiempo real." />
+    <meta property="og:image" content="https://juandematei.github.io/EcoBici/img/og-image.jpg" />
+    <meta property="og:url" content="https://juandematei.github.io/EcoBici/" />
+    <link rel="me" href="https://twitter.com/juandematei" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://juandematei.github.io/EcoBici/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://juandematei.github.io/EcoBici/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://juandematei.github.io/EcoBici/icons/favicon-16x16.png" />
+    <link rel="manifest" href="https://juandematei.github.io/EcoBici/icons/site.webmanifest" />
+    <link rel="mask-icon" href="https://juandematei.github.io/EcoBici/icons/safari-pinned-tab.svg" color="#e66300" />
+    <link rel="shortcut icon" href="https://juandematei.github.io/EcoBici/icons/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="EcoBici bloqueadas" />
+    <meta name="application-name" content="EcoBici bloqueadas" />
+    <meta name="msapplication-TileColor" content="#0a4990" />
+    <meta name="msapplication-config" content="https://juandematei.github.io/EcoBici/icons/browserconfig.xml" />
+    <meta name="theme-color" content="#e66300" />
+
+    <!-- Styles -->
+    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+    <link rel="stylesheet" href="style.min.css" />
+
+    <title>EcoBici - Estado de las estaciones en tiempo real.</title>
+  </head>
+
+  <body class="status">
+    <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
+
+    <div class="overflow">
+      <!--START OVERFLOW WRAPPER-->
+
+      <header class="header">
+        <a class="logo" href="/EcoBici"></a>
+      </header>
+
+      <main class="main">
+        <section class="response">
+          <h2 class="response__header">Estado del sistema</h2>
+          <div class="response__cards">
+            <div class="card card--status card--available">
+              <span class="card__icon"><ion-icon name="checkmark-circle"></ion-icon></span>
+              <span class="card__numb"></span>
+              <span class="card__text">estaciones activas</span>
+            </div>
+          </div>
+          <h2 class="response__header">Listado de estaciones</h2>
+          <table class="response-table" id="table-export">
+            <!-- Lista de estaciones activas -->
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Lat</th>
+              <th>Lon</th>
+            </tr>
+          </table>
+          <p class="response__time">Última actualización <span class="update-time"></span></p>
+          <a class="footer__social btn btn--ripple" href="#" onclick="download_table_as_csv('table-export');">Descargar CSV</a>
+        </section>
+      </main>
+
+      <!--END OVERFLOW WRAPPER-->
+    </div>
+
+    <div class="updating">
+      <div class="updating__icon">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <p class="updating__text">Actualizando</p>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
+    <script type="text/javascript" src="status.js"></script>
+  </body>
+</html>
