@@ -1,6 +1,7 @@
 // API tokens ----------------------------------------------------------------->
 const client_id = config.ID;
 const client_secret = config.SECRET;
+const maps_api_key = config.MAPS_API_KEY;
 
 // API url -------------------------------------------------------------------->
 const urlCors = new URL("https://cors-anywhere.herokuapp.com/");
@@ -472,7 +473,7 @@ function nearestStation(latitude, longitude) {
   let destination = stationsLocation[closest][1] + "," + stationsLocation[closest][2];
   let mapLink = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
   console.log(mapLink);
-  let mapImg = `https://maps.googleapis.com/maps/api/staticmap?center=${destination}&zoom=15&size=300x300&scale=2&markers=color:0xe66300%7C${destination}&key=AIzaSyCd4HRPs7hLs7cxZi4QAf8n-kRUR-aPuCQ`;
+  let mapImg = `https://maps.googleapis.com/maps/api/staticmap?center=${destination}&zoom=15&size=300x300&scale=2&markers=color:0xe66300%7C${destination}&key=${maps_api_key}`;
   mapImage.src = mapImg;
 
   mapButton.href = mapLink;
