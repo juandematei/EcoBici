@@ -3,19 +3,14 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
 }
 
 body {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
-  text-align: center;
   position: relative;
   padding: 0 1rem;
-  background: linear-gradient(to bottom, #e66300 105px, #f2f2f2 0%);
+  background: linear-gradient(to bottom, #e66300 80px, #f2f2f2 0%);
   color: #424242;
 }
 
@@ -23,10 +18,6 @@ body {
   body {
     padding: 0 25%;
   }
-}
-
-body.status {
-  background: linear-gradient(to bottom, #e66300 80px, #f2f2f2 0%);
 }
 
 input,
@@ -57,9 +48,9 @@ label:disabled {
 }
 
 a {
-  color: inherit;
-  font-weight: 700;
   outline: none;
+  text-decoration: none;
+  color: #e66300;
 }
 
 h1 {
@@ -113,6 +104,10 @@ ion-icon {
   background-position: center left;
 }
 
+.search {
+  display: none;
+}
+
 .search__box {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -132,11 +127,6 @@ ion-icon {
   outline: none;
 }
 
-.search__box .btn {
-  -webkit-box-shadow: none;
-          box-shadow: none;
-}
-
 .search__input {
   background-color: #ffffff;
   width: calc(100% - 80px);
@@ -148,45 +138,7 @@ ion-icon {
   color: #777777;
 }
 
-.search__fixed.btn--fixed {
-  color: #c62828;
-}
-
-.search__location.watching {
-  background-color: #0a4990;
-  color: #ffffff;
-}
-
 .response {
-  font-size: 2rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 1.5rem auto;
-}
-
-.response__header {
-  text-transform: uppercase;
-  font-size: 1.4rem;
-}
-
-.response__name {
-  text-transform: uppercase;
-  font-size: 1.2rem;
-}
-
-.response__cards {
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -203,32 +155,101 @@ ion-icon {
   margin: 1rem auto;
 }
 
+.response__cards {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .response__cards .card {
   background-color: #ffffff;
   color: #424242;
   width: 100%;
-  min-height: 60px;
   border-radius: 4px;
-  padding: 1rem;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.14);
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.14);
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -ms-flex-line-pack: stretch;
+      align-content: stretch;
+  margin-bottom: 16px;
+}
+
+.response__cards .card__header {
+  min-height: 72px;
+  padding: 0 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.response__cards .card__header .card__title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.18px;
+}
+
+.response__cards .card__header .card__subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;
+}
+
+.response__cards .card__data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap-reverse;
+      flex-wrap: wrap-reverse;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  text-align: left;
+  -ms-flex-line-pack: stretch;
+      align-content: stretch;
+  padding: 8px 16px;
 }
 
-.response__cards .card:last-of-type {
-  margin-bottom: 0;
-}
-
-.response__cards .card__icon {
-  margin-right: 0.5rem;
+.response__cards .card__data .icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(66, 66, 66, 0.2);
+  border-radius: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -238,57 +259,64 @@ ion-icon {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-right: 8px;
 }
 
-.response__cards .card__icon ion-icon {
-  font-size: 2rem;
+.response__cards .card__data .icon.available {
+  background-color: rgba(46, 125, 50, 0.2);
 }
 
-.response__cards .card__numb {
-  margin-right: 0.5rem;
-  text-align: right;
-  font-weight: 700;
-  min-width: 1.8rem;
+.response__cards .card__data .icon.disabled {
+  background-color: rgba(198, 40, 40, 0.2);
 }
 
-.response__cards .card--available {
+.response__cards .card__data div {
+  width: 33%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.response__cards .card__data .available {
   color: #2e7d32;
 }
 
-.response__cards .card--disabled {
+.response__cards .card__data .disabled {
   color: #c62828;
+}
+
+.response__cards .card__actions {
+  text-align: right;
+  padding: 8px 16px;
+}
+
+.response__cards .card__actions .card__link {
+  border-radius: 4px;
+  display: inline-block;
+  padding: 8px;
+  height: 36px;
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  color: #e66300;
+}
+
+.response__cards .card__actions .card__link:hover, .response__cards .card__actions .card__link:focus {
+  background-color: rgba(230, 99, 0, 0.2);
+}
+
+.response__cards .card__actions .card__link i {
+  margin-right: 8px;
 }
 
 .response__time {
   font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.cta {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 100%;
-}
-
-.cta .btn {
-  width: 50px;
-  height: 50px;
-  background-color: #0a4990;
-  color: #ffffff;
-}
-
-.cta .btn--fixed {
-  background-color: #c62828;
-}
-
-.cta .btn--disabled {
-  background-color: #777777;
-  opacity: 0.8;
-  pointer-events: none;
 }
 
 .menu {
@@ -347,6 +375,7 @@ ion-icon {
 }
 
 .toggler .toggler__icon {
+  display: none;
   background-color: #424242;
   height: 3px;
   width: 24px;
@@ -477,26 +506,9 @@ ion-icon {
 .btn {
   position: relative;
   background-color: #ffffff;
-  color: #424242;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.14);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.14);
-  width: 40px;
-  height: 40px;
-  font-size: 1rem;
+  color: #e66300;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 0;
-  padding: 0;
   -webkit-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
 }
@@ -663,7 +675,6 @@ tr:nth-of-type(odd) {
 th {
   background: #333;
   color: white;
-  font-weight: bold;
 }
 
 td,

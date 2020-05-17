@@ -21,25 +21,20 @@ $transition: all 0.25s ease-in-out;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  user-select: none;
+  //user-select: none;
 }
 
 body {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
-  text-align: center;
   position: relative;
   padding: 0 1rem;
-  background: linear-gradient(to bottom, $primary 105px, $light 0%);
+  background: linear-gradient(to bottom, $primary 80px, $light 0%);
   color: $dark;
 
   @media (min-width: 768px) {
     padding: 0 25%;
   }
-}
-
-body.status {
-  background: linear-gradient(to bottom, $primary 80px, $light 0%);
 }
 
 input,
@@ -70,9 +65,9 @@ label:disabled {
 }
 
 a {
-  color: inherit;
-  font-weight: 700;
   outline: none;
+  text-decoration: none;
+  color: $primary;
 }
 
 h1 {
@@ -125,6 +120,7 @@ ion-icon {
 
 // Search --------------------------------------------------------------------->
 .search {
+  display: none;
   &__box {
     display: inline-flex;
     background-color: $white;
@@ -139,10 +135,6 @@ ion-icon {
     &:focus {
       outline: none;
     }
-
-    .btn {
-      box-shadow: none;
-    }
   }
   &__input {
     background-color: $white;
@@ -154,119 +146,130 @@ ion-icon {
       color: $disabled;
     }
   }
-
-  &__fixed {
-    &.btn--fixed {
-      color: $red;
-    }
-  }
-
-  &__location.watching {
-    background-color: $secondary;
-    color: $white;
-  }
 }
 
 // Response ------------------------------------------------------------------->
 .response {
-  font-size: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1.5rem auto;
-
-  &__header {
-    text-transform: uppercase;
-    font-size: 1.4rem;
-  }
-
-  &__name {
-    text-transform: uppercase;
-    font-size: 1.2rem;
-  }
+  margin: 1rem auto;
 
   &__cards {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    margin: 1rem auto;
 
     .card {
       background-color: $white;
       color: $dark;
       width: 100%;
-      min-height: 60px;
       border-radius: $border-radius;
-      padding: 1rem;
       box-shadow: $box-shadow;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
       display: flex;
-      align-items: center;
-      text-align: left;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+      align-content: stretch;
+      margin-bottom: 16px;
 
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-
-      &__icon {
-        margin-right: 0.5rem;
+      &__header {
+        min-height: 72px;
+        padding: 0 16px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
+        .card__title {
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 24px;
+          letter-spacing: 0.18px;
+        }
 
-        ion-icon {
-          font-size: 2rem;
+        .card__subtitle {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 0.25px;
+          text-transform: uppercase;
         }
       }
 
-      &__numb {
-        margin-right: 0.5rem;
+      &__data {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap-reverse;
+        align-items: center;
+        align-content: stretch;
+        padding: 8px 16px;
+        .icon {
+          display: block;
+          width: 40px;
+          height: 40px;
+          background-color: rgba($dark, 0.2);
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 8px;
+
+          &.available {
+            background-color: rgba($green, 0.2);
+          }
+          &.disabled {
+            background-color: rgba($red, 0.2);
+          }
+        }
+        div {
+          width: 33%;
+          display: inline-flex;
+          align-items: center;
+        }
+        .available {
+          color: $green;
+        }
+
+        .disabled {
+          color: $red;
+        }
+      }
+
+      &__actions {
         text-align: right;
-        font-weight: 700;
-        min-width: 1.8rem;
-      }
+        padding: 8px 16px;
 
-      &--available {
-        color: $green;
-      }
+        .card__link {
+          border-radius: $border-radius;
+          display: inline-block;
+          padding: 8px;
+          height: 36px;
+          margin-left: 8px;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 22px;
+          letter-spacing: 1.25px;
+          text-transform: uppercase;
+          color: $primary;
+          //background-color: lightgreen;
 
-      &--disabled {
-        color: $red;
+          &:hover,
+          &:focus {
+            background-color: rgba($primary, 0.2);
+          }
+
+          i {
+            margin-right: 8px;
+          }
+        }
       }
     }
   }
 
   &__time {
     font-size: 0.8rem;
-    font-weight: 700;
-  }
-}
-
-// CTA ------------------------------------------------------------------------>
-.cta {
-  display: inline-flex;
-  justify-content: space-between;
-  width: 100%;
-
-  .btn {
-    width: 50px;
-    height: 50px;
-    background-color: $secondary;
-    color: $white;
-
-    &--fixed {
-      background-color: $red;
-    }
-
-    &--disabled {
-      background-color: $disabled;
-      opacity: 0.8;
-      pointer-events: none;
-    }
   }
 }
 
@@ -316,6 +319,8 @@ ion-icon {
   z-index: 99;
 
   .toggler__icon {
+    display: none;
+
     background-color: $dark;
     height: 3px;
     width: 24px;
@@ -434,19 +439,9 @@ ion-icon {
 .btn {
   position: relative;
   background-color: $white;
-  color: $dark;
-  box-shadow: $box-shadow;
-  width: 40px;
-  height: 40px;
-  font-size: 1rem;
+  color: $primary;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
   transition: $transition;
 
   &--ripple {
@@ -549,7 +544,6 @@ tr:nth-of-type(odd) {
 th {
   background: #333;
   color: white;
-  font-weight: bold;
 }
 td,
 th {
