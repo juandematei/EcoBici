@@ -47,6 +47,8 @@
   </head>
 
   <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
     <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
     <div class="overflow">
@@ -72,6 +74,9 @@
               <div class="card__header">
                 <h5 class="card__title">Bicicletas</h5>
                 <h6 class="card__subtitle">Todas las estaciones</h6>
+              </div>
+              <div class="card__media">
+                <canvas id="myChart" width="300px" height="150px"></canvas>
               </div>
               <div class="card__data">
                 <div class="bikes--available available">

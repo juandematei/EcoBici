@@ -64,6 +64,8 @@ const cardNearestStationMap = document.querySelector(".card--nearest > .card__me
 const cardNearestStationMapLink = document.querySelector(".card--nearest > .card__actions > .card__link.link--map");
 const cardNearestStationTwitterButton = document.querySelector(".card--nearest > .card__actions > .card__link.link--twitter");
 
+let chartData = [];
+
 //! Main ---------------------------------------------------------------------->
 (function () {
   getStationsValid();
@@ -81,8 +83,8 @@ function bikesTotal() {
       // Success!
       let resp = JSON.parse(this.response);
       let stationStatus = resp.data.stations;
-      console.log("Response stationStatus - bikesTotal: ");
-      console.log(stationStatus);
+      //console.log("Response stationStatus - bikesTotal: ");
+      //console.log(stationStatus);
 
       // Get last update time & date
       let lastUpdated = new Date(resp.last_updated * 1000);
@@ -119,13 +121,13 @@ function bikesTotal() {
         return acc + currentValue.num_docks_disabled;
       }, docksDisabledInitial);
 
-      console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc} docks: ${docksAvailableAcc} / ${docksDisabledAcc}`);
+      //console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc} docks: ${docksAvailableAcc} / ${docksDisabledAcc}`);
 
       // Get total fake bikes
       let bikesFakeAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_bikes_available_types.ebike;
       }, bikesFakeInitial);
-      console.log(`bikes_available_types.ebike: ${bikesFakeAcc}`);
+      //console.log(`bikes_available_types.ebike: ${bikesFakeAcc}`);
       // Correct totals
       bikesAvailableAcc = bikesAvailableAcc - bikesFakeAcc * 2;
       cardBikesAvailableNumb.textContent = bikesAvailableAcc;
@@ -139,6 +141,9 @@ function bikesTotal() {
       let via = "juandematei";
       let related = "elbotonmalo,baecobici";
       cardBikesTwitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
+
+      chartData.push(bikesAvailableAcc, bikesDisabledAcc);
+      chart();
 
       updating.classList.add("updating--hide");
     } else {
@@ -162,8 +167,8 @@ function bikesStation(busqueda) {
       // Success!
       let resp = JSON.parse(this.response);
       let stationInformation = resp.data.stations;
-      console.log("Response stationInformation - bikesStation:");
-      console.log(stationInformation);
+      //console.log("Response stationInformation - bikesStation:");
+      //console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
       const findStationId = function (stations, number) {
@@ -177,7 +182,7 @@ function bikesStation(busqueda) {
 
       result_id = resultStationId.station_id;
       result_name = resultStationId.name;
-      console.log(`station_id: ${result_id} - station_name: ${result_name}`);
+      //console.log(`station_id: ${result_id} - station_name: ${result_name}`);
 
       // Get station data ----------------------------------------------------->
       let xhr = new XMLHttpRequest();
@@ -187,8 +192,8 @@ function bikesStation(busqueda) {
           // Success!
           let resp = JSON.parse(this.response);
           let stationStatus = resp.data.stations;
-          console.log("Response stationStatus - bikesStation:");
-          console.log(stationStatus);
+          //console.log("Response stationStatus - bikesStation:");
+          //console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
           const getStationStatus = function (stations, result_id) {
@@ -204,8 +209,8 @@ function bikesStation(busqueda) {
           docksAvailableStation = resultStationStatus.num_docks_available;
           docksDisabledStation = resultStationStatus.num_docks_disabled;
 
-          console.log(resultStationStatus);
-          console.log(`bikes: ${bikesAvailableStation} / ${bikesDisabledStation} docks: ${docksAvailableStation} / ${docksDisabledStation}`);
+          //console.log(resultStationStatus);
+          //console.log(`bikes: ${bikesAvailableStation} / ${bikesDisabledStation} docks: ${docksAvailableStation} / ${docksDisabledStation}`);
 
           cardNearestStationName.textContent = result_name;
           cardNearestStationBikesAvailable.textContent = bikesAvailableStation;
@@ -277,7 +282,6 @@ function getStationsValid() {
       let stationInformation = resp.data.stations;
 
       for (let i = 0; i < stationInformation.length; i++) {
-        //TODO Unificar en un único array??
         // Get each station number from station name
         stationNumber = stationInformation[i].name.slice(0, 3);
         stationsValid.push(stationNumber);
@@ -287,11 +291,11 @@ function getStationsValid() {
         stationsLocation.lon = stationInformation[i].lon;
         stationsLocation.push([stationsLocation.id, stationsLocation.lat, stationsLocation.lon]);
       }
-      console.log("stationsValid");
-      console.log(stationsValid);
+      //console.log("stationsValid");
+      //console.log(stationsValid);
 
-      console.log("stationsLocation");
-      console.log(stationsLocation);
+      //console.log("stationsLocation");
+      //console.log(stationsLocation);
 
       checkGeolocation();
     } else {
@@ -414,7 +418,7 @@ function checkGeolocation() {
 // Callback function for asynchronous call to HTML5 geolocation
 function UserLocation(position) {
   nearestStation(position.coords.latitude, position.coords.longitude);
-  console.log(`User location: ${position.coords.latitude} ${position.coords.longitude}`);
+  //console.log(`User location: ${position.coords.latitude} ${position.coords.longitude}`);
 }
 
 // Convert Degress to Radians
@@ -447,12 +451,12 @@ function nearestStation(latitude, longitude) {
   }
 
   searchLocation = stationsLocation[closest][0];
-  console.log(`Closest station: ${searchLocation}`);
+  //console.log(`Closest station: ${searchLocation}`);
 
   let origin = latitude + "," + longitude;
   let destination = stationsLocation[closest][1] + "," + stationsLocation[closest][2];
   let mapLink = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
-  console.log(mapLink);
+  //console.log(mapLink);
   let mapImg = `https://maps.googleapis.com/maps/api/staticmap?center=${destination}&zoom=15&size=300x150&scale=2&markers=color:0xe66300%7C${destination}&key=${maps_api_key}`;
   cardNearestStationMap.src = mapImg;
   cardNearestStationMapLink.href = mapLink;
@@ -483,3 +487,26 @@ menuToggler.addEventListener("click", function (event) {
     menuSidebar.classList.remove("menu--show");
   }
 });
+
+// Chart 
+function chart() {
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Disponibles", "Bloqueadas"],
+      datasets: [
+        {
+          label: "Total bicicletas",
+          data: chartData,
+          backgroundColor: ["#2e7d32", "#c62828"],
+        },
+      ],
+    },
+    options: {
+      rotation: 1 * Math.PI,
+      circumference: 1 * Math.PI,
+      legend: false,
+    },
+  });
+};

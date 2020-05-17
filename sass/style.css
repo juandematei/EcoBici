@@ -226,21 +226,11 @@ ion-icon {
   text-transform: uppercase;
 }
 
+.response__cards .card__media canvas {
+  padding: 0 16px;
+}
+
 .response__cards .card__data {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap-reverse;
-      flex-wrap: wrap-reverse;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-line-pack: stretch;
-      align-content: stretch;
   padding: 8px 16px;
 }
 
@@ -271,13 +261,13 @@ ion-icon {
 }
 
 .response__cards .card__data div {
-  width: 33%;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-right: 8px;
 }
 
 .response__cards .card__data .available {
@@ -290,7 +280,7 @@ ion-icon {
 
 .response__cards .card__actions {
   text-align: right;
-  padding: 8px 16px;
+  padding: 8px;
 }
 
 .response__cards .card__actions .card__link {
