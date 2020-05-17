@@ -67,6 +67,7 @@ const cardBikesDisabledText = document.querySelector(".card--bikes.card--disable
 const cardDocksAvailableNumb = document.querySelector(".card--docks > .card__numb");
 const cardDocksAvailableText = document.querySelector(".card--docks > .card__text");
 const updateTime = document.querySelector(".update-time");
+const mapImage = document.querySelector(".map-test");
 
 //! Main ---------------------------------------------------------------------->
 (function () {
@@ -471,6 +472,8 @@ function nearestStation(latitude, longitude) {
   let destination = stationsLocation[closest][1] + "," + stationsLocation[closest][2];
   let mapLink = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
   console.log(mapLink);
+  let mapImg = `https://maps.googleapis.com/maps/api/staticmap?center=${destination}&zoom=15&size=300x300&scale=2&markers=color:0xe66300%7C${destination}&key=AIzaSyCd4HRPs7hLs7cxZi4QAf8n-kRUR-aPuCQ`;
+  mapImage.src = mapImg;
 
   mapButton.href = mapLink;
 }
