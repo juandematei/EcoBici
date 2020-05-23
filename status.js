@@ -25,10 +25,15 @@ let stationsActive = [];
 const updating = document.querySelector(".updating");
 
 // DOM - Response ------------------------------------------------------------->
-const cardNumb = document.querySelector(".card--status.card--available > .card__numb");
-const cardText = document.querySelector(".card--status.card--available > .card__text");
+const cardActiveStationsNumb = document.querySelector(".card--totals > .card__data > .active--stations > .numb");
 const updateTime = document.querySelector(".update-time");
 const stationList = document.querySelector(".response-table");
+
+// DOM
+const bottomBar = document.querySelector(".nav");
+const navBarSearch = document.querySelector(".nav__search");
+
+
 
 //! Main ---------------------------------------------------------------------->
 (function () {
@@ -75,7 +80,7 @@ function getStationsList() {
       }
       console.log("stationsActive");
       console.log(stationsActive);
-      cardNumb.textContent = stationsActive.length;
+      cardActiveStationsNumb.textContent = stationsActive.length;
       updating.classList.add("updating--hide");
     } else {
       responseHeader.textContent = "Error";
@@ -121,3 +126,15 @@ function download_table_as_csv(table_id) {
   link.click();
   document.body.removeChild(link);
 }
+
+function hideBottomBar() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    bottomBar.classList.add("scrolled");
+  } else {
+    bottomBar.classList.remove("scrolled");
+  }
+}
+
+navBarSearch.addEventListener("click", function (event) {
+  alert("La búsqueda no está disponible temporalmente.");
+});
