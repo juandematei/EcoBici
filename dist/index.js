@@ -33,6 +33,10 @@ let stationsLocation = [];
 let searchValue = "";
 let searchFixed = false;
 
+// DOM
+const bottomBar = document.querySelector(".nav");
+const navBarSearch = document.querySelector(".nav__search");
+
 // DOM - Menu ----------------------------------------------------------------->
 const menuToggler = document.querySelector(".toggler");
 const menuTogglerIcon = document.querySelector(".toggler__icon");
@@ -64,7 +68,8 @@ const cardNearestStationMap = document.querySelector(".card--nearest > .card__me
 const cardNearestStationMapLink = document.querySelector(".card--nearest > .card__actions > .card__link.link--map");
 const cardNearestStationTwitterButton = document.querySelector(".card--nearest > .card__actions > .card__link.link--twitter");
 
-let chartData = [];
+let chartAvailable = "";
+let chartDisabled = "";
 
 //! Main ---------------------------------------------------------------------->
 (function () {
@@ -134,16 +139,18 @@ function bikesTotal() {
       docksAvailableAcc = docksAvailableAcc - bikesFakeAcc * 1;
       //cardDocksAvailableNumb.textContent = docksAvailableAcc;
 
+      chartTotal = bikesAvailableAcc + bikesDisabledAcc;
+      chartAvailable = bikesAvailableAcc / chartTotal;
+      chartDisabled = bikesDisabledAcc / chartTotal;
+      chart();
+
       // Tweet button
-      let text = encodeURIComponent(`🚳 Hay ${bikesDisabledAcc} EcoBici bloqueadas. Probá la app!`);
+      let text = encodeURIComponent(`Hay 🚲 ${bikesAvailableAcc} bicis disponibles y 🚳 ${bikesDisabledAcc} bicis bloqueadas.\r\n \r\nProbá la app en el link ⤵️`);
       let url = "http://ecobici.juandematei.com";
       let hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
       let via = "juandematei";
       let related = "elbotonmalo,baecobici";
       cardBikesTwitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
-
-      chartData.push(bikesAvailableAcc, bikesDisabledAcc);
-      chart();
 
       updating.classList.add("updating--hide");
     } else {
@@ -240,17 +247,17 @@ function bikesStation(busqueda) {
           // }
 
           // Tweet button
-          let text = encodeURIComponent(`🚳 Hay ${bikesDisabledStation} EcoBici bloqueadas en la estación ${result_name}. Probá la app!`);
+          let text = encodeURIComponent(`Hay 🚲 ${bikesAvailableStation} bicis disponibles y 🚳 ${bikesDisabledStation} bicis bloqueadas en la estación ${result_name}.\r\n \r\nProbá la app en el link ⤵️`);
           let url = "http://ecobici.juandematei.com";
           let hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
           let via = "juandematei";
           let related = "elbotonmalo,baecobici";
           cardNearestStationTwitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
 
-          if (searchFixed === false) {
-            searchInput.value = ""; //! Important
-            searchValue = ""; //! Important
-          }
+          // if (searchFixed === false) {
+          //   searchInput.value = ""; //! Important
+          //   searchValue = ""; //! Important
+          // }
 
           updating.classList.add("updating--hide");
         } else {
@@ -464,49 +471,79 @@ function nearestStation(latitude, longitude) {
 }
 
 //* Event listeners ----------------------------------------------------------->
-searchButton.addEventListener("click", function (event) {
-  event.preventDefault();
-  searchButtonClick();
-});
-searchInput.addEventListener("keyup", function (event) {
-  searchInputEnter();
-});
-fixedButton.addEventListener("click", function (event) {
-  event.preventDefault();
-  fixedButtonClick();
-});
-menuToggler.addEventListener("click", function (event) {
-  event.preventDefault();
+// searchButton.addEventListener("click", function (event) {
+//   event.preventDefault();
+//   searchButtonClick();
+// });
+// searchInput.addEventListener("keyup", function (event) {
+//   searchInputEnter();
+// });
+// fixedButton.addEventListener("click", function (event) {
+//   event.preventDefault();
+//   fixedButtonClick();
+// });
+// menuToggler.addEventListener("click", function (event) {
+//   event.preventDefault();
 
-  menuOpen = !menuOpen;
-  if (menuOpen === true) {
-    menuTogglerIcon.classList.add("menu--open");
-    menuSidebar.classList.add("menu--show");
-  } else {
-    menuTogglerIcon.classList.remove("menu--open");
-    menuSidebar.classList.remove("menu--show");
-  }
-});
+//   menuOpen = !menuOpen;
+//   if (menuOpen === true) {
+//     menuTogglerIcon.classList.add("menu--open");
+//     menuSidebar.classList.add("menu--show");
+//   } else {
+//     menuTogglerIcon.classList.remove("menu--open");
+//     menuSidebar.classList.remove("menu--show");
+//   }
+// });
 
 // Chart 
 function chart() {
-  var ctx = document.getElementById("myChart");
+  var ctx = document.getElementById("chart__canvas");
   var myChart = new Chart(ctx, {
-    type: "doughnut",
+    type: "horizontalBar",
     data: {
-      labels: ["Disponibles", "Bloqueadas"],
+      labels: ["Bicis"],
+      barThickness: 24,
       datasets: [
         {
-          label: "Total bicicletas",
-          data: chartData,
-          backgroundColor: ["#2e7d32", "#c62828"],
+          label: "Disponibles",
+          data: [chartAvailable],
+          backgroundColor: "rgba(46,125,50,1)",
         },
+        {
+          label: "Bloqueadas",
+          data: [chartDisabled],
+          backgroundColor: "rgba(198,40,40,1)",
+        }
       ],
     },
     options: {
-      rotation: 1 * Math.PI,
-      circumference: 1 * Math.PI,
       legend: false,
+      tooltips: {
+        enabled: false
+      },
+      scales: {
+        yAxes: [{
+          stacked: true,
+          display: false
+        }],
+        xAxes: [{
+          stacked: true,
+          display: false
+        }]
+
+      }
     },
   });
 };
+
+function hideBottomBar() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    bottomBar.classList.add("scrolled");
+  } else {
+    bottomBar.classList.remove("scrolled");
+  }
+}
+
+navBarSearch.addEventListener("click", function (event) {
+  alert("La búsqueda no está disponible temporalmente.");
+});
