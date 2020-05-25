@@ -39,106 +39,113 @@
     <meta name="theme-color" content="#e66300" />
 
     <!-- Styles -->
-    <script src="https://kit.fontawesome.com/edd60794b7.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" />
     <link rel="stylesheet" href="style.min.css" />
 
     <title>EcoBici - Estado de las estaciones en tiempo real.</title>
   </head>
 
-  <body onscroll="hideBottomBar()">
+  <body onscroll="hideNavBar()">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <h1>EcoBici - Estado de las estaciones en tiempo real.</h1>
 
     <header class="header">
-      <div class="header__container container">
+      <div class="header__container">
         <a class="header__logo" href="/EcoBici"><img src="img/logo.svg" alt="Logo EcoBici" /></a>
       </div>
     </header>
 
-    <nav class="nav">
+    <nav id="navBottom" class="nav">
       <div class="nav__container">
         <ul class="nav__bottom">
-          <li class="nav__item nav__home">
-            <a class="nav__link active" href="/EcoBici"><i class="nav__icon fas fa-home fa-lg"></i><span>Inicio</span></a>
+          <li class="nav__item">
+            <a id="navHomeBtn" class="nav__link active" href="/EcoBici"><span class="material-icons">home</span><span>Inicio</span></a>
           </li>
-          <li class="nav__item nav__search">
-            <a class="nav__link" href="#"><i class="nav__icon fas fa-search fa-lg"></i><span>Buscar</span></a>
+          <li class="nav__item">
+            <a id="navSearchBtn" class="nav__link" href="#"><span class="material-icons">search</span><span>Buscar</span></a>
           </li>
-          <li class="nav__item nav__status">
-            <a class="nav__link" href="status.html"><i class="nav__icon fas fa-info-circle fa-lg"></i><span>Estado</span></a>
+          <li class="nav__item">
+            <a id="navStatusBtn" class="nav__link" href="status.html"><span class="material-icons">info</span><span>Estado</span></a>
           </li>
         </ul>
       </div>
     </nav>
 
+    <section id="searchSection" class="search search--hidden">
+      <div class="search__container">
+        <p>Search</p>
+      </div>
+    </section>
+
     <main class="response">
-      <div class="response__container container">
-        <div class="response__cards">
-          <div class="card card--totals">
-            <div class="card__header">
-              <h5 class="card__title">Bicicletas</h5>
-              <h6 class="card__subtitle">Todas las estaciones</h6>
+      <div class="response__container response__cards">
+        <div id="cardTotals" class="card card--hidden">
+          <div class="card__header">
+            <h5 class="card__title">Bicicletas</h5>
+            <h6 class="card__subtitle">Todas las estaciones</h6>
+          </div>
+          <div class="card__media">
+            <canvas id="chart__canvas" width="300px" height="20px"></canvas>
+          </div>
+          <div class="card__data">
+            <div class="bikes--available available">
+              <span class="icon available"><span class="material-icons">directions_bike</span></span>
+              <span id="cardBikesAvailableNumb" class="numb"></span>
             </div>
-            <div class="card__media">
-              <canvas id="chart__canvas" width="300px" height="20px"></canvas>
-            </div>
-            <div class="card__data">
-              <div class="bikes--available available">
-                <span class="icon available"><i class="fas fa-bicycle"></i></span>
-                <span class="numb"></span>
-              </div>
-              <div class="bikes--disabled disabled">
-                <span class="icon disabled"><i class="fas fa-wrench"></i></span>
-                <span class="numb"></span>
-              </div>
-            </div>
-            <div class="card__actions float">
-              <a class="card__link link--twitter twitter-share-button" href="https://twitter.com/intent/tweet"><i class="fas fa-share-alt fa-lg"></i></a>
+            <div class="bikes--disabled disabled">
+              <span class="icon disabled"><span class="material-icons">build</span></span>
+              <span id="cardBikesDisabledNumb" class="numb"></span>
             </div>
           </div>
-
-          <div class="card card--nearest">
-            <div class="card__header">
-              <h5 class="card__title">Estación más cercana</h5>
-              <h6 class="card__subtitle"></h6>
-            </div>
-            <div class="card__media">
-              <img class="card__map" src="https://via.placeholder.com/300" alt="" width="100%" height="auto" />
-            </div>
-            <div class="card__data">
-              <div class="bikes--available available">
-                <span class="icon available"><i class="fas fa-bicycle"></i></span>
-                <span class="numb"></span>
-              </div>
-              <div class="bikes--disabled disabled">
-                <span class="icon disabled"><i class="fas fa-wrench"></i></span>
-                <span class="numb"></span>
-              </div>
-              <div class="docks--available">
-                <span class="icon"><i class="fas fa-parking"></i></span>
-                <span class="numb"></span>
-              </div>
-            </div>
-            <div class="card__actions">
-              <a class="btn card__link link--map" href=""><i class="fas fa-directions"></i>Cómo llegar</a>
-              <a class="btn card__link link--twitter twitter-share-button" href="https://twitter.com/intent/tweet"><i class="fab fa-twitter"></i>Twitear</a>
-            </div>
+          <div class="card__actions float">
+            <a id="cardBikesTwitterButton" class="card__link link--twitter twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"><span class="material-icons">share</span></a>
           </div>
         </div>
-        <p class="response__time">Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
-        <p class="response__time">Última actualización <span class="update-time"></span></p>
+
+        <div id="cardNearest" class="card card--hidden">
+          <div class="card__header">
+            <h5 class="card__title">Estación más cercana</h5>
+            <h6 id="cardNearestStationName" class="card__subtitle"></h6>
+          </div>
+          <div class="card__media">
+            <img id="cardNearestStationMap" class="card__map" src="https://via.placeholder.com/300" alt="" width="100%" height="auto" />
+          </div>
+          <div class="card__data">
+            <div class="bikes--available available">
+              <span class="icon available"><span class="material-icons">directions_bike</span></span>
+              <span id="cardNearestStationBikesAvailable" class="numb"></span>
+            </div>
+            <div class="bikes--disabled disabled">
+              <span class="icon disabled"><span class="material-icons">build</span></span>
+              <span id="cardNearestStationBikesDisabled" class="numb"></span>
+            </div>
+            <div class="docks--available">
+              <span class="icon"><span class="material-icons">local_parking</span></span>
+              <span id="cardNearestStationDocksAvailable" class="numb"></span>
+            </div>
+          </div>
+          <div class="card__actions">
+            <a id="cardBikesLocationButton" class="card__link btn btn--ripple" href="#">Usar ubicación</a>
+            <a id="cardNearestStationMapLink" class="card__link btn btn--ripple btn--primary" href="">Cómo llegar</a>
+          </div>
+          <div class="card__actions float">
+            <a id="cardNearestStationTwitterButton" class="card__link link--twitter twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"><span class="material-icons">share</span></a>
+          </div>
+        </div>
+        <p class="response__time">Última actualización <span id="updateTime"></span></p>
       </div>
     </main>
 
     <footer class="footer">
-      <div class="footer__container container">
-        <p class="footer__author">Hecho con <i class="fas fa-code"></i> por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
-        <a class="footer__btn" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener"><i class="fab fa-github"></i>Ver en GitHub</a>
+      <div class="footer__container">
+        <p class="footer__text">Datos obtenidos de la <a href="https://www.buenosaires.gob.ar/desarrollourbano/transporte/apitransporte" target="_blank" rel="noopener">API Transporte</a> del GCBA</p>
+        <a class="footer__btn btn btn--ripple" href="https://github.com/juandematei/EcoBici" target="_blank" rel="noopener">Ver en GitHub</a>
+        <p class="footer__author">Hecho con<span class="material-icons">code</span>por <a href="https://www.juandematei.com" target="_blank" rel="noopener">Juan Dematei</a></p>
       </div>
     </footer>
 
-    <div class="updating">
+    <div id="updating" class="updating updating--hidden">
       <div class="updating__icon">
         <div class="line"></div>
         <div class="line"></div>
@@ -147,7 +154,6 @@
       <p class="updating__text">Obteniendo datos</p>
     </div>
 
-    <!-- Scripts -->
     <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </body>

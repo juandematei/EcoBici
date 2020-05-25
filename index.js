@@ -1,82 +1,80 @@
-// API tokens ----------------------------------------------------------------->
+//* API -----------------------------------------------------------------------> 
+//  Tokens -------------------------------------------------------------------->
 const client_id = config.ID;
 const client_secret = config.SECRET;
 const maps_api_key = config.MAPS_API_KEY;
-
-// API url -------------------------------------------------------------------->
+//  URL ----------------------------------------------------------------------->
 const urlCors = new URL("https://cors-anywhere.herokuapp.com/");
 const urlBase = new URL("https://apitransporte.buenosaires.gob.ar");
-
-// API "stationStatus" -------------------------------------------------------->
+//  stationStatus ------------------------------------------------------------->
 const urlStatus = new URL("/ecobici/gbfs/stationStatus", urlBase);
 urlStatus.searchParams.set("client_id", client_id);
 urlStatus.searchParams.set("client_secret", client_secret);
 const xhrStatus = urlCors + urlStatus;
-
-// API "stationInformation" --------------------------------------------------->
+//  stationInformation -------------------------------------------------------->
 const urlInformation = new URL("/ecobici/gbfs/stationInformation", urlBase);
 urlInformation.searchParams.set("client_id", client_id);
 urlInformation.searchParams.set("client_secret", client_secret);
 const xhrInformation = urlCors + urlInformation;
 
-// Initial variables ---------------------------------------------------------->
+//* Initial variables --------------------------------------------------------->
+//  Counters ------------------------------------------------------------------>
 let bikesAvailableInitial = 0;
 let bikesDisabledInitial = 0;
 let docksAvailableInitial = 0;
-let docksDisabledInitial = 0;
 let bikesFakeInitial = 0;
-let capacityInitial = 0;
-
-// Search initial values ------------------------------------------------------>
+//  Search -------------------------------------------------------------------->
 let stationsValid = [];
 let stationsLocation = [];
 let searchValue = "";
 let searchFixed = false;
-
-// DOM
-const bottomBar = document.querySelector(".nav");
-const navBarSearch = document.querySelector(".nav__search");
-
-// DOM - Menu ----------------------------------------------------------------->
-const menuToggler = document.querySelector(".toggler");
-const menuTogglerIcon = document.querySelector(".toggler__icon");
-const menuSidebar = document.querySelector(".menu");
-let menuOpen = false;
-
-// DOM - Search --------------------------------------------------------------->
-const searchBox = document.querySelector(".search__box");
-const searchButton = document.querySelector(".search__submit");
-const searchInput = document.querySelector(".search__input");
-const fixedButton = document.querySelector(".search__fixed");
-const fixedButtonIcon = document.querySelector(".search__fixed > ion-icon");
-
-// DOM - Updating ------------------------------------------------------------->
-const updating = document.querySelector(".updating");
-
-// DOM - Response ------------------------------------------------------------->
-const updateTime = document.querySelector(".update-time");
-// DOM - Total stations
-const cardBikesAvailableNumb = document.querySelector(".card--totals > .card__data > .bikes--available > .numb");
-const cardBikesDisabledNumb = document.querySelector(".card--totals > .card__data > .bikes--disabled > .numb");
-const cardBikesTwitterButton = document.querySelector(".card--totals > .card__actions > .card__link.link--twitter");
-// DOM - Nearest station
-const cardNearestStationName = document.querySelector(".card--nearest > .card__header >.card__subtitle");
-const cardNearestStationBikesAvailable = document.querySelector(".card--nearest > .card__data > .bikes--available > .numb");
-const cardNearestStationBikesDisables = document.querySelector(".card--nearest > .card__data > .bikes--disabled > .numb");
-const cardNearestStationDocksAvailable = document.querySelector(".card--nearest > .card__data > .docks--available > .numb");
-const cardNearestStationMap = document.querySelector(".card--nearest > .card__media > .card__map");
-const cardNearestStationMapLink = document.querySelector(".card--nearest > .card__actions > .card__link.link--map");
-const cardNearestStationTwitterButton = document.querySelector(".card--nearest > .card__actions > .card__link.link--twitter");
-
+//  Chart --------------------------------------------------------------------->
 let chartAvailable = "";
 let chartDisabled = "";
+// Date & Time ---------------------------------------------------------------->
+let options = {
+  year: "2-digit",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+};
 
-//! Main ---------------------------------------------------------------------->
-(function () {
-  getStationsValid();
-  bikesTotal();
-})();
+//* Selectors ----------------------------------------------------------------->
+//  Navigation ---------------------------------------------------------------->
+const navBottom = document.querySelector("#navBottom");
+const navHomeBtn = document.querySelector("#navHomeBtn");
+const navSearchBtn = document.querySelector("#navSearchBtn");
+const navStatusBtn = document.querySelector("#navStatusBtn");
+//  Search -------------------------------------------------------------------->
+const searchSection = document.querySelector("#searchSection");
+//  Updating ------------------------------------------------------------------>
+const updating = document.querySelector("#updating");
+//  Response ------------------------------------------------------------------>
+const updateTime = document.querySelector("#updateTime");
+//  Cards --------------------------------------------------------------------->
+const cardTotals = document.querySelector("#cardTotals");
+const cardNearest = document.querySelector("#cardNearest");
+//  Total stations ------------------------------------------------------------>
+const cardBikesAvailableNumb = document.querySelector("#cardBikesAvailableNumb");
+const cardBikesDisabledNumb = document.querySelector("#cardBikesDisabledNumb");
+//  Nearest station ----------------------------------------------------------->
+const cardNearestStationName = document.querySelector("#cardNearestStationName");
+const cardNearestStationBikesAvailable = document.querySelector("#cardNearestStationBikesAvailable");
+const cardNearestStationBikesDisabled = document.querySelector("#cardNearestStationBikesDisabled");
+const cardNearestStationDocksAvailable = document.querySelector("#cardNearestStationDocksAvailable");
+const cardNearestStationMap = document.querySelector("#cardNearestStationMap");
+const cardNearestStationMapLink = document.querySelector("#cardNearestStationMapLink");
 
+//* Twitter button ------------------------------------------------------------>
+const cardBikesTwitterButton = document.querySelector("#cardBikesTwitterButton");
+const cardNearestStationTwitterButton = document.querySelector("#cardNearestStationTwitterButton");
+const url = "http://ecobici.juandematei.com";
+const hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
+const via = "juandematei";
+const related = "elbotonmalo,baecobici";
+
+//! Main functions ------------------------------------------------------------>
 // Get accumulated quantities ------------------------------------------------->
 function bikesTotal() {
   updating.classList.remove("updating--hide");
@@ -85,74 +83,55 @@ function bikesTotal() {
   xhr.open("GET", xhrStatus, true);
   xhr.onload = function () {
     if (this.status >= 200 && this.status < 400) {
-      // Success!
+      //* Success!
       let resp = JSON.parse(this.response);
       let stationStatus = resp.data.stations;
-      //console.log("Response stationStatus - bikesTotal: ");
-      //console.log(stationStatus);
-
-      // Get last update time & date
-      let lastUpdated = new Date(resp.last_updated * 1000);
-      let options = {
-        year: "2-digit",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      };
-      let lastUpdatedTotal = lastUpdated.toLocaleString("es-AR", options);
-      updateTime.textContent = lastUpdatedTotal;
 
       // Get total bikes available
       let bikesAvailableAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_bikes_available;
       }, bikesAvailableInitial);
-      cardBikesAvailableNumb.textContent = bikesAvailableAcc;
 
       // Get total bikes disabled
       let bikesDisabledAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_bikes_disabled;
       }, bikesDisabledInitial);
-      cardBikesDisabledNumb.textContent = bikesDisabledAcc;
 
-      // Get total docks available
-      let docksAvailableAcc = stationStatus.reduce(function (acc, currentValue) {
-        return acc + currentValue.num_docks_available;
-      }, docksAvailableInitial);
-      //cardDocksAvailableNumb.textContent = docksAvailableAcc;
-
-      // Get total docks disabled
-      let docksDisabledAcc = stationStatus.reduce(function (acc, currentValue) {
-        return acc + currentValue.num_docks_disabled;
-      }, docksDisabledInitial);
-
-      //console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc} docks: ${docksAvailableAcc} / ${docksDisabledAcc}`);
-
-      // Get total fake bikes
+      // Get total bikes fake
       let bikesFakeAcc = stationStatus.reduce(function (acc, currentValue) {
         return acc + currentValue.num_bikes_available_types.ebike;
       }, bikesFakeInitial);
-      //console.log(`bikes_available_types.ebike: ${bikesFakeAcc}`);
+
       // Correct totals
       bikesAvailableAcc = bikesAvailableAcc - bikesFakeAcc * 2;
-      cardBikesAvailableNumb.textContent = bikesAvailableAcc;
-      docksAvailableAcc = docksAvailableAcc - bikesFakeAcc * 1;
-      //cardDocksAvailableNumb.textContent = docksAvailableAcc;
 
+      // Data
+      cardBikesAvailableNumb.textContent = bikesAvailableAcc;
+      cardBikesDisabledNumb.textContent = bikesDisabledAcc;
+
+      // Chart
       chartTotal = bikesAvailableAcc + bikesDisabledAcc;
       chartAvailable = bikesAvailableAcc / chartTotal;
       chartDisabled = bikesDisabledAcc / chartTotal;
       chart();
 
       // Tweet button
-      let text = encodeURIComponent(`Hay 🚲 ${bikesAvailableAcc} bicis disponibles y 🚳 ${bikesDisabledAcc} bicis bloqueadas.\r\n \r\nProbá la app en el link ⤵️`);
-      let url = "http://ecobici.juandematei.com";
-      let hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
-      let via = "juandematei";
-      let related = "elbotonmalo,baecobici";
+      let text = encodeURIComponent(`Hay 🚲 ${bikesAvailableAcc} bicis disponibles y 🚳 ${bikesDisabledAcc} bicis bloqueadas.\r\n\r\nProbá la app en el link ⤵️\r\n`);
       cardBikesTwitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
 
+      // Response date & time
+      let responseDate = new Date(resp.last_updated * 1000);
+      updateTime.textContent = responseDate.toLocaleString("es-AR", options);
+
       updating.classList.add("updating--hide");
+      cardTotals.classList.remove("card--hidden");
+
+      // !Debug
+      // console.log("Response stationStatus - bikesTotal: ");
+      // console.log(stationStatus);
+      // console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc}`);
+      // console.log(`fake bikes: ${bikesFakeAcc}`);
+
     } else {
       updating.classList.add("updating--hide");
     }
@@ -165,7 +144,7 @@ function bikesTotal() {
 
 // Get quantities by station (search) ----------------------------------------->
 function bikesStation(busqueda) {
-  updating.classList.remove("updating--hide");
+  //updating.classList.remove("updating--hide");
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
@@ -221,7 +200,7 @@ function bikesStation(busqueda) {
 
           cardNearestStationName.textContent = result_name;
           cardNearestStationBikesAvailable.textContent = bikesAvailableStation;
-          cardNearestStationBikesDisables.textContent = bikesDisabledStation;
+          cardNearestStationBikesDisabled.textContent = bikesDisabledStation;
           cardNearestStationDocksAvailable.textContent = docksAvailableStation;
 
 
@@ -247,11 +226,7 @@ function bikesStation(busqueda) {
           // }
 
           // Tweet button
-          let text = encodeURIComponent(`Hay 🚲 ${bikesAvailableStation} bicis disponibles y 🚳 ${bikesDisabledStation} bicis bloqueadas en la estación ${result_name}.\r\n \r\nProbá la app en el link ⤵️`);
-          let url = "http://ecobici.juandematei.com";
-          let hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
-          let via = "juandematei";
-          let related = "elbotonmalo,baecobici";
+          let text = encodeURIComponent(`Hay 🚲 ${bikesAvailableStation} bicis disponibles y 🚳 ${bikesDisabledStation} bicis bloqueadas en la estación ${result_name}.\r\n\r\nProbá la app en el link ⤵️\r\n`);
           cardNearestStationTwitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
 
           // if (searchFixed === false) {
@@ -259,21 +234,23 @@ function bikesStation(busqueda) {
           //   searchValue = ""; //! Important
           // }
 
-          updating.classList.add("updating--hide");
+          //updating.classList.add("updating--hide");
+          cardNearest.classList.remove("card--hidden");
+
         } else {
-          updating.classList.add("updating--hide");
+          //updating.classList.add("updating--hide");
         }
       };
       xhr.onerror = function () {
-        updating.classList.add("updating--hide");
+        //updating.classList.add("updating--hide");
       };
       xhr.send();
     } else {
-      updating.classList.add("updating--hide");
+      //updating.classList.add("updating--hide");
     }
   };
   xhr.onerror = function () {
-    updating.classList.add("updating--hide");
+    //updating.classList.add("updating--hide");
   };
   xhr.send();
 }
@@ -306,16 +283,16 @@ function getStationsValid() {
 
       checkGeolocation();
     } else {
-      updating.classList.add("updating--hide");
+      //updating.classList.add("updating--hide");
     }
   };
   xhr.onerror = function () {
-    updating.classList.add("updating--hide");
+    //updating.classList.add("updating--hide");
   };
   xhr.send();
 }
 
-// Get all different status in "stationStatus" and count them ----------------->
+//? Get all different status in "stationStatus" and count them ----------------->
 function getUniqueStatus() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
@@ -333,74 +310,65 @@ function getUniqueStatus() {
         console.log(`Total ${element}: ${count}`);
       });
     } else {
-      updating.classList.add("updating--hide");
+      //updating.classList.add("updating--hide");
     }
   };
   xhr.onerror = function () {
-    updating.classList.add("updating--hide");
+    //updating.classList.add("updating--hide");
   };
   xhr.send();
 }
 
-// Change refresh-button color when searh is fixed ---------------------------->
-function fixedButtonClick() {
-  searchFixed = !searchFixed;
-  if (searchFixed === true) {
-    refreshButton.classList.add("btn--fixed");
-    fixedButton.classList.add("btn--fixed");
-    fixedButtonIcon.setAttribute("name", "lock");
+//! Helper functions ---------------------------------------------------------->
+// Draw chart ----------------------------------------------------------------->
+function chart() {
+  var ctx = document.getElementById("chart__canvas");
+  new Chart(ctx, {
+    type: "horizontalBar",
+    data: {
+      labels: ["Bicis"],
+      barThickness: 24,
+      datasets: [
+        {
+          label: "Disponibles",
+          data: [chartAvailable],
+          backgroundColor: "#43A047",
+        },
+        {
+          label: "Bloqueadas",
+          data: [chartDisabled],
+          backgroundColor: "#E53935",
+        }
+      ],
+    },
+    options: {
+      legend: false,
+      tooltips: {
+        enabled: false
+      },
+      scales: {
+        yAxes: [{
+          stacked: true,
+          display: false
+        }],
+        xAxes: [{
+          stacked: true,
+          display: false
+        }]
+      }
+    },
+  });
+};
+
+// Hide bottom navigation ----------------------------------------------------->
+function hideNavBar() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    navBottom.classList.add("nav--hidden");
   } else {
-    refreshButton.classList.remove("btn--fixed");
-    fixedButton.classList.remove("btn--fixed");
-    fixedButtonIcon.setAttribute("name", "unlock");
+    navBottom.classList.remove("nav--hidden");
   }
 }
 
-// Refresh results ------------------------------------------------------------>
-function refreshButtonClick() {
-  if (searchFixed === true) {
-    searchButton.click();
-  } else {
-    location.reload();
-  }
-}
-
-// Search button click -------------------------------------------------------->
-function searchButtonClick() {
-  searchValue = searchInput.value; //! Important
-
-  if (searchValue === "") {
-    //! Important
-    searchBox.classList.add("error");
-    searchInput.placeholder = "Ingresá una estación";
-    setTimeout(function () {
-      searchBox.classList.remove("error");
-      searchInput.placeholder = "Buscar una estación";
-    }, 4000);
-  } else {
-    searchValue = pad(searchInput.value); //! Important
-    if (stationsValid.includes(searchValue)) {
-      //! Important
-      bikesStation(searchValue); //! Important
-      searchInput.blur();
-    } else {
-      searchInput.value = "";
-      searchBox.classList.add("error");
-      searchInput.placeholder = "No existe esa estación";
-      setTimeout(function () {
-        searchBox.classList.remove("error");
-        searchInput.placeholder = "Buscar una estación";
-      }, 4000);
-    }
-  }
-}
-
-// Start search by pressing enter on search box ------------------------------->
-function searchInputEnter() {
-  if (event.keyCode === 13) {
-    searchButton.click();
-  }
-}
 
 // Add leading zeros to station_id number ------------------------------------->
 function pad(n) {
@@ -419,13 +387,13 @@ function checkGeolocation() {
   }
   // Geolocation not available
   else {
+    console.log("No hay ubicacion");
   }
 }
 
 // Callback function for asynchronous call to HTML5 geolocation
 function UserLocation(position) {
   nearestStation(position.coords.latitude, position.coords.longitude);
-  //console.log(`User location: ${position.coords.latitude} ${position.coords.longitude}`);
 }
 
 // Convert Degress to Radians
@@ -458,12 +426,10 @@ function nearestStation(latitude, longitude) {
   }
 
   searchLocation = stationsLocation[closest][0];
-  //console.log(`Closest station: ${searchLocation}`);
 
   let origin = latitude + "," + longitude;
   let destination = stationsLocation[closest][1] + "," + stationsLocation[closest][2];
   let mapLink = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
-  //console.log(mapLink);
   let mapImg = `https://maps.googleapis.com/maps/api/staticmap?center=${destination}&zoom=15&size=300x150&scale=2&markers=color:0xe66300%7C${destination}&key=${maps_api_key}`;
   cardNearestStationMap.src = mapImg;
   cardNearestStationMapLink.href = mapLink;
@@ -471,79 +437,16 @@ function nearestStation(latitude, longitude) {
 }
 
 //* Event listeners ----------------------------------------------------------->
-// searchButton.addEventListener("click", function (event) {
-//   event.preventDefault();
-//   searchButtonClick();
-// });
-// searchInput.addEventListener("keyup", function (event) {
-//   searchInputEnter();
-// });
-// fixedButton.addEventListener("click", function (event) {
-//   event.preventDefault();
-//   fixedButtonClick();
-// });
-// menuToggler.addEventListener("click", function (event) {
-//   event.preventDefault();
-
-//   menuOpen = !menuOpen;
-//   if (menuOpen === true) {
-//     menuTogglerIcon.classList.add("menu--open");
-//     menuSidebar.classList.add("menu--show");
-//   } else {
-//     menuTogglerIcon.classList.remove("menu--open");
-//     menuSidebar.classList.remove("menu--show");
-//   }
-// });
-
-// Chart 
-function chart() {
-  var ctx = document.getElementById("chart__canvas");
-  var myChart = new Chart(ctx, {
-    type: "horizontalBar",
-    data: {
-      labels: ["Bicis"],
-      barThickness: 24,
-      datasets: [
-        {
-          label: "Disponibles",
-          data: [chartAvailable],
-          backgroundColor: "rgba(46,125,50,1)",
-        },
-        {
-          label: "Bloqueadas",
-          data: [chartDisabled],
-          backgroundColor: "rgba(198,40,40,1)",
-        }
-      ],
-    },
-    options: {
-      legend: false,
-      tooltips: {
-        enabled: false
-      },
-      scales: {
-        yAxes: [{
-          stacked: true,
-          display: false
-        }],
-        xAxes: [{
-          stacked: true,
-          display: false
-        }]
-
-      }
-    },
-  });
-};
-
-function hideBottomBar() {
-  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-    bottomBar.classList.add("scrolled");
-  } else {
-    bottomBar.classList.remove("scrolled");
-  }
-}
-
-navBarSearch.addEventListener("click", function (event) {
-  alert("La búsqueda no está disponible temporalmente.");
+navSearchBtn.addEventListener("click", function (event) {
+  searchSection.classList.remove("search--hidden");
 });
+searchSection.addEventListener("click", function (event) {
+  searchSection.classList.add("search--hidden");
+});
+
+
+//! Call functions on page load ----------------------------------------------->
+(function () {
+  getStationsValid();
+  bikesTotal();
+})();
