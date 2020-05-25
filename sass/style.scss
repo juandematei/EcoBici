@@ -2,18 +2,21 @@
 // Colors --------------------------------------------------------------------->
 $primary: #e66300;
 $secondary: #0a4990;
-$red: #c62828;
-$green: #2e7d32;
+$red: #e53935;
+$green: #43a047;
 $dark: #424242;
 $light: #f2f2f2;
 $white: #ffffff;
 $black: #000000;
 $disabled: #777777;
-// Border radius -------------------------------------------------------------->
+// Layout --------------------------------------------------------------------->
+$m0: 0;
+$m1: 8px;
+$m2: $m1 * 2;
+$m100: $m1 * 45;
+// Effects -------------------------------------------------------------------->
 $border-radius: 4px;
-// Shadows -------------------------------------------------------------------->
 $box-shadow: 0 1px 3px rgba($black, 0.2), 0 1px 2px rgba($black, 0.12), 0 1px 1px rgba($black, 0.14);
-// Transition ----------------------------------------------------------------->
 $transition: all 0.25s ease-in-out;
 
 //! Base----------------------------------------------------------------------->
@@ -25,16 +28,17 @@ $transition: all 0.25s ease-in-out;
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
   position: relative;
   background: $light;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
   color: $dark;
 }
 
 header,
 nav,
 main,
+section,
 footer {
   width: 100%;
 }
@@ -87,11 +91,6 @@ h1 {
 
 //! Layout -------------------------------------------------------------------->
 // Wrappers ------------------------------------------------------------------->
-.container {
-  width: 360px;
-  margin: 0 auto;
-  padding: 16px;
-}
 
 // Header --------------------------------------------------------------------->
 .header {
@@ -101,10 +100,16 @@ h1 {
   position: fixed;
   top: 0;
 
+  &__container {
+    width: $m100;
+    margin: $m0 auto;
+    padding: $m2;
+  }
+
   &__logo {
     display: block;
     width: 100%;
-    max-width: 360px;
+    max-width: $m100;
     text-align: center;
 
     img {
@@ -122,13 +127,14 @@ h1 {
   bottom: 0;
   transition: $transition;
 
-  &.scrolled {
+  &--hidden {
     bottom: -56px;
   }
 
   &__container {
-    width: 360px;
-    margin: 0 auto;
+    width: $m100;
+    margin: $m0 auto;
+    padding: $m0;
   }
 
   &__bottom {
@@ -145,7 +151,7 @@ h1 {
   }
 
   &__link {
-    padding: 8px;
+    padding: $m1;
     color: rgba($light, 0.74);
     font-size: 12px;
     line-height: 16px;
@@ -171,9 +177,12 @@ h1 {
 
 // Response ------------------------------------------------------------------->
 .response {
-  margin-top: 56px;
-
+  //margin-top: 56px;
+  margin-bottom: 56px;
   &__container {
+    width: $m100;
+    margin: $m0 auto;
+    padding: $m2;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -201,9 +210,12 @@ h1 {
       align-content: stretch;
       margin-bottom: 16px;
 
+      &--hidden {
+        display: none;
+      }
+
       &__header {
-        min-height: 72px;
-        padding: 0 16px;
+        padding: $m2;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -223,12 +235,14 @@ h1 {
 
       &__media {
         canvas {
-          padding: 0 16px;
+          padding: $m0 $m2;
         }
       }
 
       &__data {
-        padding: 8px 16px;
+        padding: $m2;
+        display: flex;
+        justify-content: space-evenly;
         .icon {
           display: block;
           width: 40px;
@@ -250,12 +264,11 @@ h1 {
         div {
           display: inline-flex;
           align-items: center;
-          margin-right: 8px;
+          min-width: 80px;
         }
         .available {
           color: $green;
         }
-
         .disabled {
           color: $red;
         }
@@ -263,38 +276,17 @@ h1 {
 
       &__actions {
         text-align: right;
-        padding: 8px;
+        padding: $m1;
 
         &.float {
           position: absolute;
-          right: 0px;
-          padding: 8px 0;
+          right: $m2;
+          top: $m2;
+          padding: $m1;
 
           a {
+            display: block;
             color: $dark;
-          }
-        }
-
-        .card__link {
-          border-radius: $border-radius;
-          display: inline-block;
-          padding: 8px;
-          height: 36px;
-          margin-left: 8px;
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 22px;
-          letter-spacing: 1.25px;
-          text-transform: uppercase;
-          color: $primary;
-
-          &:hover,
-          &:focus {
-            background-color: rgba($primary, 0.2);
-          }
-
-          i {
-            margin-right: 8px;
           }
         }
       }
@@ -304,24 +296,23 @@ h1 {
   &__btn {
     background-color: $secondary;
     color: $light;
-    border-radius: $border-radius;
-    display: inline-block;
-    margin: 8px auto;
-    padding: 8px;
-    height: 36px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    letter-spacing: 1.25px;
-    text-transform: uppercase;
-
-    i {
-      margin-right: 8px;
-    }
   }
 
   &__time {
     font-size: 0.8rem;
+  }
+}
+
+// Search --------------------------------------------------------------------->
+.search {
+  background-color: $primary;
+  color: $light;
+  transition: $transition;
+  margin-top: 56px;
+  height: 56px;
+
+  &--hidden {
+    margin-top: 0;
   }
 }
 
@@ -330,59 +321,61 @@ h1 {
   background-color: $dark;
   color: $light;
   text-align: center;
-  padding: 16px 16px 56px 16px;
+
+  &__container {
+    width: $m100;
+    margin: $m0 auto;
+    padding: $m2;
+  }
+
   &__author {
-    line-height: 40px;
     font-weight: 500;
-    margin-bottom: 16px;
+    margin: $m2 auto;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
 
     a {
       color: $light;
+      margin: 0 4px;
     }
 
-    i {
+    span {
       color: $red;
+      margin: 0 4px;
     }
+  }
+
+  &__text {
+    font-size: 0.8rem;
+    margin: $m2 auto;
   }
 
   &__btn {
     background-color: $light;
     color: $dark;
-    border-radius: $border-radius;
-    display: inline-block;
-    padding: 8px;
-    height: 36px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    letter-spacing: 1.25px;
-    text-transform: uppercase;
-
-    i {
-      margin-right: 8px;
-    }
   }
 }
 
 //! Module -------------------------------------------------------------------->
 // Updating overlay ----------------------------------------------------------->
 .updating {
-  background-color: rgba($black, 0.8);
-  color: $light;
-  backdrop-filter: blur(10px);
+  background-color: $light;
+  color: $dark;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 9;
   visibility: visible;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: $transition;
 
-  &--hide {
+  &--hidden {
     visibility: hidden;
   }
 
@@ -415,11 +408,27 @@ h1 {
 // Buttons -------------------------------------------------------------------->
 .btn {
   position: relative;
-  background-color: $white;
-  color: $primary;
   cursor: pointer;
   overflow: hidden;
   transition: $transition;
+  border-radius: $border-radius;
+  display: inline-block;
+  padding: $m1 $m2;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+
+  i {
+    margin-right: $m1;
+  }
+
+  &--primary {
+    background-color: $primary;
+    color: $light;
+  }
 
   &--ripple {
     &::before {
@@ -506,7 +515,6 @@ h1 {
 }
 
 // TABLES
-
 table {
   width: 100%;
   border-collapse: collapse;

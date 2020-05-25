@@ -6,16 +6,17 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
   position: relative;
   background: #f2f2f2;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
   color: #424242;
 }
 
 header,
 nav,
 main,
+section,
 footer {
   width: 100%;
 }
@@ -66,18 +67,18 @@ h1 {
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-.container {
-  width: 360px;
-  margin: 0 auto;
-  padding: 16px;
-}
-
 .header {
   background-color: #e66300;
   color: #f2f2f2;
   z-index: 99;
   position: fixed;
   top: 0;
+}
+
+.header__container {
+  width: 360px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
 .header__logo {
@@ -101,13 +102,14 @@ h1 {
   transition: all 0.25s ease-in-out;
 }
 
-.nav.scrolled {
+.nav--hidden {
   bottom: -56px;
 }
 
 .nav__container {
   width: 360px;
   margin: 0 auto;
+  padding: 0;
 }
 
 .nav__bottom {
@@ -167,10 +169,13 @@ h1 {
 }
 
 .response {
-  margin-top: 56px;
+  margin-bottom: 56px;
 }
 
 .response__container {
+  width: 360px;
+  margin: 0 auto;
+  padding: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -228,9 +233,12 @@ h1 {
   margin-bottom: 16px;
 }
 
+.response__cards .card--hidden {
+  display: none;
+}
+
 .response__cards .card__header {
-  min-height: 72px;
-  padding: 0 16px;
+  padding: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -261,7 +269,13 @@ h1 {
 }
 
 .response__cards .card__data {
-  padding: 8px 16px;
+  padding: 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
 .response__cards .card__data .icon {
@@ -283,11 +297,11 @@ h1 {
 }
 
 .response__cards .card__data .icon.available {
-  background-color: rgba(46, 125, 50, 0.2);
+  background-color: rgba(67, 160, 71, 0.2);
 }
 
 .response__cards .card__data .icon.disabled {
-  background-color: rgba(198, 40, 40, 0.2);
+  background-color: rgba(229, 57, 53, 0.2);
 }
 
 .response__cards .card__data div {
@@ -297,15 +311,15 @@ h1 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-right: 8px;
+  min-width: 80px;
 }
 
 .response__cards .card__data .available {
-  color: #2e7d32;
+  color: #43a047;
 }
 
 .response__cards .card__data .disabled {
-  color: #c62828;
+  color: #e53935;
 }
 
 .response__cards .card__actions {
@@ -315,109 +329,91 @@ h1 {
 
 .response__cards .card__actions.float {
   position: absolute;
-  right: 0px;
-  padding: 8px 0;
+  right: 16px;
+  top: 16px;
+  padding: 8px;
 }
 
 .response__cards .card__actions.float a {
+  display: block;
   color: #424242;
-}
-
-.response__cards .card__actions .card__link {
-  border-radius: 4px;
-  display: inline-block;
-  padding: 8px;
-  height: 36px;
-  margin-left: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  letter-spacing: 1.25px;
-  text-transform: uppercase;
-  color: #e66300;
-}
-
-.response__cards .card__actions .card__link:hover, .response__cards .card__actions .card__link:focus {
-  background-color: rgba(230, 99, 0, 0.2);
-}
-
-.response__cards .card__actions .card__link i {
-  margin-right: 8px;
 }
 
 .response__btn {
   background-color: #0a4990;
   color: #f2f2f2;
-  border-radius: 4px;
-  display: inline-block;
-  margin: 8px auto;
-  padding: 8px;
-  height: 36px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  letter-spacing: 1.25px;
-  text-transform: uppercase;
-}
-
-.response__btn i {
-  margin-right: 8px;
 }
 
 .response__time {
   font-size: 0.8rem;
 }
 
+.search {
+  background-color: #e66300;
+  color: #f2f2f2;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  margin-top: 56px;
+  height: 56px;
+}
+
+.search--hidden {
+  margin-top: 0;
+}
+
 .footer {
   background-color: #424242;
   color: #f2f2f2;
   text-align: center;
-  padding: 16px 16px 56px 16px;
+}
+
+.footer__container {
+  width: 360px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
 .footer__author {
-  line-height: 40px;
   font-weight: 500;
-  margin-bottom: 16px;
+  margin: 16px auto;
+  min-height: 28px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .footer__author a {
   color: #f2f2f2;
+  margin: 0 4px;
 }
 
-.footer__author i {
-  color: #c62828;
+.footer__author span {
+  color: #e53935;
+  margin: 0 4px;
+}
+
+.footer__text {
+  font-size: 0.8rem;
+  margin: 16px auto;
 }
 
 .footer__btn {
   background-color: #f2f2f2;
   color: #424242;
-  border-radius: 4px;
-  display: inline-block;
-  padding: 8px;
-  height: 36px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  letter-spacing: 1.25px;
-  text-transform: uppercase;
-}
-
-.footer__btn i {
-  margin-right: 8px;
 }
 
 .updating {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #f2f2f2;
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  background-color: #f2f2f2;
+  color: #424242;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 9;
   visibility: visible;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -432,9 +428,11 @@ h1 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
-.updating--hide {
+.updating--hidden {
   visibility: hidden;
 }
 
@@ -468,12 +466,28 @@ h1 {
 
 .btn {
   position: relative;
-  background-color: #ffffff;
-  color: #e66300;
   cursor: pointer;
   overflow: hidden;
   -webkit-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 8px 16px;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.btn i {
+  margin-right: 8px;
+}
+
+.btn--primary {
+  background-color: #e66300;
+  color: #f2f2f2;
 }
 
 .btn--ripple::before {
@@ -618,7 +632,7 @@ h1 {
 }
 
 .error > .search__input::-webkit-input-placeholder {
-  color: #c62828;
+  color: #e53935;
 }
 
 table {
