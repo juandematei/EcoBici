@@ -92,6 +92,52 @@ h1 {
   height: 20px;
 }
 
+.search {
+  background-color: #e66300;
+  color: #f2f2f2;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  margin-top: 56px;
+  height: 56px;
+}
+
+.search--hidden {
+  margin-top: 0;
+}
+
+.search__container {
+  width: 360px;
+  margin: 0 auto;
+  padding: 8px 16px;
+}
+
+.search__form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.search__box {
+  border-radius: 50px 0 0 50px;
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+}
+
+.search__btn {
+  background-color: #ffffff;
+  color: #424242;
+  display: block;
+  border-radius: 0 50px 50px 0;
+  width: 40px;
+  height: 40px;
+}
+
 .nav {
   background-color: #e66300;
   color: #f2f2f2;
@@ -348,23 +394,15 @@ h1 {
   font-size: 0.8rem;
 }
 
-.search {
-  background-color: #e66300;
-  color: #f2f2f2;
-  -webkit-transition: all 0.25s ease-in-out;
-  transition: all 0.25s ease-in-out;
-  margin-top: 56px;
-  height: 56px;
-}
-
-.search--hidden {
-  margin-top: 0;
-}
-
 .footer {
   background-color: #424242;
   color: #f2f2f2;
   text-align: center;
+}
+
+.footer a {
+  color: #f2f2f2;
+  text-decoration: underline;
 }
 
 .footer__container {
@@ -385,14 +423,13 @@ h1 {
           align-items: center;
 }
 
-.footer__author a {
-  color: #f2f2f2;
+.footer__author a,
+.footer__author span {
   margin: 0 4px;
 }
 
 .footer__author span {
   color: #e53935;
-  margin: 0 4px;
 }
 
 .footer__text {
@@ -400,21 +437,20 @@ h1 {
   margin: 16px auto;
 }
 
-.footer__btn {
+.footer a.footer__btn {
   background-color: #f2f2f2;
   color: #424242;
+  text-decoration: none;
 }
 
 .updating {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   color: #424242;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: 9;
-  visibility: visible;
+  opacity: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -430,10 +466,12 @@ h1 {
           align-items: center;
   -webkit-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
+  border-radius: 4px;
 }
 
 .updating--hidden {
-  visibility: hidden;
+  opacity: 0;
+  z-index: 0;
 }
 
 .updating__icon .line {
@@ -486,8 +524,10 @@ h1 {
 }
 
 .btn--primary {
-  background-color: #e66300;
-  color: #f2f2f2;
+  background-color: #0a4990;
+  color: #ffffff;
+  width: 100%;
+  text-align: center;
 }
 
 .btn--ripple::before {
