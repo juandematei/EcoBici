@@ -69,7 +69,7 @@ const cardNearestStationMap = document.querySelector("#cardNearestStationMap");
 const cardNearestStationMapLink = document.querySelector("#cardNearestStationMapLink");
 const cardLocationButton = document.querySelector("#cardLocationButton");
 //  Active stations
-const stationList = document.querySelector(".response-table");
+const stationsList = document.querySelector(".response-table");
 const cardActiveSubtitle = document.querySelector("#cardActiveSubtitle");
 
 //* Twitter button ------------------------------------------------------------>
@@ -342,17 +342,38 @@ function getActiveStations() {
         stationsActive.name = stationInformation[i].name;
         stationsActive.lat = stationInformation[i].lat;
         stationsActive.lon = stationInformation[i].lon;
-        stationsActive.push([stationsActive.id, stationsActive.name, stationsActive.lat, stationsActive.lon]);
-        var row = stationList.insertRow(i + 1);
-        var cell1 = row.insertCell(0);
-        cell1.innerHTML = stationsActive.id;
-        var cell2 = row.insertCell(1);
-        cell2.innerHTML = stationsActive.name;
-        var cell3 = row.insertCell(2);
-        cell3.innerHTML = stationsActive.lat;
-        var cell4 = row.insertCell(3);
-        cell4.innerHTML = stationsActive.lon;
+        stationsActive.push({ "id": stationsActive.id, "name": stationsActive.name, "lat": stationsActive.lat, "lon": stationsActive.lon });
       }
+
+      stationsTable = stationsActive.sort();
+      console.table(stationsTable);
+
+
+      for (let i = 0; i < stationsTable.length; i++) {
+        stationsTable.name = stationsActive[i].name;
+        stationsTable.lat = stationsActive[i].lat;
+        stationsTable.lon = stationsActive[i].lon;
+
+        let mapURL = `https://www.google.com/maps/search/?api=1&query=${stationsTable.lat},${stationsTable.lon}&query_place_id=${stationsTable.name}`;
+        let a = document.createElement('a');
+        let icon = document.createElement("span");
+
+        icon.classList.add("material-icons");
+        icon.textContent = "place";
+        a.appendChild(icon);
+        a.title = `Ver ${stationsTable.name} en Google Maps`;
+        a.href = mapURL;
+        a.target = "_blank";
+        a.rel = "noopener";
+        document.body.appendChild(a);
+
+        let row = stationsList.insertRow(i + 1);
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        cell1.innerHTML = stationsTable.name;
+        cell2.appendChild(a);
+      }
+      //todo
       cardActiveSubtitle.textContent = stationsActive.length;
       updating.classList.add("updating--hide");
     } else {

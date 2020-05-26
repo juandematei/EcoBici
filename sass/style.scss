@@ -215,11 +215,10 @@ h1 {
 
 // Response ------------------------------------------------------------------->
 .response {
-  //margin-top: 56px;
   margin-bottom: 56px;
+  width: $m100;
+  margin: $m0 auto;
   &__container {
-    width: $m100;
-    margin: $m0 auto;
     padding: $m2;
     display: flex;
     flex-direction: column;
@@ -408,7 +407,7 @@ h1 {
   &--hidden {
     //visibility: hidden;
     opacity: 0;
-    z-index: 0;
+    z-index: -1;
   }
 
   &__icon {
@@ -549,6 +548,11 @@ h1 {
 }
 
 // TABLES
+table,
+th,
+td {
+  border: none;
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -566,6 +570,8 @@ td,
 th {
   font-size: 0.8rem;
   padding: 6px;
-  border: 1px solid #ccc;
-  text-align: left;
+  text-transform: uppercase;
+}
+td:nth-child(2) {
+  text-align: center;
 }

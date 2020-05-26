@@ -216,11 +216,11 @@ h1 {
 
 .response {
   margin-bottom: 56px;
+  width: 360px;
+  margin: 0 auto;
 }
 
 .response__container {
-  width: 360px;
-  margin: 0 auto;
   padding: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -471,7 +471,7 @@ h1 {
 
 .updating--hidden {
   opacity: 0;
-  z-index: 0;
+  z-index: -1;
 }
 
 .updating__icon .line {
@@ -675,6 +675,12 @@ h1 {
   color: #e53935;
 }
 
+table,
+th,
+td {
+  border: none;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -694,6 +700,9 @@ td,
 th {
   font-size: 0.8rem;
   padding: 6px;
-  border: 1px solid #ccc;
-  text-align: left;
+  text-transform: uppercase;
+}
+
+td:nth-child(2) {
+  text-align: center;
 }
