@@ -60,13 +60,13 @@
       <div class="nav__container">
         <ul class="nav__bottom">
           <li class="nav__item">
-            <a id="navHomeBtn" class="nav__link active" href="/EcoBici"><span class="material-icons">home</span><span>Inicio</span></a>
+            <a id="navHomeBtn" class="nav__link active" href="#"><span class="material-icons">home</span><span>Inicio</span></a>
           </li>
           <li class="nav__item">
             <a id="navSearchBtn" class="nav__link" href="#"><span class="material-icons">search</span><span>Buscar</span></a>
           </li>
           <li class="nav__item">
-            <a id="navStatusBtn" class="nav__link" href="status.html"><span class="material-icons">info</span><span>Estado</span></a>
+            <a id="navStatusBtn" class="nav__link" href="#"><span class="material-icons">info</span><span>Estado</span></a>
           </li>
         </ul>
       </div>
@@ -83,7 +83,7 @@
 
     <main class="response">
       <div class="response__container response__cards">
-        <div id="cardTotals" class="card">
+        <div id="cardTotals" class="card card--hidden">
           <div id="updating" class="updating updating--hidden">
             <div class="updating__icon">
               <div class="line"></div>
@@ -92,29 +92,39 @@
             </div>
             <p class="updating__text">Obteniendo datos</p>
           </div>
+
           <div class="card__header">
             <h5 class="card__title">Bicicletas</h5>
             <h6 class="card__subtitle">Todas las estaciones</h6>
           </div>
+
           <div class="card__media">
             <canvas id="chart__canvas" width="300px" height="20px"></canvas>
           </div>
+
           <div class="card__data">
-            <div class="bikes--available available">
-              <span class="icon available"><span class="material-icons">directions_bike</span></span>
-              <span id="cardBikesAvailableNumb" class="numb"></span>
+            <div class="bikes--available available data--container">
+              <div class="icon available"><span class="material-icons">directions_bike</span></div>
+              <div class="text">
+                <span id="cardBikesAvailableNumb" class="numb"></span>
+                <small>disponibles</small>
+              </div>
             </div>
-            <div class="bikes--disabled disabled">
-              <span class="icon disabled"><span class="material-icons">build</span></span>
-              <span id="cardBikesDisabledNumb" class="numb"></span>
+            <div class="bikes--disabled disabled data--container">
+              <div class="icon disabled"><span class="material-icons">build</span></div>
+              <div class="text">
+                <span id="cardBikesDisabledNumb" class="numb"></span>
+                <small>bloqueadas</small>
+              </div>
             </div>
           </div>
+
           <div class="card__actions float">
             <a id="cardBikesTwitterButton" class="card__link link--twitter twitter-share-button" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener"><span class="material-icons">share</span></a>
           </div>
         </div>
 
-        <div id="cardNearest" class="card">
+        <div id="cardNearest" class="card card--hidden">
           <div id="updating" class="updating updating--hidden">
             <div class="updating__icon">
               <div class="line"></div>
@@ -131,17 +141,26 @@
             <img id="cardNearestStationMap" class="card__map" src="" alt="" width="100%" height="auto" />
           </div>
           <div class="card__data">
-            <div class="bikes--available available">
-              <span class="icon available"><span class="material-icons">directions_bike</span></span>
-              <span id="cardNearestStationBikesAvailable" class="numb"></span>
+            <div class="bikes--available available data--container">
+              <div class="icon available"><span class="material-icons">directions_bike</span></div>
+              <div class="text">
+                <span id="cardNearestStationBikesAvailable" class="numb"></span>
+                <small>disponibles</small>
+              </div>
             </div>
-            <div class="bikes--disabled disabled">
-              <span class="icon disabled"><span class="material-icons">build</span></span>
-              <span id="cardNearestStationBikesDisabled" class="numb"></span>
+            <div class="bikes--disabled disabled data--container">
+              <div class="icon disabled"><span class="material-icons">build</span></div>
+              <div class="text">
+                <span id="cardNearestStationBikesDisabled" class="numb"></span>
+                <small>bloqueadas</small>
+              </div>
             </div>
-            <div class="docks--available">
-              <span class="icon"><span class="material-icons">local_parking</span></span>
-              <span id="cardNearestStationDocksAvailable" class="numb"></span>
+            <div class="docks--available data--container">
+              <div class="icon"><span class="material-icons">local_parking</span></div>
+              <div class="text">
+                <span id="cardNearestStationDocksAvailable" class="numb"></span>
+                <small>posiciones</small>
+              </div>
             </div>
           </div>
           <div class="card__actions">
@@ -153,7 +172,7 @@
           </div>
         </div>
 
-        <div id="cardActive" class="card">
+        <div id="cardActive" class="card card--hidden">
           <div id="updating" class="updating updating--hidden">
             <div class="updating__icon">
               <div class="line"></div>
@@ -164,7 +183,10 @@
           </div>
           <div class="card__header">
             <h5 class="card__title">Estaciones activas</h5>
-            <h6 id="cardActiveSubtitle" class="card__subtitle"></h6>
+            <h6 id="cardActiveSubtitle" class="card__subtitle">Funcionando con esquema especial</h6>
+          </div>
+          <div class="card__data active--stations">
+            <div id="cardActiveNumb"></div>
           </div>
           <div class="card__data">
             <table class="response-table" id="table-export">
@@ -180,7 +202,7 @@
           </div>
         </div>
 
-        <p class="response__time">Última actualización <span id="updateTime"></span></p>
+        <time id="updateTime" class="response__time"></time>
       </div>
     </main>
 
@@ -193,6 +215,6 @@
     </footer>
 
     <script type="text/javascript" src="https://juandematei.github.io/EcoBici_private/config.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

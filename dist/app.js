@@ -49,14 +49,15 @@ const navStatusBtn = document.querySelector("#navStatusBtn");
 //  Search -------------------------------------------------------------------->
 const searchSection = document.querySelector("#searchSection");
 //  Updating ------------------------------------------------------------------>
-const updating = document.querySelector("#updating");
 const updatingCardTotals = document.querySelector("#cardTotals > #updating");
-const updatingcardNearest = document.querySelector("#cardNearest > #updating");
+const updatingCardNearest = document.querySelector("#cardNearest > #updating");
+const updatingCardActive = document.querySelector("#cardActive > #updating");
 //  Response ------------------------------------------------------------------>
 const updateTime = document.querySelector("#updateTime");
 //  Cards --------------------------------------------------------------------->
 const cardTotals = document.querySelector("#cardTotals");
 const cardNearest = document.querySelector("#cardNearest");
+const cardActive = document.querySelector("#cardActive");
 //  Total stations ------------------------------------------------------------>
 const cardBikesAvailableNumb = document.querySelector("#cardBikesAvailableNumb");
 const cardBikesDisabledNumb = document.querySelector("#cardBikesDisabledNumb");
@@ -83,8 +84,8 @@ const related = "elbotonmalo,baecobici";
 //! Main functions ------------------------------------------------------------>
 // Get accumulated quantities ------------------------------------------------->
 function getBikesTotal() {
+  cardTotals.classList.remove("card--hidden");
   updatingCardTotals.classList.remove("updating--hidden");
-  updatingcardNearest.classList.remove("updating--hidden");
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
@@ -113,7 +114,7 @@ function getBikesTotal() {
       bikesAvailableAcc = bikesAvailableAcc - bikesFakeAcc * 2;
 
       // Data
-      cardBikesAvailableNumb.textContent = bikesAvailableAcc;
+      cardBikesAvailableNumb.textContent = `${bikesAvailableAcc}`;
       cardBikesDisabledNumb.textContent = bikesDisabledAcc;
 
       // Chart
@@ -127,8 +128,8 @@ function getBikesTotal() {
       cardBikesTwitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
 
       // Response date & time
-      let responseDate = new Date(resp.last_updated * 1000);
-      updateTime.textContent = responseDate.toLocaleString("es-AR", options);
+      let responseDate = new Date(resp.last_updated * 1000).toLocaleString("es-AR", options);
+      updateTime.textContent = `Última actualización ${responseDate}`;
 
       updatingCardTotals.classList.add("updating--hidden");
       //cardTotals.classList.remove("card--hidden");
@@ -240,7 +241,7 @@ function getBikesStation(busqueda) {
           //   searchValue = ""; //! Important
           // }
 
-          updatingcardNearest.classList.add("updating--hidden");
+          updatingCardNearest.classList.add("updating--hidden");
           //cardNearest.classList.remove("card--hidden");
 
         } else {
@@ -263,6 +264,9 @@ function getBikesStation(busqueda) {
 
 // Get stations information --------------------------------------------------->
 function getStationInformation() {
+  cardNearest.classList.remove("card--hidden");
+  updatingCardNearest.classList.remove("updating--hidden");
+
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function () {
@@ -329,6 +333,13 @@ function getUniqueStatus() {
 
 // Get active station numbers & location --------------------------------------->
 function getActiveStations() {
+  cardTotals.classList.add("card--hidden");
+  cardNearest.classList.add("card--hidden");
+  navHomeBtn.classList.remove("active");
+  navStatusBtn.classList.add("active");
+  cardActive.classList.remove("card--hidden");
+  updatingCardActive.classList.remove("updating--hidden");
+
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function () {
@@ -345,23 +356,27 @@ function getActiveStations() {
         stationsActive.push({ "id": stationsActive.id, "name": stationsActive.name, "lat": stationsActive.lat, "lon": stationsActive.lon });
       }
 
-      stationsTable = stationsActive.sort();
-      console.table(stationsTable);
+      stationsTable = stationsActive.filter(function (e) {
+        return e.id !== "tes"
+      });
+
+      stationsTableSorted = stationsTable.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      //console.table(stationsTableSorted);
 
 
-      for (let i = 0; i < stationsTable.length; i++) {
-        stationsTable.name = stationsActive[i].name;
-        stationsTable.lat = stationsActive[i].lat;
-        stationsTable.lon = stationsActive[i].lon;
+      for (let i = 0; i < stationsTableSorted.length; i++) {
+        stationsTableSorted.name = stationsActive[i].name;
+        stationsTableSorted.lat = stationsActive[i].lat;
+        stationsTableSorted.lon = stationsActive[i].lon;
 
-        let mapURL = `https://www.google.com/maps/search/?api=1&query=${stationsTable.lat},${stationsTable.lon}&query_place_id=${stationsTable.name}`;
+        let mapURL = `https://www.google.com/maps/search/?api=1&query=${stationsTableSorted.lat},${stationsTableSorted.lon}&query_place_id=${stationsTableSorted.name}`;
         let a = document.createElement('a');
         let icon = document.createElement("span");
 
         icon.classList.add("material-icons");
         icon.textContent = "place";
         a.appendChild(icon);
-        a.title = `Ver ${stationsTable.name} en Google Maps`;
+        a.title = `Ver ${stationsTableSorted.name} en Google Maps`;
         a.href = mapURL;
         a.target = "_blank";
         a.rel = "noopener";
@@ -370,20 +385,19 @@ function getActiveStations() {
         let row = stationsList.insertRow(i + 1);
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
-        cell1.innerHTML = stationsTable.name;
+        cell1.innerHTML = stationsTableSorted.name;
         cell2.appendChild(a);
       }
-      //todo
-      cardActiveSubtitle.textContent = stationsActive.length;
-      updating.classList.add("updating--hide");
+      document.querySelector("#cardActiveNumb").textContent = `${stationsTableSorted.length} estaciones`;
+      updatingCardActive.classList.add("updating--hidden");
     } else {
       responseHeader.textContent = "Error";
-      updating.classList.add("updating--hide");
+      updatingCardActive.classList.add("updating--hidden");
     }
   };
   xhr.onerror = function () {
     responseHeader.textContent = "Error";
-    updating.classList.add("updating--hide");
+    updatingCardActive.classList.add("updating--hidden");
   };
   xhr.send();
 }
@@ -546,23 +560,23 @@ function nearestStation(latitude, longitude) {
 }
 
 //* Event listeners ----------------------------------------------------------->
+navHomeBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  location.reload();
+})
 navSearchBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  searchSection.classList.remove("search--hidden");
+  //searchSection.classList.remove("search--hidden");
+  alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
 });
-searchSection.addEventListener("click", function (e) {
+navStatusBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  searchSection.classList.add("search--hidden");
+  getActiveStations();
 });
-// cardLocationButton.addEventListener("click", function (e) {
-//   e.preventDefault();
-//   console.log("click");
-// });
 
 
 //! Call functions on page load ----------------------------------------------->
 (function () {
   getBikesTotal();
   getStationInformation();
-  getActiveStations();
 })();

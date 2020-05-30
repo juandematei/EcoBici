@@ -217,6 +217,7 @@ h1 {
 .response {
   margin-bottom: 56px;
   width: $m100;
+  min-height: 100vh;
   margin: $m0 auto;
   &__container {
     padding: $m2;
@@ -256,6 +257,7 @@ h1 {
         display: flex;
         flex-direction: column;
         justify-content: center;
+
         .card__title {
           color: $black;
           font-size: 24px;
@@ -280,16 +282,21 @@ h1 {
         padding: $m2;
         display: flex;
         justify-content: space-evenly;
+
         .icon {
           display: block;
-          width: 40px;
-          height: 40px;
+          width: 34px;
+          height: 34px;
           background-color: rgba($dark, 0.2);
           border-radius: 50%;
           display: flex;
           justify-content: center;
           align-items: center;
           margin-right: 8px;
+
+          .material-icons {
+            font-size: 1rem;
+          }
 
           &.available {
             background-color: rgba($green, 0.2);
@@ -298,16 +305,35 @@ h1 {
             background-color: rgba($red, 0.2);
           }
         }
-        div {
+
+        .data--container {
           display: inline-flex;
           align-items: center;
-          min-width: 80px;
+          min-width: 90px;
+
+          .text {
+            display: flex;
+            flex-direction: column;
+            font-size: 1.2rem;
+            font-weight: 500;
+
+            small {
+              font-size: 0.5rem;
+              text-transform: uppercase;
+            }
+          }
         }
         .available {
           color: $green;
         }
         .disabled {
           color: $red;
+        }
+
+        &.active--stations {
+          background-color: rgba($green, 0.2);
+          color: $green;
+          font-size: 1.4rem;
         }
       }
 
@@ -556,7 +582,6 @@ td {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1rem 0;
 }
 
 tr:nth-of-type(odd) {

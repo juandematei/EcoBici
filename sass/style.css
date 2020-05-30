@@ -217,6 +217,7 @@ h1 {
 .response {
   margin-bottom: 56px;
   width: 360px;
+  min-height: 100vh;
   margin: 0 auto;
 }
 
@@ -326,8 +327,8 @@ h1 {
 
 .response__cards .card__data .icon {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   background-color: rgba(66, 66, 66, 0.2);
   border-radius: 50%;
   display: -webkit-box;
@@ -342,6 +343,10 @@ h1 {
   margin-right: 8px;
 }
 
+.response__cards .card__data .icon .material-icons {
+  font-size: 1rem;
+}
+
 .response__cards .card__data .icon.available {
   background-color: rgba(67, 160, 71, 0.2);
 }
@@ -350,14 +355,31 @@ h1 {
   background-color: rgba(229, 57, 53, 0.2);
 }
 
-.response__cards .card__data div {
+.response__cards .card__data .data--container {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  min-width: 80px;
+  min-width: 90px;
+}
+
+.response__cards .card__data .data--container .text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.response__cards .card__data .data--container .text small {
+  font-size: 0.5rem;
+  text-transform: uppercase;
 }
 
 .response__cards .card__data .available {
@@ -366,6 +388,12 @@ h1 {
 
 .response__cards .card__data .disabled {
   color: #e53935;
+}
+
+.response__cards .card__data.active--stations {
+  background-color: rgba(67, 160, 71, 0.2);
+  color: #43a047;
+  font-size: 1.4rem;
 }
 
 .response__cards .card__actions {
@@ -684,7 +712,6 @@ td {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1rem 0;
 }
 
 tr:nth-of-type(odd) {
