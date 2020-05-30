@@ -26,8 +26,8 @@ let bikesFakeInitial = 0;
 //  Search -------------------------------------------------------------------->
 let stationsValid = [];
 let stationsLocation = [];
+let stationsActive = [];
 let searchValue = "";
-let searchFixed = false;
 //  Chart --------------------------------------------------------------------->
 let chartAvailable = "";
 let chartDisabled = "";
@@ -49,12 +49,15 @@ const navStatusBtn = document.querySelector("#navStatusBtn");
 //  Search -------------------------------------------------------------------->
 const searchSection = document.querySelector("#searchSection");
 //  Updating ------------------------------------------------------------------>
-const updating = document.querySelector("#updating");
+const updatingCardTotals = document.querySelector("#cardTotals > #updating");
+const updatingCardNearest = document.querySelector("#cardNearest > #updating");
+const updatingCardActive = document.querySelector("#cardActive > #updating");
 //  Response ------------------------------------------------------------------>
 const updateTime = document.querySelector("#updateTime");
 //  Cards --------------------------------------------------------------------->
 const cardTotals = document.querySelector("#cardTotals");
 const cardNearest = document.querySelector("#cardNearest");
+const cardActive = document.querySelector("#cardActive");
 //  Total stations ------------------------------------------------------------>
 const cardBikesAvailableNumb = document.querySelector("#cardBikesAvailableNumb");
 const cardBikesDisabledNumb = document.querySelector("#cardBikesDisabledNumb");
@@ -65,6 +68,10 @@ const cardNearestStationBikesDisabled = document.querySelector("#cardNearestStat
 const cardNearestStationDocksAvailable = document.querySelector("#cardNearestStationDocksAvailable");
 const cardNearestStationMap = document.querySelector("#cardNearestStationMap");
 const cardNearestStationMapLink = document.querySelector("#cardNearestStationMapLink");
+const cardLocationButton = document.querySelector("#cardLocationButton");
+//  Active stations
+const stationsList = document.querySelector(".response-table");
+const cardActiveSubtitle = document.querySelector("#cardActiveSubtitle");
 
 //* Twitter button ------------------------------------------------------------>
 const cardBikesTwitterButton = document.querySelector("#cardBikesTwitterButton");
@@ -76,8 +83,9 @@ const related = "elbotonmalo,baecobici";
 
 //! Main functions ------------------------------------------------------------>
 // Get accumulated quantities ------------------------------------------------->
-function bikesTotal() {
-  updating.classList.remove("updating--hide");
+function getBikesTotal() {
+  cardTotals.classList.remove("card--hidden");
+  updatingCardTotals.classList.remove("updating--hidden");
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrStatus, true);
@@ -106,7 +114,7 @@ function bikesTotal() {
       bikesAvailableAcc = bikesAvailableAcc - bikesFakeAcc * 2;
 
       // Data
-      cardBikesAvailableNumb.textContent = bikesAvailableAcc;
+      cardBikesAvailableNumb.textContent = `${bikesAvailableAcc}`;
       cardBikesDisabledNumb.textContent = bikesDisabledAcc;
 
       // Chart
@@ -120,14 +128,14 @@ function bikesTotal() {
       cardBikesTwitterButton.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}&hashtags=${hashtags}&via=${via}&related=${related}`;
 
       // Response date & time
-      let responseDate = new Date(resp.last_updated * 1000);
-      updateTime.textContent = responseDate.toLocaleString("es-AR", options);
+      let responseDate = new Date(resp.last_updated * 1000).toLocaleString("es-AR", options);
+      updateTime.textContent = `Última actualización ${responseDate}`;
 
-      updating.classList.add("updating--hide");
-      cardTotals.classList.remove("card--hidden");
+      updatingCardTotals.classList.add("updating--hidden");
+      //cardTotals.classList.remove("card--hidden");
 
       // !Debug
-      // console.log("Response stationStatus - bikesTotal: ");
+      // console.log("Response stationStatus - getBikesTotal: ");
       // console.log(stationStatus);
       // console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc}`);
       // console.log(`fake bikes: ${bikesFakeAcc}`);
@@ -143,8 +151,7 @@ function bikesTotal() {
 }
 
 // Get quantities by station (search) ----------------------------------------->
-function bikesStation(busqueda) {
-  //updating.classList.remove("updating--hide");
+function getBikesStation(busqueda) {
 
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
@@ -153,7 +160,7 @@ function bikesStation(busqueda) {
       // Success!
       let resp = JSON.parse(this.response);
       let stationInformation = resp.data.stations;
-      //console.log("Response stationInformation - bikesStation:");
+      //console.log("Response stationInformation - getBikesStation:");
       //console.log(stationInformation);
 
       // Find station_id ------------------------------------------------------>
@@ -178,7 +185,7 @@ function bikesStation(busqueda) {
           // Success!
           let resp = JSON.parse(this.response);
           let stationStatus = resp.data.stations;
-          //console.log("Response stationStatus - bikesStation:");
+          //console.log("Response stationStatus - getBikesStation:");
           //console.log(stationStatus);
 
           // Get station status for station_id -------------------------------->
@@ -234,8 +241,8 @@ function bikesStation(busqueda) {
           //   searchValue = ""; //! Important
           // }
 
-          //updating.classList.add("updating--hide");
-          cardNearest.classList.remove("card--hidden");
+          updatingCardNearest.classList.add("updating--hidden");
+          //cardNearest.classList.remove("card--hidden");
 
         } else {
           //updating.classList.add("updating--hide");
@@ -255,8 +262,11 @@ function bikesStation(busqueda) {
   xhr.send();
 }
 
-// Get valid station numbers & location --------------------------------------->
-function getStationsValid() {
+// Get stations information --------------------------------------------------->
+function getStationInformation() {
+  cardNearest.classList.remove("card--hidden");
+  updatingCardNearest.classList.remove("updating--hidden");
+
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function () {
@@ -267,21 +277,23 @@ function getStationsValid() {
 
       for (let i = 0; i < stationInformation.length; i++) {
         // Get each station number from station name
-        stationNumber = stationInformation[i].name.slice(0, 3);
-        stationsValid.push(stationNumber);
+        //stationNumber = stationInformation[i].name.slice(0, 3);
+        stationNumber = stationInformation[i].name
+        stationName = stationNumber.toUpperCase();
+        stationsValid.push(stationName);
         // Get each station location (lat & lon)
         stationsLocation.id = stationInformation[i].name.slice(0, 3);
         stationsLocation.lat = stationInformation[i].lat;
         stationsLocation.lon = stationInformation[i].lon;
         stationsLocation.push([stationsLocation.id, stationsLocation.lat, stationsLocation.lon]);
       }
-      //console.log("stationsValid");
-      //console.log(stationsValid);
 
-      //console.log("stationsLocation");
-      //console.log(stationsLocation);
+      //! Debug
+      // console.log("stationsValid", stationsValid);
+      // console.log("stationsLocation", stationsLocation);
 
       checkGeolocation();
+
     } else {
       //updating.classList.add("updating--hide");
     }
@@ -315,6 +327,77 @@ function getUniqueStatus() {
   };
   xhr.onerror = function () {
     //updating.classList.add("updating--hide");
+  };
+  xhr.send();
+}
+
+// Get active station numbers & location --------------------------------------->
+function getActiveStations() {
+  cardTotals.classList.add("card--hidden");
+  cardNearest.classList.add("card--hidden");
+  navHomeBtn.classList.remove("active");
+  navStatusBtn.classList.add("active");
+  cardActive.classList.remove("card--hidden");
+  updatingCardActive.classList.remove("updating--hidden");
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", xhrInformation, true);
+  xhr.onload = function () {
+    if (this.status >= 200 && this.status < 400) {
+      // Success!
+      let resp = JSON.parse(this.response);
+      let stationInformation = resp.data.stations;
+
+      for (let i = 0; i < stationInformation.length; i++) {
+        stationsActive.id = stationInformation[i].name.slice(0, 3);
+        stationsActive.name = stationInformation[i].name;
+        stationsActive.lat = stationInformation[i].lat;
+        stationsActive.lon = stationInformation[i].lon;
+        stationsActive.push({ "id": stationsActive.id, "name": stationsActive.name, "lat": stationsActive.lat, "lon": stationsActive.lon });
+      }
+
+      stationsTable = stationsActive.filter(function (e) {
+        return e.id !== "tes"
+      });
+
+      stationsTableSorted = stationsTable.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      //console.table(stationsTableSorted);
+
+
+      for (let i = 0; i < stationsTableSorted.length; i++) {
+        stationsTableSorted.name = stationsActive[i].name;
+        stationsTableSorted.lat = stationsActive[i].lat;
+        stationsTableSorted.lon = stationsActive[i].lon;
+
+        let mapURL = `https://www.google.com/maps/search/?api=1&query=${stationsTableSorted.lat},${stationsTableSorted.lon}&query_place_id=${stationsTableSorted.name}`;
+        let a = document.createElement('a');
+        let icon = document.createElement("span");
+
+        icon.classList.add("material-icons");
+        icon.textContent = "place";
+        a.appendChild(icon);
+        a.title = `Ver ${stationsTableSorted.name} en Google Maps`;
+        a.href = mapURL;
+        a.target = "_blank";
+        a.rel = "noopener";
+        document.body.appendChild(a);
+
+        let row = stationsList.insertRow(i + 1);
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        cell1.innerHTML = stationsTableSorted.name;
+        cell2.appendChild(a);
+      }
+      document.querySelector("#cardActiveNumb").textContent = `${stationsTableSorted.length} estaciones`;
+      updatingCardActive.classList.add("updating--hidden");
+    } else {
+      responseHeader.textContent = "Error";
+      updatingCardActive.classList.add("updating--hidden");
+    }
+  };
+  xhr.onerror = function () {
+    responseHeader.textContent = "Error";
+    updatingCardActive.classList.add("updating--hidden");
   };
   xhr.send();
 }
@@ -369,7 +452,6 @@ function hideNavBar() {
   }
 }
 
-
 // Add leading zeros to station_id number ------------------------------------->
 function pad(n) {
   if (n <= 999) {
@@ -378,23 +460,39 @@ function pad(n) {
   return n;
 }
 
-//* Search by user location --------------------------------------------------->
-// Get User's Coordinate from their Browser
-function checkGeolocation() {
-  // Geolocation OK
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(UserLocation);
+// Export CSV
+// Quick and simple export target #table_id into a csv
+function download_table_as_csv(table_id) {
+  // Select rows from table_id
+  var rows = document.querySelectorAll("table#" + table_id + " tr");
+  // Construct csv
+  var csv = [];
+  for (var i = 0; i < rows.length; i++) {
+    var row = [],
+      cols = rows[i].querySelectorAll("td, th");
+    for (var j = 0; j < cols.length; j++) {
+      // Clean innertext to remove multiple spaces and jumpline (break csv)
+      var data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
+      // Escape double-quote with double-double-quote (see https://stackoverflow.com/questions/17808511/properly-escape-a-double-quote-in-csv)
+      data = data.replace(/"/g, '""');
+      // Push escaped string
+      row.push('"' + data + '"');
+    }
+    csv.push(row.join(";"));
   }
-  // Geolocation not available
-  else {
-    console.log("No hay ubicacion");
-  }
+  var csv_string = csv.join("\n");
+  // Download it
+  var filename = "export_" + table_id + "_" + new Date().toLocaleDateString() + ".csv";
+  var link = document.createElement("a");
+  link.style.display = "none";
+  link.setAttribute("target", "_blank");
+  link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv_string));
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-// Callback function for asynchronous call to HTML5 geolocation
-function UserLocation(position) {
-  nearestStation(position.coords.latitude, position.coords.longitude);
-}
 
 // Convert Degress to Radians
 function Deg2Rad(deg) {
@@ -413,6 +511,27 @@ function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
   return d;
 }
 
+
+//* Search by user location --------------------------------------------------->
+//  Get user location --------------------------------------------------------->
+function checkGeolocation() {
+  // Geolocation OK
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(userLocation);
+  }
+  // Geolocation not available
+  else {
+    console.log("No hay ubicacion");
+    nearestStation(-34.6038157, -58.3816604);
+  }
+}
+
+// Callback function for asynchronous call to HTML5 geolocation
+function userLocation(position) {
+  nearestStation(position.coords.latitude, position.coords.longitude);
+}
+
+// Find nearest station ------------------------------------------------------->
 function nearestStation(latitude, longitude) {
   let minDif = 99999;
   let closest;
@@ -425,28 +544,39 @@ function nearestStation(latitude, longitude) {
     }
   }
 
+  // Get information for nearest station (search) ----------------------------->
   searchLocation = stationsLocation[closest][0];
+  getBikesStation(searchLocation);
 
+  // Get google maps directions url ------------------------------------------->
   let origin = latitude + "," + longitude;
   let destination = stationsLocation[closest][1] + "," + stationsLocation[closest][2];
   let mapLink = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
+  cardNearestStationMapLink.href = mapLink;
+
+  // Get google maps static map image ----------------------------------------->
   let mapImg = `https://maps.googleapis.com/maps/api/staticmap?center=${destination}&zoom=15&size=300x150&scale=2&markers=color:0xe66300%7C${destination}&key=${maps_api_key}`;
   cardNearestStationMap.src = mapImg;
-  cardNearestStationMapLink.href = mapLink;
-  bikesStation(searchLocation);
 }
 
 //* Event listeners ----------------------------------------------------------->
-navSearchBtn.addEventListener("click", function (event) {
-  searchSection.classList.remove("search--hidden");
+navHomeBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  location.reload();
+})
+navSearchBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  //searchSection.classList.remove("search--hidden");
+  alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
 });
-searchSection.addEventListener("click", function (event) {
-  searchSection.classList.add("search--hidden");
+navStatusBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  getActiveStations();
 });
 
 
 //! Call functions on page load ----------------------------------------------->
 (function () {
-  getStationsValid();
-  bikesTotal();
+  getBikesTotal();
+  getStationInformation();
 })();
