@@ -135,10 +135,10 @@ function getBikesTotal() {
       //cardTotals.classList.remove("card--hidden");
 
       // !Debug
-      // console.log("Response stationStatus - getBikesTotal: ");
-      // console.log(stationStatus);
-      // console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc}`);
-      // console.log(`fake bikes: ${bikesFakeAcc}`);
+      //console.log("Response stationStatus - getBikesTotal: ");
+      //console.log(stationStatus);
+      //console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc}`);
+      //console.log(`fake bikes: ${bikesFakeAcc}`);
 
     } else {
       updating.classList.add("updating--hide");
