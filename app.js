@@ -4,18 +4,18 @@ const client_id = config.ID;
 const client_secret = config.SECRET;
 const maps_api_key = config.MAPS_API_KEY;
 //  URL ----------------------------------------------------------------------->
-const urlCors = new URL("https://cors-anywhere.herokuapp.com/");
+const urlCors = new URL("https://cors-juandematei.herokuapp.com/");
 const urlBase = new URL("https://apitransporte.buenosaires.gob.ar");
 //  stationStatus ------------------------------------------------------------->
 const urlStatus = new URL("/ecobici/gbfs/stationStatus", urlBase);
 urlStatus.searchParams.set("client_id", client_id);
 urlStatus.searchParams.set("client_secret", client_secret);
-const xhrStatus = urlCors + urlStatus;
+const xhrStatus = urlStatus;
 //  stationInformation -------------------------------------------------------->
 const urlInformation = new URL("/ecobici/gbfs/stationInformation", urlBase);
 urlInformation.searchParams.set("client_id", client_id);
 urlInformation.searchParams.set("client_secret", client_secret);
-const xhrInformation = urlCors + urlInformation;
+const xhrInformation = urlInformation;
 
 //* Initial variables --------------------------------------------------------->
 //  Counters ------------------------------------------------------------------>
@@ -44,7 +44,7 @@ let options = {
 //  Navigation ---------------------------------------------------------------->
 const navBottom = document.querySelector("#navBottom");
 const navHomeBtn = document.querySelector("#navHomeBtn");
-const navSearchBtn = document.querySelector("#navSearchBtn");
+// const navSearchBtn = document.querySelector("#navSearchBtn");
 const navStatusBtn = document.querySelector("#navStatusBtn");
 //  Search -------------------------------------------------------------------->
 const searchSection = document.querySelector("#searchSection");
@@ -135,10 +135,10 @@ function getBikesTotal() {
       //cardTotals.classList.remove("card--hidden");
 
       // !Debug
-      // console.log("Response stationStatus - getBikesTotal: ");
-      // console.log(stationStatus);
-      // console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc}`);
-      // console.log(`fake bikes: ${bikesFakeAcc}`);
+      //console.log("Response stationStatus - getBikesTotal: ");
+      //console.log(stationStatus);
+      //console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc}`);
+      //console.log(`fake bikes: ${bikesFakeAcc}`);
 
     } else {
       updating.classList.add("updating--hide");
@@ -564,11 +564,11 @@ navHomeBtn.addEventListener("click", function (e) {
   e.preventDefault();
   location.reload();
 })
-navSearchBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  //searchSection.classList.remove("search--hidden");
-  alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
-});
+// navSearchBtn.addEventListener("click", function (e) {
+//   e.preventDefault();
+//   //searchSection.classList.remove("search--hidden");
+//   alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
+// });
 navStatusBtn.addEventListener("click", function (e) {
   e.preventDefault();
   getActiveStations();
