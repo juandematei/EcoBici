@@ -566,7 +566,7 @@ navHomeBtn.addEventListener("click", function (e) {
 })
 // navSearchBtn.addEventListener("click", function (e) {
 //   e.preventDefault();
-//   //searchSection.classList.remove("search--hidden");
+//   searchSection.classList.remove("search--hidden");
 //   alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
 // });
 navStatusBtn.addEventListener("click", function (e) {
