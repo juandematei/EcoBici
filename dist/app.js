@@ -44,7 +44,7 @@ let options = {
 //  Navigation ---------------------------------------------------------------->
 const navBottom = document.querySelector("#navBottom");
 const navHomeBtn = document.querySelector("#navHomeBtn");
-// const navSearchBtn = document.querySelector("#navSearchBtn");
+const navSearchBtn = document.querySelector("#navSearchBtn");
 const navStatusBtn = document.querySelector("#navStatusBtn");
 //  Search -------------------------------------------------------------------->
 const searchSection = document.querySelector("#searchSection");
@@ -564,11 +564,11 @@ navHomeBtn.addEventListener("click", function (e) {
   e.preventDefault();
   location.reload();
 })
-// navSearchBtn.addEventListener("click", function (e) {
-//   e.preventDefault();
-//   searchSection.classList.remove("search--hidden");
-//   alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
-// });
+navSearchBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  searchSection.classList.remove("search--hidden");
+  alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
+});
 navStatusBtn.addEventListener("click", function (e) {
   e.preventDefault();
   getActiveStations();
