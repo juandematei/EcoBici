@@ -1,21 +1,23 @@
-//* API -----------------------------------------------------------------------> 
+//* API ----------------------------------------------------------------------->
 //  Tokens -------------------------------------------------------------------->
 const client_id = config.ID;
 const client_secret = config.SECRET;
 const maps_api_key = config.MAPS_API_KEY;
 //  URL ----------------------------------------------------------------------->
-const urlCors = new URL("https://cors-juandematei.herokuapp.com/");
-const urlBase = new URL("https://apitransporte.buenosaires.gob.ar");
+//const urlCors = new URL("https://cors-juandematei.herokuapp.com/");
+//const urlBase = new URL("https://apitransporte.buenosaires.gob.ar");
 //  stationStatus ------------------------------------------------------------->
-const urlStatus = new URL("/ecobici/gbfs/stationStatus", urlBase);
-urlStatus.searchParams.set("client_id", client_id);
-urlStatus.searchParams.set("client_secret", client_secret);
-const xhrStatus = urlStatus;
+//const urlStatus = new URL("/ecobici/gbfs/stationStatus", urlBase);
+//urlStatus.searchParams.set("client_id", client_id);
+//urlStatus.searchParams.set("client_secret", client_secret);
+//const xhrStatus = urlStatus;
+const xhrStatus = "https://cors-juandematei.herokuapp.com/https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus?client_id=c9f17951eca1433a8744072cd6ed90c9&client_secret=d16cdAd7C5a44875825649808f94ca6B";
 //  stationInformation -------------------------------------------------------->
-const urlInformation = new URL("/ecobici/gbfs/stationInformation", urlBase);
-urlInformation.searchParams.set("client_id", client_id);
-urlInformation.searchParams.set("client_secret", client_secret);
-const xhrInformation = urlInformation;
+//const urlInformation = new URL("/ecobici/gbfs/stationInformation", urlBase);
+//urlInformation.searchParams.set("client_id", client_id);
+//urlInformation.searchParams.set("client_secret", client_secret);
+//const xhrInformation = urlInformation;
+const xhrInformation = "https://cors-juandematei.herokuapp.com/https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationInformation?client_id=c9f17951eca1433a8744072cd6ed90c9&client_secret=d16cdAd7C5a44875825649808f94ca6B";
 
 //* Initial variables --------------------------------------------------------->
 //  Counters ------------------------------------------------------------------>
@@ -77,9 +79,9 @@ const cardActiveSubtitle = document.querySelector("#cardActiveSubtitle");
 const cardBikesTwitterButton = document.querySelector("#cardBikesTwitterButton");
 const cardNearestStationTwitterButton = document.querySelector("#cardNearestStationTwitterButton");
 const url = "http://ecobici.juandematei.com";
-const hashtags = "EliminenElBotón,EcoBici,QuedateEnCasa";
+const hashtags = "EcoBici";
 const via = "juandematei";
-const related = "elbotonmalo,baecobici";
+const related = "baecobici";
 
 //! Main functions ------------------------------------------------------------>
 // Get accumulated quantities ------------------------------------------------->
@@ -139,7 +141,6 @@ function getBikesTotal() {
       //console.log(stationStatus);
       //console.log(`bikes: ${bikesAvailableAcc} / ${bikesDisabledAcc}`);
       //console.log(`fake bikes: ${bikesFakeAcc}`);
-
     } else {
       updating.classList.add("updating--hide");
     }
@@ -152,7 +153,6 @@ function getBikesTotal() {
 
 // Get quantities by station (search) ----------------------------------------->
 function getBikesStation(busqueda) {
-
   let xhr = new XMLHttpRequest();
   xhr.open("GET", xhrInformation, true);
   xhr.onload = function () {
@@ -210,7 +210,6 @@ function getBikesStation(busqueda) {
           cardNearestStationBikesDisabled.textContent = bikesDisabledStation;
           cardNearestStationDocksAvailable.textContent = docksAvailableStation;
 
-
           // cardBikesAvailableNumb.textContent = bikesAvailableStation;
           // if (bikesAvailableStation === 1) {
           //   cardBikesAvailableText.textContent = "bici disponible";
@@ -243,7 +242,6 @@ function getBikesStation(busqueda) {
 
           updatingCardNearest.classList.add("updating--hidden");
           //cardNearest.classList.remove("card--hidden");
-
         } else {
           //updating.classList.add("updating--hide");
         }
@@ -278,7 +276,7 @@ function getStationInformation() {
       for (let i = 0; i < stationInformation.length; i++) {
         // Get each station number from station name
         //stationNumber = stationInformation[i].name.slice(0, 3);
-        stationNumber = stationInformation[i].name
+        stationNumber = stationInformation[i].name;
         stationName = stationNumber.toUpperCase();
         stationsValid.push(stationName);
         // Get each station location (lat & lon)
@@ -293,7 +291,6 @@ function getStationInformation() {
       // console.log("stationsLocation", stationsLocation);
 
       checkGeolocation();
-
     } else {
       //updating.classList.add("updating--hide");
     }
@@ -353,16 +350,15 @@ function getActiveStations() {
         stationsActive.name = stationInformation[i].name;
         stationsActive.lat = stationInformation[i].lat;
         stationsActive.lon = stationInformation[i].lon;
-        stationsActive.push({ "id": stationsActive.id, "name": stationsActive.name, "lat": stationsActive.lat, "lon": stationsActive.lon });
+        stationsActive.push({ id: stationsActive.id, name: stationsActive.name, lat: stationsActive.lat, lon: stationsActive.lon });
       }
 
       stationsTable = stationsActive.filter(function (e) {
-        return e.id !== "tes"
+        return e.id !== "tes";
       });
 
-      stationsTableSorted = stationsTable.sort((a, b) => (a.id > b.id) ? 1 : -1)
+      stationsTableSorted = stationsTable.sort((a, b) => (a.id > b.id ? 1 : -1));
       //console.table(stationsTableSorted);
-
 
       for (let i = 0; i < stationsTableSorted.length; i++) {
         stationsTableSorted.name = stationsActive[i].name;
@@ -370,7 +366,7 @@ function getActiveStations() {
         stationsTableSorted.lon = stationsActive[i].lon;
 
         let mapURL = `https://www.google.com/maps/search/?api=1&query=${stationsTableSorted.lat},${stationsTableSorted.lon}&query_place_id=${stationsTableSorted.name}`;
-        let a = document.createElement('a');
+        let a = document.createElement("a");
         let icon = document.createElement("span");
 
         icon.classList.add("material-icons");
@@ -421,27 +417,31 @@ function chart() {
           label: "Bloqueadas",
           data: [chartDisabled],
           backgroundColor: "#E53935",
-        }
+        },
       ],
     },
     options: {
       legend: false,
       tooltips: {
-        enabled: false
+        enabled: false,
       },
       scales: {
-        yAxes: [{
-          stacked: true,
-          display: false
-        }],
-        xAxes: [{
-          stacked: true,
-          display: false
-        }]
-      }
+        yAxes: [
+          {
+            stacked: true,
+            display: false,
+          },
+        ],
+        xAxes: [
+          {
+            stacked: true,
+            display: false,
+          },
+        ],
+      },
     },
   });
-};
+}
 
 // Hide bottom navigation ----------------------------------------------------->
 function hideNavBar() {
@@ -493,7 +493,6 @@ function download_table_as_csv(table_id) {
   document.body.removeChild(link);
 }
 
-
 // Convert Degress to Radians
 function Deg2Rad(deg) {
   return (deg * Math.PI) / 180;
@@ -510,7 +509,6 @@ function PythagorasEquirectangular(lat1, lon1, lat2, lon2) {
   let d = Math.sqrt(x * x + y * y) * R;
   return d;
 }
-
 
 //* Search by user location --------------------------------------------------->
 //  Get user location --------------------------------------------------------->
@@ -563,17 +561,16 @@ function nearestStation(latitude, longitude) {
 navHomeBtn.addEventListener("click", function (e) {
   e.preventDefault();
   location.reload();
-})
+});
 navSearchBtn.addEventListener("click", function (e) {
   e.preventDefault();
   searchSection.classList.remove("search--hidden");
-  alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!")
+  alert("Por ahora la búsqueda no está disponible, pero muy pronto volverá!");
 });
 navStatusBtn.addEventListener("click", function (e) {
   e.preventDefault();
   getActiveStations();
 });
-
 
 //! Call functions on page load ----------------------------------------------->
 (function () {
